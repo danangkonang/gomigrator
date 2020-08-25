@@ -1,3 +1,10 @@
 # migrasion-go-cli
 
-go build main.go
+
+usage
+
+`go build main.go && ./main -h`
+
+or
+
+`go run main.go -h`
