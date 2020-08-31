@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/danangkonang/migrasion-go-cli/app/helper"
 )
@@ -29,7 +30,7 @@ func createFolderDatabase() {
 func createFilemigration() {
 	tableName := os.Args[3]
 	fileName := helper.GetTime() + "_" + tableName + ".go"
-	path := dir + "/" + fileName
+	path := migrationDir + "/" + fileName
 	// deteksi apakah file sudah ada
 	_, err := os.Stat(path)
 
@@ -40,7 +41,25 @@ func createFilemigration() {
 			fmt.Println(err.Error())
 		}
 		// isi file
-		file.WriteString("package database\n")
+		// file.WriteString("package database\n func " + tableName + "(){\n}")
+		fl := "package database\n\n"
+		fl += "import (\n"
+		fl += `	"log"`
+		fl += "\n\n"
+		fl += `	"github.com/danangkonang/rest-api/config"`
+		fl += "\n"
+		fl += ")\n\n"
+		fl += "func " + strings.Title(tableName) + "(){\n"
+		fl += "	db := config.Connect()\n"
+		fl += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
+		fl += "	_, err := db.Exec(`CREATE TABLE " + tableName + "(\n"
+
+		fl += "	)`)\n"
+		fl += "	if err != nil {\n"
+		fl += "		log.Fatal(err)\n"
+		fl += "	}\n"
+		fl += "}\n"
+		file.WriteString(fl)
 		defer file.Close()
 	}
 	// fmt.Println("file berhasil dibuat", path)

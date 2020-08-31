@@ -27,12 +27,13 @@ func createEnvFile() {
 			fmt.Println(err.Error())
 		}
 		file.WriteString(`
-DB_HOST=localhost\n
-DB_TYPE=postgres\n
-DB_PORT=5432\n
-DB_NAME=root\n
-DB_PASSWORD=root\n
-DB_USER=postgres\n
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_TYPE=postgres
+DB_PORT=5432
+DB_NAME=root
+DB_PASSWORD=root
+DB_USER=postgres
 `)
 		defer file.Close()
 	}
@@ -50,7 +51,71 @@ func createConfigFile() {
 		if err != nil {
 			fmt.Println(err.Error())
 		}
-		file.WriteString("package config\n")
+		writeText := "package config\n\n"
+		writeText += "import (\n"
+		writeText += `	"database/sql"`
+		writeText += "\n"
+		writeText += `	"fmt"`
+		writeText += "\n"
+		writeText += `	"os"`
+		writeText += "\n\n"
+		writeText += `	_ "github.com/go-sql-driver/mysql"`
+		writeText += "\n"
+		writeText += `	"github.com/joho/godotenv"`
+		writeText += "\n"
+		writeText += `	_ "github.com/lib/pq"`
+		writeText += "\n"
+		writeText += ")\n\n"
+		writeText += "func Connect() *sql.DB {\n"
+		writeText += "	dbUrl := GetDbUrl()\n"
+		writeText += `	connection := os.Getenv("DB_CONNECTION")`
+		writeText += "\n"
+		writeText += "	db, err := sql.Open(connection, dbUrl)\n"
+
+		writeText += "	if err != nil {\n"
+		writeText += "		panic(err)\n"
+		writeText += "	}\n"
+		writeText += "	err = db.Ping()\n"
+		writeText += "	if err != nil {\n"
+		writeText += "		panic(err)\n"
+		writeText += "	}\n"
+		writeText += "	return db\n"
+		writeText += "}\n"
+		writeText += "\n"
+
+		writeText += "func GetDbUrl() string {\n"
+		writeText += "	e := godotenv.Load()\n"
+		writeText += "	if e != nil {\n"
+		writeText += "		fmt.Print(e)\n"
+		writeText += "	}\n"
+		writeText += `	var url = os.Getenv("DATABASE_URL")`
+		writeText += "\n"
+		writeText += `	if url == "" {`
+		writeText += "\n"
+		writeText += `		user := os.Getenv("DBUSER")`
+		writeText += "\n"
+		writeText += `		password := os.Getenv("DBPASSWORD")`
+		writeText += "\n"
+		writeText += `		dbname := os.Getenv("DBNAME")`
+		writeText += "\n"
+		writeText += `		port := os.Getenv("DBPORT")`
+		writeText += "\n"
+		writeText += `		host := os.Getenv("DBHOST")`
+		writeText += "\n"
+		writeText += `		localUrl := fmt.Sprintf("host=%s port=%s user=%s "+`
+		writeText += "\n"
+		writeText += `			"password=%s dbname=%s sslmode=disable",`
+		writeText += "\n"
+		writeText += `			host, port, user, password, dbname)`
+		writeText += "\n"
+		writeText += "		return localUrl\n"
+		writeText += "	} else {\n"
+		writeText += "		return url\n"
+		writeText += "	}\n"
+
+		writeText += "}\n"
+
+		file.WriteString(writeText)
 		defer file.Close()
 	}
 }

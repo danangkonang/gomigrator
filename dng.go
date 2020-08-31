@@ -38,7 +38,7 @@ func runCmd() {
 		cmd.Initial()
 		break
 	case "danang":
-		cmd.CmdType(usrCmd)
+		cmd.TypeIs()
 		break
 	case "create":
 		cmd.TypeIs()
