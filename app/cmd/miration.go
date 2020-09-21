@@ -42,24 +42,24 @@ func createFilemigration() {
 		}
 		// isi file
 		// file.WriteString("package database\n func " + tableName + "(){\n}")
-		fl := "package database\n\n"
-		fl += "import (\n"
-		fl += `	"log"`
-		fl += "\n\n"
-		fl += `	"github.com/danangkonang/rest-api/config"`
-		fl += "\n"
-		fl += ")\n\n"
-		fl += "func " + strings.Title(tableName) + "(){\n"
-		fl += "	db := config.Connect()\n"
-		fl += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
-		fl += "	_, err := db.Exec(`CREATE TABLE " + tableName + "(\n"
+		writeMigration := "package database\n\n"
+		writeMigration += "import (\n"
+		writeMigration += `	"log"`
+		writeMigration += "\n\n"
+		writeMigration += `	"github.com/danangkonang/migrasion-go-cli/config"`
+		writeMigration += "\n"
+		writeMigration += ")\n\n"
+		writeMigration += "func " + strings.Title(tableName) + "(){\n"
+		writeMigration += "	db := config.Connect()\n"
+		writeMigration += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
+		writeMigration += "	_, err := db.Exec(`CREATE TABLE " + tableName + "(\n"
 
-		fl += "	)`)\n"
-		fl += "	if err != nil {\n"
-		fl += "		log.Fatal(err)\n"
-		fl += "	}\n"
-		fl += "}\n"
-		file.WriteString(fl)
+		writeMigration += "	)`)\n"
+		writeMigration += "	if err != nil {\n"
+		writeMigration += "		log.Fatal(err)\n"
+		writeMigration += "	}\n"
+		writeMigration += "}\n"
+		file.WriteString(writeMigration)
 		defer file.Close()
 	}
 	// fmt.Println("file berhasil dibuat", path)

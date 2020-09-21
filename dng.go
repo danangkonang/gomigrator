@@ -38,17 +38,20 @@ func runCmd() {
 		cmd.Initial()
 		break
 	case "danang":
-		cmd.TypeIs()
+		cmd.TypeMigration()
 		break
 	case "create":
-		cmd.TypeIs()
+		cmd.TypeMigration() //go run dng.go create migration [name file]
 		break
 	case "run":
-		cmd.TypeIs()
+		cmd.TipeRun() //go run dng.go run migration [name file]
 		break
 	case "back":
-		cmd.TypeIs()
+		cmd.TypeBack()
 		break
+		// case "run":
+		// 	cmd.Run()
+		// break
 	default:
 		helper.PrintHelper()
 	}

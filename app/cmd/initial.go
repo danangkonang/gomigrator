@@ -26,13 +26,12 @@ func createEnvFile() {
 		if err != nil {
 			fmt.Println(err.Error())
 		}
-		file.WriteString(`
-DB_CONNECTION=mysql
+		file.WriteString(`DB_CONNECTION=postgres
 DB_HOST=localhost
 DB_TYPE=postgres
 DB_PORT=5432
-DB_NAME=root
-DB_PASSWORD=root
+DB_NAME=testing
+DB_PASSWORD=postgres
 DB_USER=postgres
 `)
 		defer file.Close()
@@ -92,15 +91,15 @@ func createConfigFile() {
 		writeText += "\n"
 		writeText += `	if url == "" {`
 		writeText += "\n"
-		writeText += `		user := os.Getenv("DBUSER")`
+		writeText += `		user := os.Getenv("DB_USER")`
 		writeText += "\n"
-		writeText += `		password := os.Getenv("DBPASSWORD")`
+		writeText += `		password := os.Getenv("DB_PASSWORD")`
 		writeText += "\n"
-		writeText += `		dbname := os.Getenv("DBNAME")`
+		writeText += `		dbname := os.Getenv("DB_NAME")`
 		writeText += "\n"
-		writeText += `		port := os.Getenv("DBPORT")`
+		writeText += `		port := os.Getenv("DB_PORT")`
 		writeText += "\n"
-		writeText += `		host := os.Getenv("DBHOST")`
+		writeText += `		host := os.Getenv("DB_HOST")`
 		writeText += "\n"
 		writeText += `		localUrl := fmt.Sprintf("host=%s port=%s user=%s "+`
 		writeText += "\n"
