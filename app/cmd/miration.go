@@ -8,7 +8,7 @@ import (
 	"github.com/danangkonang/migrasion-go-cli/app/helper"
 )
 
-var migrationDir = "database"
+var migrationDir = "database/migration"
 
 func CreateMigration() {
 	fullCmd := os.Args[1:]
@@ -53,7 +53,9 @@ func createFilemigration() {
 		writeMigration += "	db := config.Connect()\n"
 		writeMigration += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
 		writeMigration += "	_, err := db.Exec(`CREATE TABLE " + tableName + "(\n"
-
+		writeMigration += "	id_product serial PRIMARY KEY,\n"
+		writeMigration += "	created_at TIMESTAMP NOT NULL,\n"
+		writeMigration += "	updated_at TIMESTAMP NOT NULL\n"
 		writeMigration += "	)`)\n"
 		writeMigration += "	if err != nil {\n"
 		writeMigration += "		log.Fatal(err)\n"

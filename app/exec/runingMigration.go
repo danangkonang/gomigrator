@@ -5,5 +5,5 @@ import (
 )
 
 func RuningMigration() {
-	database.User()
+	database.Master()
 }

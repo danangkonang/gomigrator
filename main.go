@@ -35,16 +35,16 @@ func runCmd() {
 		helper.PrintVersion()
 		break
 	case "init":
-		cmd.Initial()
+		cmd.Initial() //create .env config database
 		break
 	case "danang":
 		cmd.TypeMigration()
 		break
 	case "create":
-		cmd.TypeMigration() //go run dng.go create migration [name file]
+		cmd.TypeMigration() //go run main.go create migration [name file]
 		break
 	case "run":
-		cmd.TipeRun() //go run dng.go run migration [name file]
+		cmd.TipeRun() //go run main.go run migration [name file]
 		break
 	case "back":
 		cmd.TypeBack()
@@ -54,5 +54,6 @@ func runCmd() {
 		// break
 	default:
 		helper.PrintHelper()
+		// Execute()
 	}
 }

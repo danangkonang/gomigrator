@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/danangkonang/migrasion-go-cli/app/exec"
@@ -43,23 +42,16 @@ func TipeRun() {
 	subCommand := os.Args[2]
 	switch subCommand {
 	case "migration":
-		// CreateMigration()
 		exec.RuningMigration()
-		// fmt.Println("migration")
 		break
 	case "-m":
-		// CreateMigration()
-		// fmt.Println("-m")
-		// exec.ReadeFileInFolder()
 		exec.RuningMigration()
 		break
 	case "seeder":
-		fmt.Println("seeder")
-		// CreateSeeder()
+		exec.RunSeeder()
 		break
 	case "-s":
-		fmt.Println("-s")
-		// CreateSeeder()
+		exec.RunSeeder()
 		break
 	default:
 		helper.PrintHelper()
