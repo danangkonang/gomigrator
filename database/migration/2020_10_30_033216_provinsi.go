@@ -14,6 +14,6 @@ func Provinsi() {
 		provinsi VARCHAR (225) NOT NULL
 	)`)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("provinsi", err)
 	}
 }

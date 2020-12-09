@@ -16,6 +16,6 @@ func Categories() {
 		updated_at TIMESTAMP NOT NULL
 	)`)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("categories", err)
 	}
 }

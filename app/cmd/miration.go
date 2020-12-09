@@ -42,7 +42,7 @@ func createFilemigration() {
 		}
 		// isi file
 		// file.WriteString("package database\n func " + tableName + "(){\n}")
-		writeMigration := "package database\n\n"
+		writeMigration := "package migration\n\n"
 		writeMigration += "import (\n"
 		writeMigration += `	"log"`
 		writeMigration += "\n\n"

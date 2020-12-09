@@ -18,6 +18,6 @@ func Sub_items() {
 		updated_at TIMESTAMP NOT NULL
 	)`)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("sub_items", err)
 	}
 }

@@ -16,6 +16,6 @@ func Kecamatan() {
 	provinsi_id INTEGER NOT NULL
 	)`)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("kecamatan", err)
 	}
 }
