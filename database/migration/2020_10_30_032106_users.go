@@ -8,7 +8,7 @@ import (
 
 func Users() {
 	db := config.Connect()
-	db.Exec(`DROP TABLE users`)
+	db.Exec(`DROP TABLE users CASCADE`)
 	_, err := db.Exec(`CREATE TABLE users(
 	user_id CHAR(32) NOT NULL PRIMARY KEY,
 	name VARCHAR (50) NOT NULL,

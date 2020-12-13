@@ -14,8 +14,8 @@ func Products() {
 		user_id CHAR (32) NOT NULL,
 		product_name VARCHAR (225) NOT NULL,
 		images VARCHAR (225) NOT NULL,
-		price NUMERIC NOT NULL CHECK (price > 0),
-		discount numeric,
+		price NUMERIC,
+		discount NUMERIC,
 		description TEXT NOT NULL,
 		brand VARCHAR (225) NULL,
 		address TEXT NOT NULL,
@@ -26,8 +26,7 @@ func Products() {
 		weight_unit CHAR (20) NOT NULL,
 		active BOOLEAN,
 		created_at TIMESTAMP NOT NULL,
-		updated_at TIMESTAMP NOT NULL,
-		CHECK (discount > 0 AND price > discount)
+		updated_at TIMESTAMP NOT NULL
 	)`)
 	if err != nil {
 		log.Fatal("products", err)
