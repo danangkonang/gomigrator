@@ -18,6 +18,7 @@ func Master() {
 	migration.Provinsi()
 	migration.Messages()
 	migration.Notif()
+	migration.News()
 }
 
 func Seeds() {
