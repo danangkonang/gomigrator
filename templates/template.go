@@ -7,11 +7,13 @@ Usage: {{.Name}} [command] [options]
 Options:
 	-v, --version                       output the version number
 	-h, --help                          output usage information
+	-m, --migration                     create migration file
+	-s, --seeder                        create seeder file
 
 Commands:
-	- migrate
+	- create
 	- run
-	- down
+	- back
 
 {{- /* end */ -}}
 {{- "" }}
