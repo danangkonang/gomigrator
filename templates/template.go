@@ -21,3 +21,9 @@ var VersionTemplate = `{{.Name}} Version {{.Version}}
 {{- /* end */ -}}
 {{- "" }}
 `
+
+var ErrorTemplate = `{{.Message}}: unknown command
+Run 'gomig -help' for usage.
+{{- /* end */ -}}
+{{- "" }}
+`

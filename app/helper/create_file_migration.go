@@ -6,6 +6,12 @@ import (
 	"strings"
 )
 
+var (
+	red   = "\033[31m"
+	green = "\033[32m"
+	blue  = "\033[34m"
+)
+
 func CreateMigrationFile(name, migrationDir string) {
 	tableName := os.Args[3]
 	fileName := tableName + "_" + GetTime() + ".go"
@@ -48,4 +54,5 @@ func CreateMigrationFile(name, migrationDir string) {
 		defer file.Close()
 	}
 	fmt.Println("create", path)
+	fmt.Println(string(green), "success")
 }

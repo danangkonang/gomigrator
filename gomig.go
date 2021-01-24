@@ -7,8 +7,6 @@ import (
 	"github.com/danangkonang/migrasion-go-cli/app/helper"
 )
 
-// var dir = "database"
-
 func main() {
 	arrCmd := os.Args[1:]
 	if len(arrCmd) == 0 {
@@ -41,19 +39,15 @@ func runCmd() {
 		command.TestingComand()
 		break
 	case "create":
-		command.TypeMigration() //go run main.go create migration [name file]
+		command.MigrationCreate() //go run main.go create migration [name file]
 		break
 	case "run":
-		// command.TipeRun() //go run main.go run migration [name file]
+		command.MigrationRun() //go run main.go run migration [name file]
 		break
 	case "back":
-		command.TypeBack()
+		command.MigrationUndo()
 		break
-		// case "run":
-		// 	cmd.Run()
-		// break
 	default:
 		helper.PrintHelper()
-		// Execute()
 	}
 }

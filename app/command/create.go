@@ -7,7 +7,7 @@ import (
 	"github.com/danangkonang/migrasion-go-cli/app/helper"
 )
 
-func TypeMigration() {
+func MigrationCreate() {
 	// dir := helper.MyRootDir()
 	fullCommand := os.Args[1:]
 	if len(fullCommand) == 1 {

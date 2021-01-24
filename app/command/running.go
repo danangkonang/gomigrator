@@ -1,13 +1,13 @@
 package command
 
 import (
-	"log"
 	"os"
+	"os/exec"
 
 	"github.com/danangkonang/migrasion-go-cli/app/helper"
 )
 
-func TipeRun() {
+func MigrationRun() {
 	fullCommand := os.Args[1:]
 	if len(fullCommand) == 1 {
 		helper.PrintHelper()
@@ -16,35 +16,25 @@ func TipeRun() {
 	subCommand := os.Args[2]
 	switch subCommand {
 	case "migration":
-		// execusion.RuningMigration()
+		runExecusin("migration")
 		break
 	case "-m":
-		// execusion.RuningMigration()
+		runExecusin("migration")
 		break
 	case "seeder":
-		// execusion.RunSeeder()
+		runExecusin("seeder")
 		break
 	case "-s":
-		// execusion.RunSeeder()
+		runExecusin("seeder")
 		break
 	default:
-		helper.PrintHelper()
+		helper.ErrorCommand(os.Args[2])
 	}
 }
 
-func TypeBack() {
-
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	remove(dir)
-
-}
-
-func remove(dir string) {
-	err := os.RemoveAll(dir + "/migration/")
-	if err != nil {
-		log.Fatal(err)
-	}
+func runExecusin(typeFlag string) {
+	cmd := exec.Command("go", "run", "migration/migration.go", typeFlag)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Run()
 }

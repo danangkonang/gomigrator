@@ -18,12 +18,9 @@ func CreateMainFile(thisDir, dirMigration string) {
 		}
 		writeText := "package main\n\n"
 		writeText += "import (\n"
-		// writeText += `	"os"`
-		// writeText += "\n\n"
-		// writeText += `	"github.com/danangkonang/` + thisDir + `/migration/app/command"`
-		// "github.com/danangkonang/database-migration/app/helper"
-		// writeText += "\n"
-		writeText += `	//"github.com/danangkonang/` + thisDir + `/migration/app/helper"`
+		writeText += `	"os"`
+		writeText += "\n\n"
+		writeText += `	"github.com/danangkonang/` + thisDir + `/migration/app/helper"`
 		writeText += "\n"
 		writeText += `	"github.com/danangkonang/` + thisDir + `/migration/app/execusion"`
 		writeText += "\n"
@@ -31,61 +28,29 @@ func CreateMainFile(thisDir, dirMigration string) {
 
 		// function
 		writeText += "func main() {\n"
-		// writeText += "	arrCmd := os.Args[1:]\n"
-
-		// writeText += "	if len(arrCmd) == 0 {\n"
-		// writeText += "		helper.PrintHelper()\n"
-		// writeText += "		return\n"
-		// writeText += "	}\n"
-
+		writeText += "	arrCmd := os.Args[1:]\n"
+		writeText += "	if len(arrCmd) == 0 {\n"
+		writeText += "		helper.PrintHelper()\n"
+		writeText += "		return\n"
+		writeText += "	}\n"
 		writeText += "	runCmd()\n"
 		writeText += "}\n"
 		writeText += "\n"
 
 		writeText += "func runCmd() {\n"
-		// writeText += "	usrCmd := os.Args[1]\n"
-		// writeText += "	switch usrCmd {\n"
-
-		// writeText += `	case "-h":`
-		// writeText += "\n"
-		writeText += "	//helper.PrintHelper() \n"
-		writeText += "	execusion.RuningMigration()\n"
-		// writeText += `	case "--help":`
-		// writeText += "\n"
-		// writeText += "		helper.PrintHelper() \n"
-		// writeText += "		break\n"
-		// writeText += `	case "-v":`
-		// writeText += "\n"
-		// writeText += "			helper.PrintVersion() \n"
-		// writeText += "		break\n"
-		// writeText += `	case "--version":`
-		// writeText += "\n"
-		// writeText += "		helper.PrintVersion() \n"
-		// writeText += "		break\n"
-		// writeText += `	case "init":`
-		// writeText += "\n"
-		// writeText += " 		cmd.Initial()\n" //create .env config database
-		// writeText += "		break\n"
-		// writeText += `	case "danang":`
-		// writeText += "\n"
-		// writeText += "		cmd.TypeMigration()\n"
-		// writeText += "		break\n"
-		// writeText += `	case "create":`
-		// writeText += "\n"
-		// writeText += "		cmd.TypeMigration()\n" //go run main.go create migration [name file]
-		// writeText += "		break\n"
-		// writeText += `	case "run":`
-		// writeText += "\n"
-		// writeText += "		cmd.TipeRun()\n" //go run main.go run migration [name file]
-		// writeText += "		break\n"
-
-		// writeText += `	case "back":`
-		// writeText += "\n"
-		// writeText += "		cmd.TypeBack()\n"
-		// writeText += "		break\n"
-		// writeText += "	default:\n"
-		// writeText += "		helper.PrintHelper()\n"
-		// writeText += "	}\n"
+		writeText += "	usrCmd := os.Args[1]\n"
+		writeText += "	switch usrCmd {\n"
+		writeText += `	case "migration":`
+		writeText += "\n"
+		writeText += "		execusion.RuningMigration()\n"
+		writeText += "		break\n"
+		writeText += `	case "seeder":`
+		writeText += "\n"
+		writeText += "		execusion.RuningSeeder() \n"
+		writeText += "		break\n"
+		writeText += "	default:\n"
+		writeText += "		helper.PrintHelper()\n"
+		writeText += "	}\n"
 		writeText += "}\n"
 
 		file.WriteString(writeText)
