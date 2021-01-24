@@ -1,22 +1,35 @@
 # migrasion-go-cli
 
-## on developing
+## On developing 
 
 usage
 
-`$ go run dng.go -h`
+`$ go run gomig.go --help`
 
 or cli option
 
-`$ go build dng.go && ./dng -h`
+`$ go build gomig.go && ./gomig --help`
 
 global usage
 
-`$ sudo cp dng /usr/local/bin`
+`$ sudo cp gomig /usr/local/bin`
 
 test
-`$ dkg -v`
+
+`$ gomig --version`
 
 create migration cli
 
-`$ dng [option] migration [tablename]`
+`$ gomig [option] migration [tablename]`
+
+example
+
+`$ gomig create migration users`
+
+create seeder cli
+
+`$ gomig [option] seeder [tablename]`
+
+example
+
+`$ gomig create seeder users`
