@@ -1,8 +1,7 @@
 package templates
 
-var UsageTemplate = `{{.Name}} Version {{.Version}}
-
-Usage: {{.Name}} [command] [options]
+var UsageTemplate = `
+Usage: {{.Name}} [command] [flag]
 
 Options:
 	-v, --version                       output the version number

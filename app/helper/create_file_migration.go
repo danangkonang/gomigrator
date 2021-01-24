@@ -23,6 +23,8 @@ func CreateMigrationFile(name, migrationDir string) {
 		// file.WriteString("package database\n func " + tableName + "(){\n}")
 		writeMigration := "package migration\n\n"
 		writeMigration += "import (\n"
+		writeMigration += `	"fmt"`
+		writeMigration += "\n"
 		writeMigration += `	"log"`
 		writeMigration += "\n\n"
 		writeMigration += `	"github.com/danangkonang/` + name + `/migration/app/config"`
@@ -33,13 +35,14 @@ func CreateMigrationFile(name, migrationDir string) {
 		writeMigration += "	db := config.Connect()\n"
 		writeMigration += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
 		writeMigration += "	_, err := db.Exec(`CREATE TABLE " + tableName + "(\n"
-		writeMigration += "	id_product serial PRIMARY KEY,\n"
+		writeMigration += "	id serial PRIMARY KEY,\n"
 		writeMigration += "	created_at TIMESTAMP NOT NULL,\n"
 		writeMigration += "	updated_at TIMESTAMP NOT NULL\n"
 		writeMigration += "	)`)\n"
 		writeMigration += "	if err != nil {\n"
 		writeMigration += "		log.Fatal(err)\n"
 		writeMigration += "	}\n"
+		writeMigration += `fmt.Println("success create table ` + fileName + `")`
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)
 		defer file.Close()

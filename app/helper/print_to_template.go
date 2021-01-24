@@ -13,7 +13,7 @@ type Inventory struct {
 }
 
 func PrintHelper() {
-	data := Inventory{"Danang", "0.0.1"}
+	data := Inventory{"gomig", "0.0.1"}
 	tmpl, err := template.New("test").Parse(templates.UsageTemplate)
 	if err != nil {
 		panic(err)

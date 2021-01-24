@@ -67,6 +67,7 @@ func Initial() {
 	// helper.CreateTypeCmd(thisDir, dirCmd)
 
 	helper.CreatePrintTemplate(thisDir, dirHelper)
+	helper.CreateGetTime(thisDir, dirHelper)
 	// helper.CreateFileRootDirName(thisDir, dirHelper)
 
 	// helper.CreateRunningMigrationFile(thisDir, dirExecusion)

@@ -23,6 +23,8 @@ func CreateSeedFile(rootDir, seederDir string) {
 		// file.WriteString("package database\n func " + tableName + "(){\n}")
 		writeMigration := "package seed\n\n"
 		writeMigration += "import (\n"
+		writeMigration += `	"fmt"`
+		writeMigration += "\n"
 		writeMigration += `	"log"`
 		writeMigration += "\n\n"
 		writeMigration += `	"github.com/danangkonang/` + rootDir + `/migration/app/config"`
@@ -31,14 +33,16 @@ func CreateSeedFile(rootDir, seederDir string) {
 		writeMigration += "func " + strings.Title(tableName) + "(){\n"
 		writeMigration += "	db := config.Connect()\n"
 		// writeMigration += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
-		writeMigration += "	_, err := db.Exec(`INSERT INTO " + tableName + " (category,created_at,updated_at)VALUES\n"
+		writeMigration += "	_, err := db.Exec(`INSERT INTO " + tableName + " (created_at,updated_at)VALUES\n"
 		// writeMigration += "	id_product serial PRIMARY KEY,\n"
 		// writeMigration += "	created_at TIMESTAMP NOT NULL,\n"
-		// writeMigration += "	updated_at TIMESTAMP NOT NULL\n"
+		writeMigration += "	('2006-01-02 15:04:05','2006-01-02 15:04:05'),\n"
+		writeMigration += "	('2006-01-02 15:04:05','2006-01-02 15:04:05')\n"
 		writeMigration += "	`)\n"
 		writeMigration += "	if err != nil {\n"
 		writeMigration += "		log.Fatal(err)\n"
 		writeMigration += "	}\n"
+		writeMigration += `fmt.Println("success insert table ` + fileName + `")`
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)
 		defer file.Close()
