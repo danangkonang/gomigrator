@@ -9,6 +9,7 @@ import (
 
 func main() {
 	arrCmd := os.Args[1:]
+	// fmt.Println(arrCmd)
 	if len(arrCmd) == 0 {
 		helper.PrintHelper()
 		return
@@ -18,35 +19,41 @@ func main() {
 
 func runCmd() {
 	usrCmd := os.Args[1]
-
+	// fmt.Println(usrCmd)
 	switch usrCmd {
 	case "-h":
 		helper.PrintHelper()
-		break
+		// break
 	case "--help":
 		helper.PrintHelper()
-		break
+		// break
 	case "-v":
 		helper.PrintVersion()
-		break
+		// break
 	case "--version":
 		helper.PrintVersion()
-		break
+		// break
 	case "init":
 		command.Initial()
-		break
+		// break
 	case "danang":
 		command.TestingComand()
-		break
+		// break
 	case "create":
 		command.MigrationCreate() //go run main.go create migration [name file]
-		break
+	case "-c":
+		command.MigrationCreate() //go run main.go create migration [name file]
+		// break
 	case "run":
 		command.MigrationRun() //go run main.go run migration [name file]
-		break
+	case "-r":
+		command.MigrationRun() //go run main.go run migration [name file]
+		// break
 	case "back":
 		command.MigrationUndo()
-		break
+	case "-b":
+		command.MigrationUndo()
+		// break
 	default:
 		helper.PrintHelper()
 	}

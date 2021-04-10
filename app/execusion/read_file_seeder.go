@@ -6,11 +6,14 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"github.com/danangkonang/migrasion-go-cli/app/helper"
 )
 
 var pathSeed = "migration/app/execusion/runing_seeder.go"
 
-func ReadeSeederFileInFolder(rootDir string) {
+func ReadeSeederFileInFolder() {
+	rootDir := helper.MyRootDir()
 	deleteFileSeed()
 	createFileSeed()
 	writeFileSeed(rootDir)
@@ -59,7 +62,7 @@ func writeFileSeed(thisDir string) {
 
 	for _, file := range files {
 		filename := file.Name()
-		list := strings.Split(filename, "_")
+		list := strings.Split(filename, "_seed_")
 		name := list[0]
 		writeText += "\tseed." + strings.Title(name+"()\n")
 	}

@@ -6,14 +6,16 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"github.com/danangkonang/migrasion-go-cli/app/helper"
 )
 
 var path = "migration/app/execusion/runing_migration.go"
 
-func ReadeMiggrationFileInFolder(rootDir string) {
+func ReadeMiggrationFileInFolder() {
 	deleteFile()
 	createFile()
-	writeFile(rootDir)
+	writeFile(helper.MyRootDir())
 }
 
 func createFile() {
@@ -59,7 +61,7 @@ func writeFile(thisDir string) {
 
 	for _, file := range files {
 		filename := file.Name()
-		list := strings.Split(filename, "_")
+		list := strings.Split(filename, "_migration_")
 		name := list[0]
 		writeText += "\tmigration." + strings.Title(name+"()\n")
 	}

@@ -13,7 +13,7 @@ var dirDatabase = "migration/database"
 var dirTableMigration = "migration/database/migration"
 var dirSeed = "migration/database/seed"
 var dirApp = "migration/app"
-var dirCmd = "migration/app/command"
+
 var dirExecusion = "migration/app/execusion"
 var dirHelper = "migration/app/helper"
 var dirConfig = "migration/app/config"
@@ -27,7 +27,6 @@ var dirTemplate = "migration/app/templates"
 		app
 			helper
 			config
-			command
 			execusion
 			templates
 		database
@@ -47,8 +46,6 @@ func Initial() {
 	makeDirectory(dirSeed)
 
 	makeDirectory(dirApp)
-
-	makeDirectory(dirCmd)
 
 	makeDirectory(dirExecusion)
 
@@ -71,8 +68,8 @@ func Initial() {
 	// helper.CreateFileRootDirName(thisDir, dirHelper)
 	// helper.CreateRunningMigrationFile(thisDir, dirExecusion)
 
-	execusion.ReadeMiggrationFileInFolder(thisDir)
-	execusion.ReadeSeederFileInFolder(thisDir)
+	execusion.ReadeMiggrationFileInFolder()
+	execusion.ReadeSeederFileInFolder()
 }
 
 func makeDirectory(name string) {

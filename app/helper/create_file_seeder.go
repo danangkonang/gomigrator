@@ -6,10 +6,14 @@ import (
 	"strings"
 )
 
-func CreateSeedFile(rootDir, seederDir string) {
-	tableName := os.Args[3]
-	fileName := tableName + "_" + GetTime() + ".go"
-	path := seederDir + "/" + fileName
+type Seeder struct {
+	TableName string
+	Filename  string
+	DirSeeder string
+}
+
+func CreateSeedFile(seed *Seeder) {
+	path := seed.DirSeeder + "/" + seed.Filename + "_seed_" + GetTime() + ".go"
 	// deteksi apakah file sudah ada
 	_, err := os.Stat(path)
 
@@ -27,13 +31,13 @@ func CreateSeedFile(rootDir, seederDir string) {
 		writeMigration += "\n"
 		writeMigration += `	"log"`
 		writeMigration += "\n\n"
-		writeMigration += `	"github.com/danangkonang/` + rootDir + `/migration/app/config"`
+		writeMigration += `	"github.com/danangkonang/` + MyRootDir() + `/migration/app/config"`
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
-		writeMigration += "func " + strings.Title(tableName) + "(){\n"
+		writeMigration += "func " + strings.Title(seed.Filename) + "() {\n"
 		writeMigration += "	db := config.Connect()\n"
 		// writeMigration += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
-		writeMigration += "	_, err := db.Exec(`INSERT INTO " + tableName + " (created_at,updated_at)VALUES\n"
+		writeMigration += "	_, err := db.Exec(`INSERT INTO " + seed.TableName + " (created_at,updated_at)VALUES\n"
 		// writeMigration += "	id_product serial PRIMARY KEY,\n"
 		// writeMigration += "	created_at TIMESTAMP NOT NULL,\n"
 		writeMigration += "	('2006-01-02 15:04:05','2006-01-02 15:04:05'),\n"
@@ -42,10 +46,12 @@ func CreateSeedFile(rootDir, seederDir string) {
 		writeMigration += "	if err != nil {\n"
 		writeMigration += "		log.Fatal(err)\n"
 		writeMigration += "	}\n"
-		writeMigration += `fmt.Println("success insert table ` + fileName + `")`
+		writeMigration += ` fmt.Println("success insert table ` + seed.Filename + `")`
+		writeMigration += "	\n"
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)
 		defer file.Close()
 	}
 	fmt.Println("create", path)
+	fmt.Println(string(green), "success")
 }

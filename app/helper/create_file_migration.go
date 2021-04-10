@@ -6,16 +6,23 @@ import (
 	"strings"
 )
 
+type Migration struct {
+	TableMigration string
+	DirMigration   string
+}
+
 var (
-	red   = "\033[31m"
+	// red   = "\033[31m"
 	green = "\033[32m"
-	blue  = "\033[34m"
+	// blue  = "\033[34m"
 )
 
-func CreateMigrationFile(name, migrationDir string) {
-	tableName := os.Args[3]
-	fileName := tableName + "_" + GetTime() + ".go"
-	path := migrationDir + "/" + fileName
+func CreateMigrationFile(migration *Migration) {
+	// name, migrationDir string
+	// tableName := os.Args[3]
+	tableName := migration.TableMigration
+	fileName := tableName + "_migration_" + GetTime() + ".go"
+	path := migration.DirMigration + "/" + fileName
 	// deteksi apakah file sudah ada
 	_, err := os.Stat(path)
 
@@ -33,11 +40,11 @@ func CreateMigrationFile(name, migrationDir string) {
 		writeMigration += "\n"
 		writeMigration += `	"log"`
 		writeMigration += "\n\n"
-		writeMigration += `	"github.com/danangkonang/` + name + `/migration/app/config"`
+		writeMigration += `	"github.com/danangkonang/` + MyRootDir() + `/migration/app/config"`
 		// writeMigration += `	"github.com/danangkonang/migrasion-go-cli/config"`
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
-		writeMigration += "func " + strings.Title(tableName) + "(){\n"
+		writeMigration += "func " + strings.Title(tableName) + "() {\n"
 		writeMigration += "	db := config.Connect()\n"
 		writeMigration += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
 		writeMigration += "	_, err := db.Exec(`CREATE TABLE " + tableName + "(\n"
@@ -48,7 +55,8 @@ func CreateMigrationFile(name, migrationDir string) {
 		writeMigration += "	if err != nil {\n"
 		writeMigration += "		log.Fatal(err)\n"
 		writeMigration += "	}\n"
-		writeMigration += `fmt.Println("success create table ` + fileName + `")`
+		writeMigration += `  fmt.Println("success create table ` + fileName + `")`
+		writeMigration += "\n"
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)
 		defer file.Close()
