@@ -18,16 +18,16 @@ func MigrationCreate() {
 	switch subCommand {
 	case "migration":
 		CreateMigration()
-		break
+		// break
 	case "-m":
 		CreateMigration()
-		break
+		// break
 	case "seeder":
 		CreateSeeder()
-		break
+		// break
 	case "-s":
 		CreateSeeder()
-		break
+		// break
 	default:
 		helper.PrintHelper()
 	}
