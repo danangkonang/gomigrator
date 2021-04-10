@@ -9,7 +9,6 @@ import (
 
 func main() {
 	arrCmd := os.Args[1:]
-	// fmt.Println(arrCmd)
 	if len(arrCmd) == 0 {
 		helper.PrintHelper()
 		return
