@@ -1,20 +1,22 @@
 package templates
 
 var UsageTemplate = `
-Usage: {{.Name}} [command] [flag]
+Usage: {{.Name}} <command> [options]
 
 Options:
-	-v, --version                       output the version number
+	-v, --version                       print version cli
 	-h, --help                          output usage information
-	migration                     	    create migration file
-	seeder                              create seeder file
-	-t, table                           make table name for migration
-	-n, name                            make name file seeder or migration
+	-t, table                           create table name for migration
+	-n, name                            create file name seeder or migration
 
 Commands:
-	- create, -c
-	- run, -r
-	- back
+	init                                init project
+	down                                delete seeder
+	drop                                drop tables
+	-c, create                          create migration or seeder [table name]
+	-r, run                             running migration or seeder
+	migration                     	    create migration file
+	seeder                              create seeder file
 
 {{- /* end */ -}}
 {{- "" }}

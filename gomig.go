@@ -39,8 +39,8 @@ func runCmd() {
 		command.MigrationRun() //go run main.go run migration [name file]
 	case "-r":
 		command.MigrationRun() //go run main.go run migration [name file]
-	case "back":
-		command.MigrationUndo()
+	// case "back":
+	// 	command.MigrationUndo()
 	case "-b":
 		command.MigrationUndo()
 	case "down":
