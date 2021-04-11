@@ -6,12 +6,14 @@ Usage: {{.Name}} [command] [flag]
 Options:
 	-v, --version                       output the version number
 	-h, --help                          output usage information
-	-m, --migration                     create migration file
-	-s, --seeder                        create seeder file
+	migration                     	    create migration file
+	seeder                              create seeder file
+	-t, table                           make table name for migration
+	-n, name                            make name file seeder or migration
 
 Commands:
-	- create
-	- run
+	- create, -c
+	- run, -r
 	- back
 
 {{- /* end */ -}}

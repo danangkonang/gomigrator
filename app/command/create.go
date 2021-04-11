@@ -57,6 +57,8 @@ func CreateMigration() {
 		migration.TableMigration = os.Args[4]
 		helper.CreateMigrationFile(&migration)
 		execusion.ReadeMiggrationFileInFolder()
+		helper.ReadeDownFileInFolder()
+		helper.ReadeDropFileInFolder()
 	} else {
 		fmt.Println(string("\033[31m"), "argumen "+os.Args[3]+" tidak dikenal")
 		os.Exit(0)
@@ -117,4 +119,6 @@ func CreateSeeder() {
 
 	helper.CreateSeedFile(&seed)
 	execusion.ReadeSeederFileInFolder()
+	helper.ReadeDownFileInFolder()
+	helper.ReadeDropFileInFolder()
 }

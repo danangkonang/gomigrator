@@ -70,6 +70,9 @@ func Initial() {
 
 	execusion.ReadeMiggrationFileInFolder()
 	execusion.ReadeSeederFileInFolder()
+
+	helper.ReadeDownFileInFolder()
+	helper.ReadeDropFileInFolder()
 }
 
 func makeDirectory(name string) {

@@ -9,7 +9,6 @@ import (
 
 func main() {
 	arrCmd := os.Args[1:]
-	// fmt.Println(arrCmd)
 	if len(arrCmd) == 0 {
 		helper.PrintHelper()
 		return
@@ -19,41 +18,51 @@ func main() {
 
 func runCmd() {
 	usrCmd := os.Args[1]
-	// fmt.Println(usrCmd)
 	switch usrCmd {
 	case "-h":
 		helper.PrintHelper()
-		// break
 	case "--help":
 		helper.PrintHelper()
-		// break
 	case "-v":
 		helper.PrintVersion()
-		// break
 	case "--version":
 		helper.PrintVersion()
-		// break
 	case "init":
 		command.Initial()
-		// break
 	case "danang":
 		command.TestingComand()
-		// break
 	case "create":
 		command.MigrationCreate() //go run main.go create migration [name file]
 	case "-c":
 		command.MigrationCreate() //go run main.go create migration [name file]
-		// break
 	case "run":
 		command.MigrationRun() //go run main.go run migration [name file]
 	case "-r":
 		command.MigrationRun() //go run main.go run migration [name file]
-		// break
 	case "back":
 		command.MigrationUndo()
 	case "-b":
 		command.MigrationUndo()
-		// break
+	case "down":
+		command.Down("down") //delete rows
+	case "drop":
+		if len(os.Args[2:]) > 0 {
+			// arguments := []string{}
+
+			// for _, argumen := range os.Args[2:] {
+			// 	arguments = append(arguments, argumen)
+			// }
+			// for i := 0; i < len(os.Args[2:]); i++ {
+			// 	arguments = append(arguments, arguments[i+2])
+			// }
+
+			// fmt.Println(os.Args[2:])
+			// arguments := strings.Join(os.Args[2:], " ")
+			// fmt.Println(arguments)
+			// command.Drop("drop table") //delete tables
+		} else {
+			command.Drop("drop") //delete tables
+		}
 	default:
 		helper.PrintHelper()
 	}
