@@ -4,32 +4,56 @@
 
 usage
 
-`$ go run gomig.go --help`
+```bash
+  $ go run gomig.go --help
+```
 
 or cli option
 
-`$ go build gomig.go && ./gomig --help`
+```bash
+  $ go build gomig.go && ./gomig --help
+```
 
 global usage
 
-`$ sudo cp gomig /usr/local/bin`
+```bash
+  $ sudo cp gomig /usr/local/bin
+```
 
-test
+## example
+create migration
 
-`$ gomig --version`
-
-create migration cli
-
-`$ gomig [option] migration [tablename]`
-
-example
-
-`$ gomig create migration users`
+```bash
+  $ gomig create migration -t [table name]
+```
 
 create seeder cli
 
-`$ gomig [option] seeder [tablename]`
+```bash
+  $ gomig create seeder -n [seeder name] -t [table name]
+```
 
-example
 
-`$ gomig create seeder users`
+runing migration
+
+```bash
+  $ gomig run migration
+```
+
+runing seeder
+
+```bash
+  $ gomig run seeder
+```
+
+undo migration
+
+```bash
+  $ gomig drop
+````
+
+undo seeder
+
+```bash
+  $ gomig down
+````
