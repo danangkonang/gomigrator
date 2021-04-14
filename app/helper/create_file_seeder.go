@@ -46,7 +46,7 @@ func CreateSeedFile(seed *Seeder) {
 		writeMigration += "	if err != nil {\n"
 		writeMigration += "		log.Fatal(err)\n"
 		writeMigration += "	}\n"
-		writeMigration += ` fmt.Println("success insert table ` + seed.Filename + `")`
+		writeMigration += ` 	fmt.Println("success insert table ` + seed.Filename + `")`
 		writeMigration += "	\n"
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)

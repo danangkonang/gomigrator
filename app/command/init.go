@@ -3,6 +3,7 @@ package command
 import (
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/danangkonang/migrasion-go-cli/app/execusion"
 	"github.com/danangkonang/migrasion-go-cli/app/helper"
@@ -78,6 +79,12 @@ func Initial() {
 func makeDirectory(name string) {
 	if _, err := os.Stat(name); os.IsNotExist(err) {
 		os.Mkdir(name, 0700)
+		pq := exec.Command("go", "get", "github.com/lib/pq")
+		mysql := exec.Command("go", "get", "github.com/go-sql-driver/mysql")
+		godotenv := exec.Command("go", "get", "github.com/joho/godotenv")
+		pq.Run()
+		mysql.Run()
+		godotenv.Run()
 		fmt.Println("create " + name)
 	}
 }
