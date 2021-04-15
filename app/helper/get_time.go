@@ -13,7 +13,6 @@ func GetTime() string {
 }
 
 func RootDir() string {
-	// dir, _ := os.Getwd()
 	dir, _ := os.Getwd()
 	s := strings.Split(dir, "/")
 	mydir := len(s) - 1

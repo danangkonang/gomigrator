@@ -43,7 +43,6 @@ func CreateMainFile(thisDir, dirMigration string) {
 		writeText += `	case "migration":`
 		writeText += "\n"
 		writeText += "		execusion.RuningMigration()\n"
-		// writeText += "		break\n"
 		writeText += `	case "seeder":`
 		writeText += "\n"
 		writeText += "		execusion.RuningSeeder() \n"
@@ -53,7 +52,6 @@ func CreateMainFile(thisDir, dirMigration string) {
 		writeText += `	case "drop":`
 		writeText += "\n"
 		writeText += "		execusion.DropTables() \n"
-		// writeText += "		break\n"
 		writeText += "	default:\n"
 		writeText += "		helper.PrintHelper()\n"
 		writeText += "	}\n"

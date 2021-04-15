@@ -17,16 +17,12 @@ func MigrationRun() {
 	switch subCommand {
 	case "migration":
 		runExecusin("migration")
-		// break
 	case "-m":
 		runExecusin("migration")
-		// break
 	case "seeder":
 		runExecusin("seeder")
-		// break
 	case "-s":
 		runExecusin("seeder")
-		// break
 	default:
 		helper.ErrorCommand(os.Args[2])
 	}

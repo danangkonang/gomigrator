@@ -30,7 +30,6 @@ func writeFiles() {
 	writeText := "package execusion\n\n"
 	if len(files) != 0 {
 		writeText += "import (\n"
-		// writeText += `	"github.com/danangkonang/` + MyRootDir() + `/migration/database/migration"`
 		writeText += `	"fmt"`
 		writeText += "\n"
 		writeText += `	"io/ioutil"`
@@ -59,7 +58,7 @@ func writeFiles() {
 		writeText += `		list := strings.Split(filename, "_migration_")`
 		writeText += "\n"
 		writeText += "		name := list[0]\n"
-		writeText += `		query := "DROP TABLE " + name + ";"`
+		writeText += `		query := "DROP TABLE IF EXISTS " + name + ";"`
 		writeText += "\n"
 		writeText += "		_, err := db.Exec(query)\n"
 		writeText += "		if err != nil {\n"

@@ -35,11 +35,6 @@ func CreatePrintTemplate(rootDir, targetDir string) {
 		writeText += "}"
 		writeText += "\n\n"
 
-		// type Inventory struct {
-		// 	Name    string
-		// 	Version string
-		// }
-
 		// function
 		writeText += "func PrintHelper() {\n"
 		writeText += `	data := Inventory{"Danang", "0.0.1"}`

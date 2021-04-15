@@ -19,7 +19,6 @@ func CreateGetTime(rootDir, targetDir string) {
 		writeText := "package helper\n\n"
 		writeText += `import "time"`
 		writeText += "\n\n"
-
 		// function
 		writeText += "func GetTime() string {\n"
 		writeText += `	t := time.Now()`

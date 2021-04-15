@@ -13,9 +13,7 @@ import (
 
 func MigrationCreate() {
 	fullCommand := os.Args[1:]
-	/*
-		jika command hanya create / -c print helper
-	*/
+	// jika command hanya create / -c print helper
 	if len(fullCommand) == 1 {
 		helper.PrintHelper()
 		return

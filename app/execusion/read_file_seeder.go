@@ -31,7 +31,6 @@ func createFileSeed() {
 		}
 		defer file.Close()
 	}
-
 	// fmt.Println("==> done creating file", pathSeed)
 }
 
@@ -66,6 +65,7 @@ func writeFileSeed(thisDir string) {
 		name := list[0]
 		writeText += "\tseed." + strings.Title(name+"()\n")
 	}
+
 	writeText += "}\n"
 	// write some text line-by-line to file
 	_, err = file.WriteString(writeText)
@@ -77,7 +77,6 @@ func writeFileSeed(thisDir string) {
 	if isErrorSeed(err) {
 		return
 	}
-
 	// fmt.Println("==> done writing to file")
 }
 
@@ -89,7 +88,6 @@ func deleteFileSeed() {
 			return
 		}
 	}
-
 	// fmt.Println("==> done deleting file")
 }
 

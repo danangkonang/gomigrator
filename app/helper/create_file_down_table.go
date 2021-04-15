@@ -30,7 +30,6 @@ func writeFile() {
 	writeText := "package execusion\n\n"
 	if len(files) != 0 {
 		writeText += "import (\n"
-		// writeText += `	"github.com/danangkonang/` + MyRootDir() + `/migration/database/migration"`
 		writeText += `	"fmt"`
 		writeText += "\n"
 		writeText += `	"io/ioutil"`

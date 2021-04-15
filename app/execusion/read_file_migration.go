@@ -89,10 +89,6 @@ func deleteFile() {
 			return
 		}
 	}
-	// fmt.Println("ini yaaa", err)
-	// if os.IsNotExist(err) {
-	// }
-
 	// fmt.Println("==> done deleting file")
 }
 

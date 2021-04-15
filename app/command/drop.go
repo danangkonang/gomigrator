@@ -6,7 +6,6 @@ import (
 )
 
 func Drop(typeFlag string) {
-	// fmt.Println(typeFlag)
 	cmd := exec.Command("go", "run", "migration/migration.go", typeFlag)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

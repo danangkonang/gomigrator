@@ -82,5 +82,4 @@ func CreateConfigFile(dirConfig string) {
 		file.WriteString(writeText)
 		defer file.Close()
 	}
-	// makeDirDatabase()
 }

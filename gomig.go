@@ -39,27 +39,13 @@ func runCmd() {
 		command.MigrationRun() //go run main.go run migration [name file]
 	case "-r":
 		command.MigrationRun() //go run main.go run migration [name file]
-	// case "back":
-	// 	command.MigrationUndo()
 	case "-b":
 		command.MigrationUndo()
 	case "down":
 		command.Down("down") //delete rows
 	case "drop":
 		if len(os.Args[2:]) > 0 {
-			// arguments := []string{}
-
-			// for _, argumen := range os.Args[2:] {
-			// 	arguments = append(arguments, argumen)
-			// }
-			// for i := 0; i < len(os.Args[2:]); i++ {
-			// 	arguments = append(arguments, arguments[i+2])
-			// }
-
 			// fmt.Println(os.Args[2:])
-			// arguments := strings.Join(os.Args[2:], " ")
-			// fmt.Println(arguments)
-			// command.Drop("drop table") //delete tables
 		} else {
 			command.Drop("drop") //delete tables
 		}

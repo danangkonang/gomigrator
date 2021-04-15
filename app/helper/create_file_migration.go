@@ -18,8 +18,6 @@ var (
 )
 
 func CreateMigrationFile(migration *Migration) {
-	// name, migrationDir string
-	// tableName := os.Args[3]
 	tableName := migration.TableMigration
 	fileName := tableName + "_migration_" + GetTime() + ".go"
 	path := migration.DirMigration + "/" + fileName
@@ -33,27 +31,27 @@ func CreateMigrationFile(migration *Migration) {
 			fmt.Println(err.Error())
 		}
 		// isi file
-		// file.WriteString("package database\n func " + tableName + "(){\n}")
 		writeMigration := "package migration\n\n"
 		writeMigration += "import (\n"
 		writeMigration += `	"fmt"`
 		writeMigration += "\n"
-		writeMigration += `	"log"`
+		writeMigration += `	"os"`
 		writeMigration += "\n\n"
 		writeMigration += `	"github.com/danangkonang/` + MyRootDir() + `/migration/app/config"`
-		// writeMigration += `	"github.com/danangkonang/migrasion-go-cli/config"`
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
 		writeMigration += "func " + strings.Title(tableName) + "() {\n"
 		writeMigration += "	db := config.Connect()\n"
-		writeMigration += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
-		writeMigration += "	_, err := db.Exec(`CREATE TABLE " + tableName + "(\n"
-		writeMigration += "	id serial PRIMARY KEY,\n"
-		writeMigration += "	created_at TIMESTAMP NOT NULL,\n"
-		writeMigration += "	updated_at TIMESTAMP NOT NULL\n"
-		writeMigration += "	)`)\n"
+		writeMigration += "	_, err := db.Exec(`\n"
+		writeMigration += "		CREATE TABLE " + tableName + "(\n"
+		writeMigration += "			id serial PRIMARY KEY,\n"
+		writeMigration += "			created_at TIMESTAMP NOT NULL,\n"
+		writeMigration += "			updated_at TIMESTAMP NOT NULL\n"
+		writeMigration += "		);\n"
+		writeMigration += "	`)\n"
 		writeMigration += "	if err != nil {\n"
-		writeMigration += "		log.Fatal(err)\n"
+		writeMigration += "		fmt.Println(err.Error())\n"
+		writeMigration += "		os.Exit(0)\n"
 		writeMigration += "	}\n"
 		writeMigration += `  fmt.Println("success create table ` + fileName + `")`
 		writeMigration += "\n"

@@ -26,7 +26,5 @@ DB_USER=postgres
 `)
 		defer file.Close()
 	}
-	// fmt.Println("file berhasil dibuat", path)
-	// createConfigFile()
 
 }

@@ -24,27 +24,25 @@ func CreateSeedFile(seed *Seeder) {
 			fmt.Println(err.Error())
 		}
 		// isi file
-		// file.WriteString("package database\n func " + tableName + "(){\n}")
 		writeMigration := "package seed\n\n"
 		writeMigration += "import (\n"
 		writeMigration += `	"fmt"`
 		writeMigration += "\n"
-		writeMigration += `	"log"`
+		writeMigration += `	"os"`
 		writeMigration += "\n\n"
 		writeMigration += `	"github.com/danangkonang/` + MyRootDir() + `/migration/app/config"`
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
 		writeMigration += "func " + strings.Title(seed.Filename) + "() {\n"
 		writeMigration += "	db := config.Connect()\n"
-		// writeMigration += "	db.Exec(`DROP TABLE " + tableName + "`)\n"
-		writeMigration += "	_, err := db.Exec(`INSERT INTO " + seed.TableName + " (created_at,updated_at)VALUES\n"
-		// writeMigration += "	id_product serial PRIMARY KEY,\n"
-		// writeMigration += "	created_at TIMESTAMP NOT NULL,\n"
-		writeMigration += "	('2006-01-02 15:04:05','2006-01-02 15:04:05'),\n"
-		writeMigration += "	('2006-01-02 15:04:05','2006-01-02 15:04:05')\n"
+		writeMigration += "	_, err := db.Exec(`\n"
+		writeMigration += "		INSERT INTO " + seed.TableName + " (created_at, updated_at) VALUES\n"
+		writeMigration += "		('2006-01-02 15:04:05','2006-01-02 15:04:05'),\n"
+		writeMigration += "		('2006-01-02 15:04:05','2006-01-02 15:04:05')\n"
 		writeMigration += "	`)\n"
 		writeMigration += "	if err != nil {\n"
-		writeMigration += "		log.Fatal(err)\n"
+		writeMigration += "		fmt.Println(err.Error())\n"
+		writeMigration += "		os.Exit(0)\n"
 		writeMigration += "	}\n"
 		writeMigration += ` 	fmt.Println("success insert table ` + seed.Filename + `")`
 		writeMigration += "	\n"
