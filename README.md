@@ -50,11 +50,11 @@
   $ gomig drop
 
   # or spesifik table 
-  $ gomig drop <table1 table2 ..>
+  $ gomig drop [table1 table2 ..]
 
   # delete all data seeder
   $ gomig down
 
   # or spesifik table 
-  $ gomig down <table1 table2 ..>
+  $ gomig down [table1 table2 ..]
 ````
