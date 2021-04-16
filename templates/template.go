@@ -1,6 +1,6 @@
 package templates
 
-var UsageTemplate = `
+var HelperTemplate = `
 Usage: {{.Name}} <command> [options]
 
 Options:
@@ -21,7 +21,7 @@ Commands:
 {{- /* end */ -}}
 {{- "" }}
 `
-var VersionTemplate = `{{.Name}} Version {{.Version}}
+var VersionTemplate = `{{.Name}} version {{.Version}}
 {{- /* end */ -}}
 {{- "" }}
 `

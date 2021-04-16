@@ -42,13 +42,9 @@ func runCmd() {
 	case "-b":
 		command.MigrationUndo()
 	case "down":
-		command.Down("down") //delete rows
+		command.Down("down", os.Args[2:]) //delete tables
 	case "drop":
-		if len(os.Args[2:]) > 0 {
-			// fmt.Println(os.Args[2:])
-		} else {
-			command.Drop("drop") //delete tables
-		}
+		command.Drop("drop", os.Args[2:]) //delete tables
 	default:
 		helper.PrintHelper()
 	}

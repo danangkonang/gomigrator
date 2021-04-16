@@ -17,8 +17,8 @@ type ERROR struct {
 }
 
 func PrintHelper() {
-	data := Inventory{"gomig", "0.0.1"}
-	tmpl, err := template.New("test").Parse(templates.UsageTemplate)
+	data := Inventory{"gomig", "0.0.2"}
+	tmpl, err := template.New("helper").Parse(templates.HelperTemplate)
 	if err != nil {
 		panic(err)
 	}
@@ -29,8 +29,8 @@ func PrintHelper() {
 }
 
 func PrintVersion() {
-	data := Inventory{"Danang", "0.0.1"}
-	tmpl, err := template.New("test").Parse(templates.VersionTemplate)
+	data := Inventory{"gomig", "0.0.2"}
+	tmpl, err := template.New("version").Parse(templates.VersionTemplate)
 	if err != nil {
 		panic(err)
 	}

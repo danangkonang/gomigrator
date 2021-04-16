@@ -1,59 +1,60 @@
-# migrasion-go-cli
+# migration Go-Lang CLI
 
 ## On developing 
 
-usage
+`gomig` is simple tools database migration for developer
+ 
+- **usage**
 
-```bash
+```go
   $ go run gomig.go --help
 ```
 
-or cli option
+- or cli option
 
-```bash
+```go
   $ go build gomig.go && ./gomig --help
 ```
 
-global usage
+- yau can use global usage
 
 ```bash
   $ sudo cp gomig /usr/local/bin
 ```
 
 ## example
-create migration
+- ***migration***
 
 ```bash
+  # create migration
   $ gomig create migration -t [table name]
-```
 
-create seeder cli
-
-```bash
-  $ gomig create seeder -n [seeder name] -t [table name]
-```
-
-
-runing migration
-
-```bash
+  # running all migration
   $ gomig run migration
 ```
 
-runing seeder
+- ***seeder***
 
 ```bash
+  # create seeder file
+  $ gomig create seeder -n [seeder name] -t [table name]
+
+  # runing seeder
   $ gomig run seeder
 ```
 
-undo migration
+- **undo**
 
 ```bash
+  # delete all tables 
   $ gomig drop
-````
 
-undo seeder
+  # or spesifik table 
+  $ gomig drop <table1 table2 ..>
 
-```bash
+  # delete all data seeder
   $ gomig down
+
+  # or spesifik table 
+  $ gomig down <table1 table2 ..>
 ````

@@ -19,6 +19,8 @@ func CreateMainFile(thisDir, dirMigration string) {
 		writeText := "package main\n\n"
 		writeText += "import (\n"
 		writeText += `	"os"`
+		writeText += "\n"
+		writeText += `	"strings"`
 		writeText += "\n\n"
 		writeText += `	"github.com/danangkonang/` + thisDir + `/migration/app/helper"`
 		writeText += "\n"
@@ -48,10 +50,29 @@ func CreateMainFile(thisDir, dirMigration string) {
 		writeText += "		execusion.RuningSeeder() \n"
 		writeText += `	case "down":`
 		writeText += "\n"
-		writeText += "		execusion.DownTables() \n"
+		// writeText += "		execusion.DownTables() \n"
+		writeText += "		var t execusion.Tables \n"
+		writeText += "		if len(os.Args[2:]) > 0 { \n"
+		writeText += `		t.NameTable = strings.Split(os.Args[2], ",")`
+		writeText += "		 \n"
+		writeText += "			execusion.DownTables(&t) \n"
+		writeText += "		} else { \n"
+		writeText += "			execusion.DownTables(&t) \n"
+		writeText += "		} \n"
+
 		writeText += `	case "drop":`
 		writeText += "\n"
-		writeText += "		execusion.DropTables() \n"
+		// writeText += "		execusion.DropTables() \n"
+
+		writeText += "		var t execusion.Tables \n"
+		writeText += "		if len(os.Args[2:]) > 0 { \n"
+		writeText += `		t.NameTable = strings.Split(os.Args[2], ",")`
+		writeText += "		 \n"
+		writeText += "			execusion.DropTables(&t) \n"
+		writeText += "		} else { \n"
+		writeText += "			execusion.DropTables(&t) \n"
+		writeText += "		} \n"
+
 		writeText += "	default:\n"
 		writeText += "		helper.PrintHelper()\n"
 		writeText += "	}\n"

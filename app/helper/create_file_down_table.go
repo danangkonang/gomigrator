@@ -44,7 +44,7 @@ func writeFile() {
 	}
 
 	// function
-	writeText += "func DownTables() {\n"
+	writeText += "func DownTables(tb *Tables) {\n"
 	if len(files) != 0 {
 		writeText += `	files, err := ioutil.ReadDir("migration/database/migration")`
 		writeText += "\n"
@@ -53,24 +53,42 @@ func writeFile() {
 		writeText += "		os.Exit(0)\n"
 		writeText += "	}\n"
 		writeText += "	db := config.Connect()\n"
-		writeText += "	for _, file := range files {\n"
-		writeText += "		filename := file.Name()\n"
-		writeText += `		list := strings.Split(filename, "_migration_")`
+
+		writeText += "	if len(tb.NameTable) > 0 {\n"
+
+		writeText += "		for _, ntb := range tb.NameTable {\n"
+		writeText += `			query := "TRUNCATE TABLE IF EXISTS " + ntb + ";"`
 		writeText += "\n"
-		writeText += "		name := list[0]\n"
-		writeText += `		query := "TRUNCATE " + name + ";"`
-		writeText += "\n"
-		writeText += "		_, err := db.Exec(query)\n"
-		writeText += "		if err != nil {\n"
+		writeText += "			_, err := db.Exec(query)\n"
+		writeText += "			if err != nil {\n"
 		writeText += "			fmt.Println(err)\n"
 		writeText += "			os.Exit(0)\n"
-		writeText += "		}\n"
-		writeText += `		fmt.Println("success delete row")`
+		writeText += "			}\n"
+		writeText += `			fmt.Println("success delete row")`
 		writeText += "\n"
-		writeText += "	}\n"
+		writeText += "		}\n"
+
+		writeText += "	} else {\n"
+
+		writeText += "		for _, file := range files {\n"
+		writeText += "			filename := file.Name()\n"
+		writeText += `			list := strings.Split(filename, "_migration_")`
+		writeText += "\n"
+		writeText += "			name := list[0]\n"
+		writeText += `			query := "TRUNCATE " + name + ";"`
+		writeText += "\n"
+		writeText += "			_, err := db.Exec(query)\n"
+		writeText += "			if err != nil {\n"
+		writeText += "				fmt.Println(err)\n"
+		writeText += "				os.Exit(0)\n"
+		writeText += "			}\n"
+		writeText += `			fmt.Println("success delete row")`
+		writeText += "\n"
+		writeText += "		}\n"
+		writeText += "	}\n" // end else
 	}
 	writeText += "}\n"
-	writeText += "\n"
+	// writeText += "\n"
 
 	_, err = file.WriteString(writeText)
 	if isError(err) {
