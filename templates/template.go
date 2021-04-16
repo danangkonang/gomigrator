@@ -8,8 +8,8 @@ Options:
     -h, --help                          output usage information
     -t, table                           create table name for migration
     -n, name                            create file name seeder or migration
-    -m, migration                       create migration file
-    -s, seeder                          create seeder file
+    migration                           create migration file
+    seeder                              create seeder file
 
 Commands:
     init                                init project
@@ -28,6 +28,17 @@ var VersionTemplate = `{{.Name}} version {{.Version}}
 
 var ErrorTemplate = `{{.Message}}: unknown command
 Run 'gomig -help' for usage.
+{{- /* end */ -}}
+{{- "" }}
+`
+var HelperCreateTemplate = `
+Usage: {{.Name}} create [options]
+
+Options:
+    -t, table                           create table name for migration
+    -n, name                            create file name seeder or migration
+    migration                           create migration file
+    seeder                              create seeder file
 {{- /* end */ -}}
 {{- "" }}
 `

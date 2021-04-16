@@ -12,21 +12,14 @@ import (
 )
 
 func MigrationCreate() {
+	//  CREATE
 	fullCommand := os.Args[1:]
-	// jika command hanya create / -c print helper
 	if len(fullCommand) == 1 {
 		helper.PrintHelper()
 		return
 	}
 	subCommand := os.Args[2]
 	switch subCommand {
-	case "-m":
-		_, err := os.Stat("migration/database/migration")
-		if err != nil {
-			fmt.Println("no initial direktori")
-			os.Exit(0)
-		}
-		CreateMigration()
 	case "migration":
 		_, err := os.Stat("migration/database/migration")
 		if err != nil {
@@ -34,13 +27,6 @@ func MigrationCreate() {
 			os.Exit(0)
 		}
 		CreateMigration()
-	case "-s":
-		_, err := os.Stat("migration/database/seed")
-		if err != nil {
-			fmt.Println("no initial direktori")
-			os.Exit(0)
-		}
-		CreateSeeder()
 	case "seeder":
 		_, err := os.Stat("migration/database/seed")
 		if err != nil {
@@ -48,6 +34,10 @@ func MigrationCreate() {
 			os.Exit(0)
 		}
 		CreateSeeder()
+	case "-h":
+		helper.PrintHelperCreate()
+	case "--help":
+		helper.PrintHelperCreate()
 	default:
 		helper.PrintHelper()
 	}

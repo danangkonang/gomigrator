@@ -28,6 +28,18 @@ func PrintHelper() {
 	}
 }
 
+func PrintHelperCreate() {
+	data := Inventory{"gomig", "0.0.2"}
+	tmpl, err := template.New("helper").Parse(templates.HelperCreateTemplate)
+	if err != nil {
+		panic(err)
+	}
+	err = tmpl.Execute(os.Stdout, data)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func PrintVersion() {
 	data := Inventory{"gomig", "0.0.2"}
 	tmpl, err := template.New("version").Parse(templates.VersionTemplate)

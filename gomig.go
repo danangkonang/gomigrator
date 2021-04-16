@@ -29,8 +29,8 @@ func runCmd() {
 		helper.PrintVersion()
 	case "init":
 		command.Initial()
-	case "danang":
-		command.TestingComand()
+	// case "danang":
+	// 	command.TestingComand()
 	case "create":
 		command.MigrationCreate() //go run main.go create migration [name file]
 	case "-c":
@@ -39,12 +39,14 @@ func runCmd() {
 		command.MigrationRun() //go run main.go run migration [name file]
 	case "-r":
 		command.MigrationRun() //go run main.go run migration [name file]
-	case "-b":
-		command.MigrationUndo()
+	// case "-u":
+	// 	command.MigrationUndo()
 	case "down":
-		command.Down("down", os.Args[2:]) //delete tables
+		command.DownRun()
+		// command.Down("down", os.Args[2:]) //delete tables
 	case "drop":
-		command.Drop("drop", os.Args[2:]) //delete tables
+		command.DropRun()
+		// command.Drop("drop", os.Args[2:]) //delete tables
 	default:
 		helper.PrintHelper()
 	}
