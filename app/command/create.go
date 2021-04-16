@@ -20,6 +20,13 @@ func MigrationCreate() {
 	}
 	subCommand := os.Args[2]
 	switch subCommand {
+	case "-m":
+		_, err := os.Stat("migration/database/migration")
+		if err != nil {
+			fmt.Println("no initial direktori")
+			os.Exit(0)
+		}
+		CreateMigration()
 	case "migration":
 		_, err := os.Stat("migration/database/migration")
 		if err != nil {
@@ -27,6 +34,13 @@ func MigrationCreate() {
 			os.Exit(0)
 		}
 		CreateMigration()
+	case "-s":
+		_, err := os.Stat("migration/database/seed")
+		if err != nil {
+			fmt.Println("no initial direktori")
+			os.Exit(0)
+		}
+		CreateSeeder()
 	case "seeder":
 		_, err := os.Stat("migration/database/seed")
 		if err != nil {
