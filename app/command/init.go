@@ -56,23 +56,100 @@ func Initial() {
 	makeDirectory(dirTemplate)
 
 	thisDir := helper.MyRootDir()
+
+	/*
+
+	 ./.env
+
+	*/
 	helper.CreateEnvFile()
+
+	/*
+
+		./migration/migration.go
+
+	*/
 	helper.CreateMainFile(thisDir, dirMigration)
+
+	/*
+
+		./migration/app/config/config.go
+
+	*/
 	helper.CreateConfigFile(dirConfig)
 
+	/*
+
+		./migration/app/templates/template.go
+
+	*/
 	helper.CreateTemplateFile(thisDir, dirTemplate)
 
 	// helper.CreateTypeCmd(thisDir, dirCmd)
 
+	/*
+
+		./migration/app/execution/type_execution.go
+
+	*/
+	helper.CreateTypeFileExecution()
+
+	/*
+
+		./migration/app/migration/type_migration.go
+
+	*/
+	helper.CreateTypeFileMigration()
+
+	/*
+
+		./migration/app/seed/type_seed.go
+
+	*/
+	helper.CreateTypeFileSeeder()
+
+	/*
+
+		./migration/app/helper/create_template.go
+
+	*/
 	helper.CreatePrintTemplate(thisDir, dirHelper)
+
+	/*
+
+		./migration/app/helper/get_time.go
+
+	*/
 	helper.CreateGetTime(thisDir, dirHelper)
 	// helper.CreateFileRootDirName(thisDir, dirHelper)
 	// helper.CreateRunningMigrationFile(thisDir, dirExecusion)
 
+	/*
+
+		./migration/app/execution/running_migration.go
+
+	*/
 	execusion.ReadeMiggrationFileInFolder()
+
+	/*
+
+		./migration/app/execution/running_seeder.go
+
+	*/
 	execusion.ReadeSeederFileInFolder()
 
+	/*
+
+		./migration/app/execution/down_table.go
+
+	*/
 	helper.ReadeDownFileInFolder()
+
+	/*
+
+		./migration/app/execution/drop_table.go
+
+	*/
 	helper.ReadeDropFileInFolder()
 }
 

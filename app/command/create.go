@@ -3,7 +3,6 @@ package command
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"strings"
 
@@ -106,7 +105,8 @@ func CreateSeeder() {
 
 	files, err := ioutil.ReadDir("migration/database/seed")
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err.Error())
+		os.Exit(0)
 	}
 
 	for _, file := range files {

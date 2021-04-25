@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 type Seeder struct {
@@ -13,9 +14,11 @@ type Seeder struct {
 }
 
 func CreateSeedFile(seed *Seeder) {
-	path := seed.DirSeeder + "/" + seed.Filename + "_seed_" + GetTime() + ".go"
+	path := seed.DirSeeder + "/" + seed.Filename + "_seeder_" + GetTime() + ".go"
 	// deteksi apakah file sudah ada
 	_, err := os.Stat(path)
+
+	now := time.Now().Format("2006-01-02 15:04:05")
 
 	// buat file baru jika belum ada
 	if os.IsNotExist(err) {
@@ -33,12 +36,12 @@ func CreateSeedFile(seed *Seeder) {
 		writeMigration += `	"github.com/danangkonang/` + MyRootDir() + `/migration/app/config"`
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
-		writeMigration += "func " + strings.Title(seed.Filename) + "() {\n"
+		writeMigration += "func (s MySeed) " + strings.Title(seed.Filename) + "() {\n"
 		writeMigration += "	db := config.Connect()\n"
 		writeMigration += "	_, err := db.Exec(`\n"
-		writeMigration += "		INSERT INTO " + seed.TableName + " (created_at, updated_at) VALUES\n"
-		writeMigration += "		('2006-01-02 15:04:05','2006-01-02 15:04:05'),\n"
-		writeMigration += "		('2006-01-02 15:04:05','2006-01-02 15:04:05')\n"
+		writeMigration += "		INSERT INTO " + seed.TableName + " (name, created_at, updated_at) VALUES\n"
+		writeMigration += "		('lorem dolor', '" + now + "','" + now + "'),\n"
+		writeMigration += "		('lorem dolor', '" + now + "','" + now + "')\n"
 		writeMigration += "	`)\n"
 		writeMigration += "	if err != nil {\n"
 		writeMigration += "		fmt.Println(err.Error())\n"

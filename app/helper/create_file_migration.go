@@ -18,9 +18,9 @@ var (
 )
 
 func CreateMigrationFile(migration *Migration) {
-	tableName := migration.TableMigration
-	fileName := tableName + "_migration_" + GetTime() + ".go"
-	path := migration.DirMigration + "/" + fileName
+	table_name := migration.TableMigration
+	file_name := table_name + "_migration_" + GetTime() + ".go"
+	path := migration.DirMigration + "/" + file_name
 	// deteksi apakah file sudah ada
 	_, err := os.Stat(path)
 
@@ -40,11 +40,12 @@ func CreateMigrationFile(migration *Migration) {
 		writeMigration += `	"github.com/danangkonang/` + MyRootDir() + `/migration/app/config"`
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
-		writeMigration += "func " + strings.Title(tableName) + "() {\n"
+		writeMigration += "func (m MyMigration) " + strings.Title(table_name) + "() {\n"
 		writeMigration += "	db := config.Connect()\n"
 		writeMigration += "	_, err := db.Exec(`\n"
-		writeMigration += "		CREATE TABLE " + tableName + "(\n"
+		writeMigration += "		CREATE TABLE " + table_name + "(\n"
 		writeMigration += "			id serial PRIMARY KEY,\n"
+		writeMigration += "			name VARCHAR (225) NOT NULL,\n"
 		writeMigration += "			created_at TIMESTAMP NOT NULL,\n"
 		writeMigration += "			updated_at TIMESTAMP NOT NULL\n"
 		writeMigration += "		);\n"
@@ -53,7 +54,7 @@ func CreateMigrationFile(migration *Migration) {
 		writeMigration += "		fmt.Println(err.Error())\n"
 		writeMigration += "		os.Exit(0)\n"
 		writeMigration += "	}\n"
-		writeMigration += `  fmt.Println("success create table ` + fileName + `")`
+		writeMigration += `  fmt.Println("success create table ` + file_name + `")`
 		writeMigration += "\n"
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)

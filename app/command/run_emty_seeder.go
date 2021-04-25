@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func DropRun() {
+func EmtySeederData() {
 	switch os.Args[2] {
 	case "--hepl":
 		fmt.Println("helper")
@@ -19,12 +19,12 @@ func DropRun() {
 			fmt.Println("no initial direktori")
 			os.Exit(0)
 		}
-		execDrop("down", os.Args[2:])
+		execEmtySeederData("down", os.Args[2:])
 	}
 }
 
-func execDrop(typeFlag string, second []string) {
-	cmd := exec.Command("go", "run", "migration/migration.go", typeFlag, strings.Join(second, ","))
+func execEmtySeederData(typeFlag string, second []string) {
+	cmd := exec.Command("go", "run", "migration/main.go", typeFlag, strings.Join(second, ","))
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Run()

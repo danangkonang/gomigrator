@@ -6,7 +6,7 @@ import (
 )
 
 func CreateMainFile(thisDir, dirMigration string) {
-	path := dirMigration + "/migration.go"
+	path := dirMigration + "/main.go"
 	// deteksi apakah file sudah ada
 	_, err := os.Stat(path)
 	// buat file baru jika belum ada
@@ -30,8 +30,7 @@ func CreateMainFile(thisDir, dirMigration string) {
 
 		// function
 		writeText += "func main() {\n"
-		writeText += "	arrCmd := os.Args[1:]\n"
-		writeText += "	if len(arrCmd) == 0 {\n"
+		writeText += "	if len(os.Args[1:]) == 0 {\n"
 		writeText += "		helper.PrintHelper()\n"
 		writeText += "		return\n"
 		writeText += "	}\n"
@@ -40,45 +39,101 @@ func CreateMainFile(thisDir, dirMigration string) {
 		writeText += "\n"
 
 		writeText += "func runCmd() {\n"
-		writeText += "	usrCmd := os.Args[1]\n"
-		writeText += "	switch usrCmd {\n"
-		writeText += `	case "migration":`
+		writeText += "	switch os.Args[1] {\n"
+		writeText += `	case "run":`
 		writeText += "\n"
-		writeText += "		execusion.RuningMigration()\n"
-		writeText += `	case "seeder":`
+		writeText += "		migrationOrSeeder()"
 		writeText += "\n"
-		writeText += "		execusion.RuningSeeder() \n"
+
 		writeText += `	case "down":`
 		writeText += "\n"
-		// writeText += "		execusion.DownTables() \n"
-		writeText += "		var t execusion.Tables \n"
-		writeText += "		if len(os.Args[2:]) > 0 { \n"
-		writeText += `		t.NameTable = strings.Split(os.Args[2], ",")`
-		writeText += "		 \n"
-		writeText += "			execusion.DownTables(&t) \n"
-		writeText += "		} else { \n"
-		writeText += "			execusion.DownTables(&t) \n"
-		writeText += "		} \n"
+
+		// writeText += "		var t execusion.Tables \n"
+		// writeText += "		if len(os.Args[2:]) > 0 { \n"
+		// writeText += `		t.NameTable = strings.Split(os.Args[2], ",")`
+		// writeText += "		 \n"
+		// writeText += "			execusion.DownTables(&t) \n"
+		// writeText += "		} else { \n"
+		// writeText += "			execusion.DownTables(&t) \n"
+		// writeText += "		} \n"
+		writeText += "		var t execusion.Tables"
+		writeText += "\n"
+		writeText += `		if os.Args[2] != "" {`
+		writeText += "\n"
+		writeText += `			t.NameTable = strings.Split(os.Args[2], ",")`
+		writeText += "\n"
+		writeText += "		}"
+		writeText += "\n"
+		writeText += "		execusion.DownTables(&t)"
+		writeText += "\n"
 
 		writeText += `	case "drop":`
 		writeText += "\n"
-		// writeText += "		execusion.DropTables() \n"
 
-		writeText += "		var t execusion.Tables \n"
-		writeText += "		if len(os.Args[2:]) > 0 { \n"
-		writeText += `		t.NameTable = strings.Split(os.Args[2], ",")`
-		writeText += "		 \n"
-		writeText += "			execusion.DropTables(&t) \n"
-		writeText += "		} else { \n"
-		writeText += "			execusion.DropTables(&t) \n"
-		writeText += "		} \n"
+		writeText += "		var t execusion.Tables"
+		writeText += "\n"
+		writeText += `		if os.Args[2] != "" {`
+		writeText += "\n"
+		writeText += `			t.NameTable = strings.Split(os.Args[2], ",")`
+		writeText += "\n"
+		writeText += "		}"
+		writeText += "\n"
+		writeText += "		execusion.DropTables(&t)"
+		writeText += "\n"
 
 		writeText += "	default:\n"
 		writeText += "		helper.PrintHelper()\n"
 		writeText += "	}\n"
 		writeText += "}\n"
+		writeText += "\n"
+
+		writeText += "func migrationOrSeeder() {"
+		writeText += "\n"
+		writeText += "	switch os.Args[2] {"
+		writeText += "\n"
+		writeText += `	case "migration":`
+		writeText += "\n"
+		writeText += "		var t execusion.Tables"
+		writeText += "\n"
+		writeText += `		if os.Args[3] == "" {`
+		writeText += "\n"
+		writeText += "			execusion.RuningMigration(&t)"
+		writeText += "\n"
+		writeText += "		} else {"
+		writeText += "\n"
+		writeText += `			t.NameTable = strings.Split(os.Args[3], ",")`
+		writeText += "\n"
+		writeText += "			execusion.RuningMigration(&t)"
+		writeText += "\n"
+		writeText += "		}"
+		writeText += "\n"
+		writeText += `	case "seeder":`
+		writeText += "\n"
+		writeText += "		var t execusion.Tables"
+		writeText += "\n"
+		writeText += `		if os.Args[3] == "" {`
+		writeText += "\n"
+		writeText += "			execusion.RuningSeeder(&t)"
+		writeText += "\n"
+		writeText += "		} else {"
+		writeText += "\n"
+		writeText += `			t.NameTable = strings.Split(os.Args[3], ",")`
+		writeText += "\n"
+		writeText += "			execusion.RuningSeeder(&t)"
+		writeText += "\n"
+		writeText += "		}"
+		writeText += "\n"
+		writeText += "	default:"
+		writeText += "\n"
+		writeText += "		helper.PrintHelper()"
+		writeText += "\n"
+		writeText += "	}"
+		writeText += "\n"
+		writeText += "}"
+		writeText += "\n"
 
 		file.WriteString(writeText)
 		defer file.Close()
 	}
+
 }
