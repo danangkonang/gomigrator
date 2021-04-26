@@ -1,22 +1,21 @@
 package templates
 
 var HelperTemplate = `
-Usage: {{.Name}} <command> [options]
+Usage: {{.AppName}} <command> [options]
 
 Options:
-    -v, --version                       print version cli
-    -h, --help                          output usage information
-    -t, table                           create table name for migration
-    -n, name                            create file name seeder or migration
-    migration                           create migration file
-    seeder                              create seeder file
+    {{.Helper}}        {{.HelperDesc}}
+    {{.Table}}         {{.TableDesc}}
+    {{.Name}}          {{.NameDesc}}
+    {{.Migration}}         {{.MigrationDesc}}
+    {{.Seeder}}            {{.SeederDesc}}
 
 Commands:
-    init                                init project
-    down                                delete seeder
-    drop                                drop tables
-    create                              create migration or seeder [table name]
-    run                                 running migration or seeder
+    {{.Init}}          {{.InitDesc}}
+    {{.Down}}          {{.DownDesc}}
+    {{.Drop}}          {{.DropDesc}}
+    {{.Create}}        {{.CreateDesc}}
+    {{.Run}}           {{.RunDesc}}
 
 {{- /* end */ -}}
 {{- "" }}
@@ -39,6 +38,17 @@ Options:
     -n, name                            create file name seeder or migration
     migration                           create migration file
     seeder                              create seeder file
+{{- /* end */ -}}
+{{- "" }}
+`
+var HelperRunTemplate = `
+Usage: {{.AppName}} {{.Cmd}} [options]
+
+Options:
+    {{.Migration}}              {{.MigrationDesc}}
+    {{.Seeder}}                 {{.SeederDesc}}
+    {{.Table}}              {{.TableDesc}}
+    {{.Name}}               {{.NameDesc}}
 {{- /* end */ -}}
 {{- "" }}
 `

@@ -34,9 +34,11 @@ func MigrationCreate() {
 		}
 		CreateSeeder()
 	case "-h":
-		helper.PrintHelperCreate()
+		// helper.PrintHelperCreate()
+		helper.MultyPrintHelper("create")
 	case "--help":
-		helper.PrintHelperCreate()
+		// helper.PrintHelperCreate()
+		helper.MultyPrintHelper("create")
 	default:
 		helper.PrintHelper()
 	}

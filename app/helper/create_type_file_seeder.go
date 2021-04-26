@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-var path_type_seed = "migration/database/seed/type_seed.go"
+var path_type_seed = "migration/database/seed/0.core_type_seed.go"
 
 func CreateTypeFileSeeder() {
 	_, err := os.Stat(path_type_seed)

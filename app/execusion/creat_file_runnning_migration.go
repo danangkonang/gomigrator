@@ -39,12 +39,6 @@ func writeFile(thisDir string) {
 	}
 	defer file.Close()
 
-	// files, err := ioutil.ReadDir("migration/database/migration")
-	// // fmt.Println("panjang", len(files))
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
 	writeText := "package execusion\n\n"
 	// if len(files) != 0 {
 	writeText += "import (\n"
@@ -61,19 +55,9 @@ func writeFile(thisDir string) {
 	writeText += `	"github.com/danangkonang/` + thisDir + `/migration/database/migration"`
 	writeText += "\n"
 	writeText += ")\n\n"
-	// }
 
 	// function
 	writeText += "func RuningMigration(tbl *Tables) {\n"
-
-	// for _, file := range files {
-	// 	filename := file.Name()
-	// 	list := strings.Split(filename, "_migration_")
-	// 	name := list[0]
-	// 	writeText += "\tmigration." + strings.Title(name+"()\n")
-	// }
-
-	// if len(files) != 0 {
 
 	writeText += `	files, err := ioutil.ReadDir("migration/database/migration")`
 	writeText += "\n"
@@ -96,7 +80,7 @@ func writeFile(thisDir string) {
 	writeText += "\n"
 	writeText += "			name := list[0]"
 	writeText += "\n"
-	writeText += `			if name != "type_migration.go" {`
+	writeText += `			if name != "0.core_type_migration.go" {`
 	writeText += "\n"
 	writeText += "				newFile = append(newFile, strings.Title(name))"
 	writeText += "\n"

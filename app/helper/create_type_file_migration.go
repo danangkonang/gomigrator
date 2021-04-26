@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-var path_type_migration = "migration/database/migration/type_migration.go"
+var path_type_migration = "migration/database/migration/0.core_type_migration.go"
 
 func CreateTypeFileMigration() {
 	_, err := os.Stat(path_type_migration)

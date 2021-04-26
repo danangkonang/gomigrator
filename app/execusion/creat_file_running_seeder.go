@@ -96,7 +96,7 @@ func writeFileSeed(thisDir string) {
 	writeText += "\n"
 	writeText += "			name := list[0]"
 	writeText += "\n"
-	writeText += `			if name != "type_seed.go" {`
+	writeText += `			if name != "0.core_type_seed.go" {`
 	writeText += "\n"
 	writeText += "				newFile = append(newFile, strings.Title(name))"
 	writeText += "\n"
