@@ -98,7 +98,7 @@ func writeFileSeed(thisDir string) {
 	writeText += "\n"
 	writeText += `			if name != "0.core_type_seed.go" {`
 	writeText += "\n"
-	writeText += "				newFile = append(newFile, strings.Title(name))"
+	writeText += "				newFile = append(newFile, name)"
 	writeText += "\n"
 	writeText += "			}"
 	writeText += "\n"
@@ -111,9 +111,9 @@ func writeFileSeed(thisDir string) {
 
 	writeText += "	s := seed.MySeed{}"
 	writeText += "\n"
-	writeText += "	for _, table := range tbl.NameTable {"
+	writeText += "	for _, data_seeder := range tbl.NameTable {"
 	writeText += "\n"
-	writeText += "		meth := reflect.ValueOf(s).MethodByName(table)"
+	writeText += "		meth := reflect.ValueOf(s).MethodByName(strings.Title(data_seeder))"
 	writeText += "\n"
 	writeText += "		meth.Call(nil)"
 	writeText += "\n"

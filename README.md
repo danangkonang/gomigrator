@@ -53,8 +53,8 @@
   $ gomig drop [table1 table2 ..]
 
   # delete all data seeder
-  $ gomig down
+  $ gomig reset
 
   # or spesifik table 
-  $ gomig down [table1 table2 ..]
+  $ gomig reset [table1 table2 ..]
 ````

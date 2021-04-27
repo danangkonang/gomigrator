@@ -57,12 +57,12 @@ func writeFile() {
 		writeText += "	if len(tb.NameTable) > 0 {\n"
 
 		writeText += "		for _, ntb := range tb.NameTable {\n"
-		writeText += `			query := "TRUNCATE TABLE IF EXISTS " + ntb + ";"`
+		writeText += `			query := "TRUNCATE " + ntb + ";"`
 		writeText += "\n"
 		writeText += "			_, err := db.Exec(query)\n"
 		writeText += "			if err != nil {\n"
-		writeText += "			fmt.Println(err)\n"
-		writeText += "			os.Exit(0)\n"
+		writeText += "				fmt.Println(err)\n"
+		writeText += "				os.Exit(0)\n"
 		writeText += "			}\n"
 		writeText += `			fmt.Println("success delete row")`
 		writeText += "\n"
@@ -75,15 +75,19 @@ func writeFile() {
 		writeText += `			list := strings.Split(filename, "_migration_")`
 		writeText += "\n"
 		writeText += "			name := list[0]\n"
-		writeText += `			query := "TRUNCATE " + name + ";"`
+
+		writeText += `			if name != "0.core_type_migration.go" {`
 		writeText += "\n"
-		writeText += "			_, err := db.Exec(query)\n"
-		writeText += "			if err != nil {\n"
-		writeText += "				fmt.Println(err)\n"
-		writeText += "				os.Exit(0)\n"
+		writeText += `				query := "TRUNCATE " + name + ";"`
+		writeText += "\n"
+		writeText += "				_, err := db.Exec(query)\n"
+		writeText += "				if err != nil {\n"
+		writeText += "					fmt.Println(err)\n"
+		writeText += "					os.Exit(0)\n"
+		writeText += "				}\n"
+		writeText += `				fmt.Println("success delete row")`
+		writeText += "\n"
 		writeText += "			}\n"
-		writeText += `			fmt.Println("success delete row")`
-		writeText += "\n"
 		writeText += "		}\n"
 		writeText += "	}\n" // end else
 	}

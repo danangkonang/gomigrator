@@ -27,7 +27,7 @@ type Helper struct {
 	Migration     string
 	Seeder        string
 	Init          string
-	Down          string
+	Reset         string
 	Drop          string
 	Create        string
 	Run           string
@@ -38,7 +38,7 @@ type Helper struct {
 	MigrationDesc string
 	SeederDesc    string
 	InitDesc      string
-	DownDesc      string
+	ResetDesc     string
 	DropDesc      string
 	CreateDesc    string
 	RunDesc       string
@@ -65,10 +65,10 @@ func PrintHelper() {
 		SeederDesc:    "create seeder file",
 		Init:          "init",
 		InitDesc:      "init project",
-		Down:          "down",
-		DownDesc:      "delete seeder",
+		Reset:         "reset",
+		ResetDesc:     "delete seeder",
 		Drop:          "drop",
-		DropDesc:      "drop tables",
+		DropDesc:      "delete tables",
 		Create:        "create",
 		CreateDesc:    "create migration or seeder [table name]",
 		Run:           "run",

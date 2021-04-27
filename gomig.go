@@ -38,7 +38,7 @@ func runCmd() {
 		command.MigrationsRun()
 	case "-r":
 		command.MigrationsRun() //go run main.go run migration [name file]
-	case "down":
+	case "reset":
 		command.EmtySeederData() // delete data seeder
 	case "drop":
 		command.DropTableRun() // delete table

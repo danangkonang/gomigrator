@@ -8,19 +8,27 @@ import (
 )
 
 func DropTableRun() {
-	// fmt.Println(os.Args[1:])
-	switch os.Args[1] {
-	case "--hepl":
-		fmt.Println("helper")
-	case "-h":
-		fmt.Println("helper")
-	default:
+	if len(os.Args[2:]) > 0 {
+		// fmt.Println("manual")
+		if os.Args[2] == "--help" {
+			fmt.Println("helper")
+			os.Exit(0)
+		}
+		if os.Args[2] == "-h" {
+			fmt.Println("helper")
+			os.Exit(0)
+		}
+		// fmt.Println("helper lain")
 		_, err := os.Stat("migration/database/migration")
 		if err != nil {
 			fmt.Println("no initial direktori")
 			os.Exit(0)
 		}
-		execDrop("drop", os.Args[2:]) // delete table
+		execDrop("drop", os.Args[2:])
+	}
+	if len(os.Args[2:]) == 0 {
+		// fmt.Println("auto")
+		execDrop("drop", os.Args[2:])
 	}
 }
 

@@ -11,11 +11,11 @@ Options:
     {{.Seeder}}            {{.SeederDesc}}
 
 Commands:
-    {{.Init}}          {{.InitDesc}}
-    {{.Down}}          {{.DownDesc}}
-    {{.Drop}}          {{.DropDesc}}
-    {{.Create}}        {{.CreateDesc}}
-    {{.Run}}           {{.RunDesc}}
+    {{.Init}}              {{.InitDesc}}
+    {{.Reset}}             {{.ResetDesc}}
+    {{.Drop}}              {{.DropDesc}}
+    {{.Create}}            {{.CreateDesc}}
+    {{.Run}}               {{.RunDesc}}
 
 {{- /* end */ -}}
 {{- "" }}

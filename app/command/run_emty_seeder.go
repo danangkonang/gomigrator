@@ -8,17 +8,23 @@ import (
 )
 
 func EmtySeederData() {
-	switch os.Args[2] {
-	case "--hepl":
-		fmt.Println("helper")
-	case "-h":
-		fmt.Println("helper")
-	default:
+	if len(os.Args[2:]) > 0 {
+		if os.Args[2] == "--help" {
+			fmt.Println("helper")
+			os.Exit(0)
+		}
+		if os.Args[2] == "-h" {
+			fmt.Println("helper")
+			os.Exit(0)
+		}
 		_, err := os.Stat("migration/database/migration")
 		if err != nil {
 			fmt.Println("no initial direktori")
 			os.Exit(0)
 		}
+		execEmtySeederData("down", os.Args[2:])
+	}
+	if len(os.Args[2:]) == 0 {
 		execEmtySeederData("down", os.Args[2:])
 	}
 }

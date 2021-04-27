@@ -82,7 +82,7 @@ func writeFile(thisDir string) {
 	writeText += "\n"
 	writeText += `			if name != "0.core_type_migration.go" {`
 	writeText += "\n"
-	writeText += "				newFile = append(newFile, strings.Title(name))"
+	writeText += "				newFile = append(newFile, name)"
 	writeText += "\n"
 	writeText += "			}"
 	writeText += "\n"
@@ -95,9 +95,9 @@ func writeFile(thisDir string) {
 
 	writeText += "	m := migration.MyMigration{}"
 	writeText += "\n"
-	writeText += "	for _, fung := range tbl.NameTable {"
+	writeText += "	for _, migrate := range tbl.NameTable {"
 	writeText += "\n"
-	writeText += "		meth := reflect.ValueOf(m).MethodByName(fung)"
+	writeText += "		meth := reflect.ValueOf(m).MethodByName(strings.Title(migrate))"
 	writeText += "\n"
 	writeText += "		meth.Call(nil)"
 	writeText += "\n"

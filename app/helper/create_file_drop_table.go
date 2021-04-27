@@ -65,8 +65,8 @@ func writeFiles() {
 		writeText += "\n"
 		writeText += "			_, err := db.Exec(query)\n"
 		writeText += "			if err != nil {\n"
-		writeText += "			fmt.Println(err)\n"
-		writeText += "			os.Exit(0)\n"
+		writeText += "				fmt.Println(err)\n"
+		writeText += "				os.Exit(0)\n"
 		writeText += "			}\n"
 		writeText += `			fmt.Println("success DROP TABLE " + ntb)`
 		writeText += "\n"
@@ -79,12 +79,12 @@ func writeFiles() {
 		writeText += `			list := strings.Split(filename, "_migration_")`
 		writeText += "\n"
 		writeText += "			name := list[0]\n"
-		writeText += `			if name != "type.go" {`
+		writeText += `			if name != "0.core_type_migration.go" {`
 		writeText += "\n"
 		writeText += `				query := "DROP TABLE IF EXISTS " + name + ";"`
 		writeText += "\n"
-		writeText += "			_, err := db.Exec(query)\n"
-		writeText += "					if err != nil {\n"
+		writeText += "				_, err := db.Exec(query)\n"
+		writeText += "				if err != nil {\n"
 		writeText += "					fmt.Println(err)\n"
 		writeText += "					os.Exit(0)\n"
 		writeText += "				}\n"
