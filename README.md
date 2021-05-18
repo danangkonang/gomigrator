@@ -3,26 +3,36 @@
 ## On developing 
 
 `gomig` is simple tools database migration for developer
+
+## Installation
  
-- **usage**
+  - Run this command to download:
 
-```go
-  $ go run gomig.go --help
-```
+  ```bash
+    $ sudo curl -L "https://github.com/danangkonang/migrasion-go-cli/releases/download/v0.0.2/gomig" -o /usr/local/bin/gomig
+  ```
 
-- or cli option
+  - Apply executable permissions to the binary:
+  ```bash
+    $ sudo chmod +x /usr/local/bin/gomig
+  ```
 
-```go
-  $ go build gomig.go && ./gomig --help
-```
+  -  If the command gomig fails you cant run this
+  ```bash
+    $ sudo ln -s /usr/local/bin/gomig /usr/bin/gomig
+  ```
 
-- yau can use global usage
+  - Test installation.
+  ```bash
+    $ goming --version
+  ```
 
-```bash
-  $ sudo cp gomig /usr/local/bin
-```
+## Databases
 
-## example
+* PostgreSQL
+* 
+
+## Example
 - ***migration***
 
 ```bash
