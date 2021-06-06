@@ -44,12 +44,13 @@ type Helper struct {
 	RunDesc       string
 }
 
+const version string = "0.0.3"
+
 func PrintHelper() {
-	// data := Inventory{"gomig", "0.0.2"}
 	data := &Helper{
 
 		Cmd:           "",
-		AppVersion:    "0.0.2",
+		AppVersion:    version,
 		AppName:       "gomig",
 		Version:       "-v, --version",
 		VersionDesc:   "print version cli",
@@ -85,7 +86,7 @@ func PrintHelper() {
 }
 
 func PrintHelperCreate() {
-	data := Inventory{"gomig", "0.0.2"}
+	data := Inventory{"gomig", version}
 	tmpl, err := template.New("helper").Parse(templates.HelperCreateTemplate)
 	if err != nil {
 		panic(err)
@@ -97,7 +98,7 @@ func PrintHelperCreate() {
 }
 
 func PrintHelperRun() {
-	data := Inventory{"gomig", "0.0.2"}
+	data := Inventory{"gomig", version}
 	tmpl, err := template.New("helper").Parse(templates.HelperRunTemplate)
 	if err != nil {
 		panic(err)
@@ -111,7 +112,7 @@ func PrintHelperRun() {
 func MultyPrintHelper(comand string) {
 	var data = &Helper{
 		AppName:       "gomig",
-		Version:       "0.0.2",
+		Version:       version,
 		Cmd:           comand,
 		Table:         "-t, table",
 		TableDesc:     "create table name for migration",
@@ -134,7 +135,7 @@ func MultyPrintHelper(comand string) {
 }
 
 func PrintVersion() {
-	data := Inventory{"gomig", "0.0.2"}
+	data := Inventory{"gomig", version}
 	tmpl, err := template.New("version").Parse(templates.VersionTemplate)
 	if err != nil {
 		panic(err)
