@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/danangkonang/migrasion-go-cli/app/command"
-	"github.com/danangkonang/migrasion-go-cli/app/helper"
+	"github.com/danangkonang/migration-go-cli/app/command"
+	"github.com/danangkonang/migration-go-cli/app/helper"
 )
 
 func main() {

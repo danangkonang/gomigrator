@@ -4,7 +4,7 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/danangkonang/migrasion-go-cli/templates"
+	"github.com/danangkonang/migration-go-cli/templates"
 )
 
 type Inventory struct {

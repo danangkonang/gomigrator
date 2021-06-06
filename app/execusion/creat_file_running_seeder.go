@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/danangkonang/migrasion-go-cli/app/helper"
+	"github.com/danangkonang/migration-go-cli/app/helper"
 )
 
 var path_seed = "migration/app/execusion/runing_seeder.go"

@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/danangkonang/migrasion-go-cli/app/execusion"
-	"github.com/danangkonang/migrasion-go-cli/app/helper"
+	"github.com/danangkonang/migration-go-cli/app/execusion"
+	"github.com/danangkonang/migration-go-cli/app/helper"
 )
 
 var dirMigration = "migration"

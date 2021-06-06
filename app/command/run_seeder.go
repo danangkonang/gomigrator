@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/danangkonang/migrasion-go-cli/app/helper"
+	"github.com/danangkonang/migration-go-cli/app/helper"
 )
 
 func SeederRun() {
