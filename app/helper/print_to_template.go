@@ -44,7 +44,7 @@ type Helper struct {
 	RunDesc       string
 }
 
-const version string = "0.0.3"
+const version string = "0.0.4"
 
 func PrintHelper() {
 	data := &Helper{
