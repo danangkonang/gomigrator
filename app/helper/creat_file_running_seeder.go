@@ -1,39 +1,37 @@
-package execusion
+package helper
 
 import (
 	"fmt"
 	"os"
-
-	"github.com/danangkonang/migration-go-cli/app/helper"
 )
 
-var path_migration = "migration/app/execusion/runing_migration.go"
+var path_seed = "migration/app/execusion/runing_seeder.go"
 
-func ReadeMiggrationFileInFolder() {
-	deleteFile()
-	createFile()
-	writeFile(helper.MyRootDir())
+func ReadeSeederFileInFolder() {
+	rootDir := MyRootDir()
+	deleteFileSeed()
+	createFileSeed()
+	writeFileSeed(rootDir)
 }
 
-func createFile() {
+func createFileSeed() {
 	// detect if file exists
-	var _, err = os.Stat(path_migration)
+	var _, err = os.Stat(path_seed)
 
 	// create file if not exists
 	if os.IsNotExist(err) {
-		var file, err = os.Create(path_migration)
-		if isError(err) {
+		var file, err = os.Create(path_seed)
+		if isErrorSeed(err) {
 			return
 		}
 		defer file.Close()
 	}
-
-	// fmt.Println("==> done creating file", path_migration)
+	// fmt.Println("==> done creating file", path_seed)
 }
 
-func writeFile(thisDir string) {
+func writeFileSeed(thisDir string) {
 	// open file using READ & WRITE permission
-	var file, err = os.OpenFile(path_migration, os.O_RDWR, 0644)
+	var file, err = os.OpenFile(path_seed, os.O_RDWR, 0644)
 	if isError(err) {
 		return
 	}
@@ -52,14 +50,15 @@ func writeFile(thisDir string) {
 	writeText += `	"strings"`
 	writeText += "\n"
 	writeText += "\n"
-	writeText += `	"github.com/danangkonang/` + thisDir + `/migration/database/migration"`
+	writeText += `	"github.com/danangkonang/` + thisDir + `/migration/database/seed"`
 	writeText += "\n"
 	writeText += ")\n\n"
+	// }
 
 	// function
-	writeText += "func RuningMigration(tbl *Tables) {\n"
+	writeText += "func RuningSeeder(tbl *Tables) {\n"
 
-	writeText += `	files, err := ioutil.ReadDir("migration/database/migration")`
+	writeText += `	files, err := ioutil.ReadDir("migration/database/seed")`
 	writeText += "\n"
 	writeText += "	if err != nil {"
 	writeText += "\n"
@@ -76,11 +75,11 @@ func writeFile(thisDir string) {
 	writeText += "\n"
 	writeText += "			filename := file.Name()"
 	writeText += "\n"
-	writeText += `			list := strings.Split(filename, "_migration_")`
+	writeText += `			list := strings.Split(filename, "_seeder_")`
 	writeText += "\n"
 	writeText += "			name := list[0]"
 	writeText += "\n"
-	writeText += `			if name != "0.core_type_migration.go" {`
+	writeText += `			if name != "0.core_type_seed.go" {`
 	writeText += "\n"
 	writeText += "				newFile = append(newFile, name)"
 	writeText += "\n"
@@ -93,11 +92,11 @@ func writeFile(thisDir string) {
 	writeText += "	}"
 	writeText += "\n"
 
-	writeText += "	m := migration.MyMigration{}"
+	writeText += "	s := seed.MySeed{}"
 	writeText += "\n"
-	writeText += "	for _, migrate := range tbl.NameTable {"
+	writeText += "	for _, data_seeder := range tbl.NameTable {"
 	writeText += "\n"
-	writeText += "		meth := reflect.ValueOf(m).MethodByName(strings.Title(migrate))"
+	writeText += "		meth := reflect.ValueOf(s).MethodByName(strings.Title(data_seeder))"
 	writeText += "\n"
 	writeText += "		meth.Call(nil)"
 	writeText += "\n"
@@ -115,23 +114,20 @@ func writeFile(thisDir string) {
 	if isError(err) {
 		return
 	}
-
-	// fmt.Println("==> done writing to file")
 }
 
-func deleteFile() {
-	// delete file
-	var _, err = os.Stat(path_migration)
+func deleteFileSeed() {
+	var _, err = os.Stat(path_seed)
 	if err == nil {
-		var err = os.Remove(path_migration)
-		if isError(err) {
+		var err = os.Remove(path_seed)
+		if isErrorSeed(err) {
 			return
 		}
 	}
 	// fmt.Println("==> done deleting file")
 }
 
-func isError(err error) bool {
+func isErrorSeed(err error) bool {
 	if err != nil {
 		fmt.Println(err.Error())
 	}

@@ -5,8 +5,8 @@ Usage: {{.AppName}} <command> [options]
 
 Options:
     {{.Helper}}        {{.HelperDesc}}
-    {{.Table}}         {{.TableDesc}}
-    {{.Name}}          {{.NameDesc}}
+    {{.Table}}       {{.TableDesc}}
+    {{.Name}}        {{.NameDesc}}
     {{.Migration}}         {{.MigrationDesc}}
     {{.Seeder}}            {{.SeederDesc}}
 
@@ -42,13 +42,29 @@ Options:
 {{- "" }}
 `
 var HelperRunTemplate = `
-Usage: {{.AppName}} {{.Cmd}} [options]
+Usage: {{.AppName}} {{.Cmd}} [comand] [options]
 
-Options:
+Commands:
     {{.Migration}}              {{.MigrationDesc}}
     {{.Seeder}}                 {{.SeederDesc}}
-    {{.Table}}              {{.TableDesc}}
-    {{.Name}}               {{.NameDesc}}
+
+Options:
+    {{.Table}}            {{.TableDesc}}
+    {{.Name}}             {{.NameDesc}}
+{{- /* end */ -}}
+{{- "" }}
+`
+
+const HelperCreateMigrationTemplate = `
+Usage: {{.AppName}} {{.Cmd}} [comand] [options]
+
+Commands:
+    {{.Migration}}              {{.MigrationDesc}}
+    {{.Seeder}}                 {{.SeederDesc}}
+
+Options:
+    {{.Table}}            {{.TableDesc}}
+    {{.Name}}             {{.NameDesc}}
 {{- /* end */ -}}
 {{- "" }}
 `

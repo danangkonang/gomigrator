@@ -19,7 +19,7 @@ var (
 
 func CreateMigrationFile(migration *Migration) {
 	table_name := migration.TableMigration
-	file_name := table_name + "_migration_" + GetTime() + ".go"
+	file_name := GetTime() + "_migration_" + table_name + ".go"
 	path := migration.DirMigration + "/" + file_name
 	// deteksi apakah file sudah ada
 	_, err := os.Stat(path)

@@ -45,17 +45,9 @@ func CreateMainFile(thisDir, dirMigration string) {
 		writeText += "		migrationOrSeeder()"
 		writeText += "\n"
 
-		writeText += `	case "down":`
+		writeText += `	case "reset":`
 		writeText += "\n"
 
-		// writeText += "		var t execusion.Tables \n"
-		// writeText += "		if len(os.Args[2:]) > 0 { \n"
-		// writeText += `		t.NameTable = strings.Split(os.Args[2], ",")`
-		// writeText += "		 \n"
-		// writeText += "			execusion.DownTables(&t) \n"
-		// writeText += "		} else { \n"
-		// writeText += "			execusion.DownTables(&t) \n"
-		// writeText += "		} \n"
 		writeText += "		var t execusion.Tables"
 		writeText += "\n"
 		writeText += `		if os.Args[2] != "" {`
@@ -64,7 +56,7 @@ func CreateMainFile(thisDir, dirMigration string) {
 		writeText += "\n"
 		writeText += "		}"
 		writeText += "\n"
-		writeText += "		execusion.DownTables(&t)"
+		writeText += "		execusion.ResetTables(&t)"
 		writeText += "\n"
 
 		writeText += `	case "drop":`

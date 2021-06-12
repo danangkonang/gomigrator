@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-var path = "migration/app/execusion/down_table.go"
+var path = "migration/app/execusion/reset_table.go"
 
 func ReadeDropFileInFolder() {
 	deleteFile()
@@ -44,7 +44,7 @@ func writeFile() {
 	}
 
 	// function
-	writeText += "func DownTables(tb *Tables) {\n"
+	writeText += "func ResetTables(tb *Tables) {\n"
 	if len(files) != 0 {
 		writeText += `	files, err := ioutil.ReadDir("migration/database/migration")`
 		writeText += "\n"

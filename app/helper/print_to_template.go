@@ -56,9 +56,9 @@ func PrintHelper() {
 		VersionDesc:   "print version cli",
 		Helper:        "-h, --help",
 		HelperDesc:    "output usage information",
-		Table:         "-t, table",
+		Table:         "-t, --table",
 		TableDesc:     "create table name for migration",
-		Name:          "-n, name",
+		Name:          "-n, --name",
 		NameDesc:      "create file name seeder or migration",
 		Migration:     "migration",
 		MigrationDesc: "create migration file",
@@ -114,9 +114,9 @@ func MultyPrintHelper(comand string) {
 		AppName:       "gomig",
 		Version:       version,
 		Cmd:           comand,
-		Table:         "-t, table",
+		Table:         "-t, --table",
 		TableDesc:     "create table name for migration",
-		Name:          "-n, name",
+		Name:          "-n, --name",
 		NameDesc:      "create file name seeder or migration",
 		Migration:     "migration",
 		MigrationDesc: "create migration file",
@@ -149,6 +149,30 @@ func PrintVersion() {
 func ErrorCommand(userFlag string) {
 	data := ERROR{userFlag}
 	tmpl, err := template.New("test").Parse(templates.ErrorTemplate)
+	if err != nil {
+		panic(err)
+	}
+	err = tmpl.Execute(os.Stdout, data)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func HelperCreateMigration(comand string) {
+	var data = &Helper{
+		AppName:       "gomig",
+		Version:       version,
+		Cmd:           comand,
+		Table:         "-t, --table",
+		TableDesc:     "create table name for migration",
+		Name:          "-n, --name",
+		NameDesc:      "create file name seeder or migration",
+		Migration:     "migration",
+		MigrationDesc: "create migration file",
+		Seeder:        "seeder",
+		SeederDesc:    "create seeder file",
+	}
+	tmpl, err := template.New("helper_create_migration").Parse(templates.HelperCreateMigrationTemplate)
 	if err != nil {
 		panic(err)
 	}

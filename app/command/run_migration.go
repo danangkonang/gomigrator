@@ -11,10 +11,8 @@ import (
 func MigrationsRun() {
 	switch os.Args[2] {
 	case "--hepl":
-		// fmt.Println("helper")
 		helper.MultyPrintHelper("run")
 	case "-h":
-		// fmt.Println("helper -h")
 		helper.MultyPrintHelper("run")
 	case "migration":
 		execMigration("run", "migration", os.Args[3:])

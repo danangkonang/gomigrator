@@ -22,10 +22,10 @@ func EmtySeederData() {
 			fmt.Println("no initial direktori")
 			os.Exit(0)
 		}
-		execEmtySeederData("down", os.Args[2:])
+		execEmtySeederData("reset", os.Args[2:])
 	}
 	if len(os.Args[2:]) == 0 {
-		execEmtySeederData("down", os.Args[2:])
+		execEmtySeederData("reset", os.Args[2:])
 	}
 }
 

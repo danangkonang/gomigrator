@@ -5,7 +5,6 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/danangkonang/migration-go-cli/app/execusion"
 	"github.com/danangkonang/migration-go-cli/app/helper"
 )
 
@@ -129,14 +128,14 @@ func Initial() {
 		./migration/app/execution/running_migration.go
 
 	*/
-	execusion.ReadeMiggrationFileInFolder()
+	helper.ReadeMiggrationFileInFolder()
 
 	/*
 
 		./migration/app/execution/running_seeder.go
 
 	*/
-	execusion.ReadeSeederFileInFolder()
+	helper.ReadeSeederFileInFolder()
 
 	/*
 
