@@ -43,10 +43,6 @@ func writeFiles() {
 		writeText += ")\n\n"
 	}
 
-	// writeText += "type Tables struct {\n"
-	// writeText += "	NameTable []string\n"
-	// writeText += "}\n\n"
-
 	// function
 	writeText += "func DropTables(tb *Tables) {\n"
 	if len(files) != 0 {
@@ -81,14 +77,16 @@ func writeFiles() {
 		writeText += "			name := list[0]\n"
 		writeText += `			if name != "0.core_type_migration.go" {`
 		writeText += "\n"
-		writeText += `				query := "DROP TABLE IF EXISTS " + name + ";"`
+		writeText += `				tb_name := strings.Split(list[1], ".go")`
+		writeText += "\n"
+		writeText += `				query := "DROP TABLE IF EXISTS " + tb_name[0] + ";"`
 		writeText += "\n"
 		writeText += "				_, err := db.Exec(query)\n"
 		writeText += "				if err != nil {\n"
 		writeText += "					fmt.Println(err)\n"
 		writeText += "					os.Exit(0)\n"
 		writeText += "				}\n"
-		writeText += `				fmt.Println("success DROP TABLE " + name)`
+		writeText += `				fmt.Println("success DROP TABLE " + tb_name[0])`
 		writeText += "\n"
 		writeText += "			}\n"
 		writeText += "		}\n" // end for files

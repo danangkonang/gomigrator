@@ -81,11 +81,11 @@ func writeFileRM(thisDir string) {
 	writeText += "\n"
 	writeText += `			list := strings.Split(filename, "_migration_")`
 	writeText += "\n"
-	writeText += "			name := list[1]"
+	writeText += `			if list[0] != "0.core_type_migration.go" {`
 	writeText += "\n"
-	writeText += `			tb_name := strings.Split(name, ".go")`
+	writeText += "				name := list[1]"
 	writeText += "\n"
-	writeText += `			if name != "0.core_type_migration.go" {`
+	writeText += `				tb_name := strings.Split(name, ".go")`
 	writeText += "\n"
 	writeText += "				newFile = append(newFile, tb_name[0])"
 	writeText += "\n"
