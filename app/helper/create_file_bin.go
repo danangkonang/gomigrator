@@ -6,7 +6,7 @@ import (
 )
 
 func CreateMainFile(thisDir, dirMigration string) {
-	path := dirMigration + "/main.go"
+	path := dirMigration + "/bin.go"
 	// deteksi apakah file sudah ada
 	_, err := os.Stat(path)
 	// buat file baru jika belum ada
@@ -22,9 +22,9 @@ func CreateMainFile(thisDir, dirMigration string) {
 		writeText += "\n"
 		writeText += `	"strings"`
 		writeText += "\n\n"
-		writeText += `	"github.com/danangkonang/` + thisDir + `/migration/app/helper"`
+		writeText += `	"github.com/danangkonang/` + thisDir + `/migration/core/helper"`
 		writeText += "\n"
-		writeText += `	"github.com/danangkonang/` + thisDir + `/migration/app/execusion"`
+		writeText += `	"github.com/danangkonang/` + thisDir + `/migration/core/execusion"`
 		writeText += "\n"
 		writeText += ")\n\n"
 

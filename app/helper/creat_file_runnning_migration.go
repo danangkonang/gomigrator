@@ -10,7 +10,7 @@ import (
 // 	"os"
 // )
 
-var path_migration = "migration/app/execusion/runing_migration.go"
+var path_migration = "migration/core/execusion/runing_migration.go"
 
 func ReadeMiggrationFileInFolder() {
 	deleteFileRm()

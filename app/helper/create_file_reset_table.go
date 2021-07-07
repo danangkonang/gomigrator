@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-var path = "migration/app/execusion/reset_table.go"
+var path = "migration/core/execusion/reset_table.go"
 
 func ReadeDropFileInFolder() {
 	deleteFile()
@@ -38,7 +38,7 @@ func writeFile() {
 		writeText += "\n"
 		writeText += `	"strings"`
 		writeText += "\n\n"
-		writeText += `	"github.com/danangkonang/` + MyRootDir() + `/migration/app/config"`
+		writeText += `	"github.com/danangkonang/` + MyRootDir() + `/migration/core/config"`
 		writeText += "\n"
 		writeText += ")\n\n"
 	}

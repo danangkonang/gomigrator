@@ -37,7 +37,7 @@ func CreateMigrationFile(migration *Migration) {
 		writeMigration += "\n"
 		writeMigration += `	"os"`
 		writeMigration += "\n\n"
-		writeMigration += `	"github.com/danangkonang/` + MyRootDir() + `/migration/app/config"`
+		writeMigration += `	"github.com/danangkonang/` + MyRootDir() + `/migration/core/config"`
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
 		writeMigration += "func (m MyMigration) " + strings.Title(table_name) + "() {\n"

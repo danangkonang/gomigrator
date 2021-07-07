@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-var path_seed = "migration/app/execusion/runing_seeder.go"
+var path_seed = "migration/core/execusion/runing_seeder.go"
 
 func ReadeSeederFileInFolder() {
 	rootDir := MyRootDir()

@@ -30,7 +30,7 @@ func EmtySeederData() {
 }
 
 func execEmtySeederData(typeFlag string, second []string) {
-	cmd := exec.Command("go", "run", "migration/main.go", typeFlag, strings.Join(second, ","))
+	cmd := exec.Command("go", "run", "migration/bin.go", typeFlag, strings.Join(second, ","))
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Run()

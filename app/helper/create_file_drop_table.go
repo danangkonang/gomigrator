@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-var pathDrop = "migration/app/execusion/drop_table.go"
+var pathDrop = "migration/core/execusion/drop_table.go"
 
 func ReadeDownFileInFolder() {
 	deleteFiles()
@@ -38,7 +38,7 @@ func writeFiles() {
 		writeText += "\n"
 		writeText += `	"strings"`
 		writeText += "\n\n"
-		writeText += `	"github.com/danangkonang/` + MyRootDir() + `/migration/app/config"`
+		writeText += `	"github.com/danangkonang/` + MyRootDir() + `/migration/core/config"`
 		writeText += "\n"
 		writeText += ")\n\n"
 	}
@@ -57,7 +57,7 @@ func writeFiles() {
 		writeText += "	if len(tb.NameTable) > 0 {\n"
 
 		writeText += "		for _, ntb := range tb.NameTable {\n"
-		writeText += `			query := "DROP TABLE IF EXISTS " + ntb + ";"`
+		writeText += `			query := "DROP TABLE IF EXISTS " + ntb + " CASCADE;"`
 		writeText += "\n"
 		writeText += "			_, err := db.Exec(query)\n"
 		writeText += "			if err != nil {\n"
@@ -79,7 +79,7 @@ func writeFiles() {
 		writeText += "\n"
 		writeText += `				tb_name := strings.Split(list[1], ".go")`
 		writeText += "\n"
-		writeText += `				query := "DROP TABLE IF EXISTS " + tb_name[0] + ";"`
+		writeText += `				query := "DROP TABLE IF EXISTS " + tb_name[0] + " CASCADE;"`
 		writeText += "\n"
 		writeText += "				_, err := db.Exec(query)\n"
 		writeText += "				if err != nil {\n"

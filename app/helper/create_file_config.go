@@ -23,8 +23,8 @@ func CreateConfigFile(dirConfig string) {
 		writeText += "\n"
 		writeText += `	"os"`
 		writeText += "\n\n"
-		writeText += `	_ "github.com/go-sql-driver/mysql"`
-		writeText += "\n"
+		// writeText += `	_ "github.com/go-sql-driver/mysql"`
+		// writeText += "\n"
 		writeText += `	"github.com/joho/godotenv"`
 		writeText += "\n"
 		writeText += `	_ "github.com/lib/pq"`

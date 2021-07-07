@@ -12,12 +12,12 @@ var dirMigration = "migration"
 var dirDatabase = "migration/database"
 var dirTableMigration = "migration/database/migration"
 var dirSeed = "migration/database/seed"
-var dirApp = "migration/app"
+var dirApp = "migration/core"
 
-var dirExecusion = "migration/app/execusion"
-var dirHelper = "migration/app/helper"
-var dirConfig = "migration/app/config"
-var dirTemplate = "migration/app/templates"
+var dirExecusion = "migration/core/execusion"
+var dirHelper = "migration/core/helper"
+var dirConfig = "migration/core/config"
+var dirTemplate = "migration/core/templates"
 
 /*
 
@@ -54,6 +54,8 @@ func Initial() {
 	makeDirectory(dirConfig)
 	makeDirectory(dirTemplate)
 
+	// CopyGomig()
+
 	thisDir := helper.MyRootDir()
 
 	/*
@@ -72,14 +74,14 @@ func Initial() {
 
 	/*
 
-		./migration/app/config/config.go
+		./migration/core/config/config.go
 
 	*/
 	helper.CreateConfigFile(dirConfig)
 
 	/*
 
-		./migration/app/templates/template.go
+		./migration/core/templates/template.go
 
 	*/
 	helper.CreateTemplateFile(thisDir, dirTemplate)
@@ -88,35 +90,35 @@ func Initial() {
 
 	/*
 
-		./migration/app/execution/type_execution.go
+		./migration/core/execution/type_execution.go
 
 	*/
 	helper.CreateTypeFileExecution()
 
 	/*
 
-		./migration/app/migration/type_migration.go
+		./migration/core/migration/type_migration.go
 
 	*/
 	helper.CreateTypeFileMigration()
 
 	/*
 
-		./migration/app/seed/type_seed.go
+		./migration/core/seed/type_seed.go
 
 	*/
 	helper.CreateTypeFileSeeder()
 
 	/*
 
-		./migration/app/helper/create_template.go
+		./migration/core/helper/create_template.go
 
 	*/
 	helper.CreatePrintTemplate(thisDir, dirHelper)
 
 	/*
 
-		./migration/app/helper/get_time.go
+		./migration/core/helper/get_time.go
 
 	*/
 	helper.CreateGetTime(thisDir, dirHelper)
@@ -125,32 +127,37 @@ func Initial() {
 
 	/*
 
-		./migration/app/execution/running_migration.go
+		./migration/core/execution/running_migration.go
 
 	*/
 	helper.ReadeMiggrationFileInFolder()
 
 	/*
 
-		./migration/app/execution/running_seeder.go
+		./migration/core/execution/running_seeder.go
 
 	*/
 	helper.ReadeSeederFileInFolder()
 
 	/*
 
-		./migration/app/execution/down_table.go
+		./migration/core/execution/down_table.go
 
 	*/
 	helper.ReadeDownFileInFolder()
 
 	/*
 
-		./migration/app/execution/drop_table.go
+		./migration/core/execution/drop_table.go
 
 	*/
 	helper.ReadeDropFileInFolder()
 }
+
+// func CopyGomig() {
+// 	gomig := exec.Command("cp", "gomig", "migration")
+// 	gomig.Run()
+// }
 
 func makeDirectory(name string) {
 	if _, err := os.Stat(name); os.IsNotExist(err) {
@@ -167,9 +174,9 @@ func makeDirectory(name string) {
 
 func getTridparty() {
 	pq := exec.Command("go", "get", "github.com/lib/pq")
-	mysql := exec.Command("go", "get", "github.com/go-sql-driver/mysql")
+	// mysql := exec.Command("go", "get", "github.com/go-sql-driver/mysql")
 	godotenv := exec.Command("go", "get", "github.com/joho/godotenv")
 	pq.Run()
-	mysql.Run()
+	// mysql.Run()
 	godotenv.Run()
 }

@@ -22,7 +22,7 @@ func CreatePrintTemplate(rootDir, targetDir string) {
 		writeText += "\n"
 		writeText += `	"text/template"`
 		writeText += "\n\n"
-		writeText += `	"github.com/danangkonang/` + rootDir + `/migration/app/templates"`
+		writeText += `	"github.com/danangkonang/` + rootDir + `/migration/core/templates"`
 		writeText += "\n"
 		writeText += ")\n\n"
 
@@ -37,7 +37,7 @@ func CreatePrintTemplate(rootDir, targetDir string) {
 
 		// function
 		writeText += "func PrintHelper() {\n"
-		writeText += `	data := Inventory{"Danang", "0.0.1"}`
+		writeText += `	data := Inventory{"Danang", "0.0.5"}`
 		writeText += "\n"
 		writeText += `	tmpl, err := template.New("test").Parse(templates.UsageTemplate)`
 		writeText += "\n"
@@ -53,7 +53,7 @@ func CreatePrintTemplate(rootDir, targetDir string) {
 		writeText += "\n"
 
 		writeText += "func PrintVersion() {\n"
-		writeText += `	data := Inventory{"Danang", "0.0.1"}`
+		writeText += `	data := Inventory{"Danang", "0.0.5"}`
 		writeText += "\n"
 		writeText += `	tmpl, err := template.New("test").Parse(templates.UsageTemplate)`
 		writeText += "\n"

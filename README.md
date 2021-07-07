@@ -9,7 +9,7 @@
   - Run this command to download:
 
   ```bash
-    $ sudo curl -L "https://github.com/danangkonang/migration-go-cli/releases/download/v0.0.3/gomig" -o /usr/local/bin/gomig
+    $ sudo curl -L "https://github.com/danangkonang/migration-go-cli/releases/download/v0.0.5/gomig" -o /usr/local/bin/gomig
   ```
 
   - Apply executable permissions to the binary:

@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-var path_type_execution = "migration/app/execusion/type_execution.go"
+var path_type_execution = "migration/core/execusion/type_execution.go"
 
 func CreateTypeFileExecution() {
 	_, err := os.Stat(path_type_execution)
