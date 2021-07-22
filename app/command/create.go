@@ -19,14 +19,15 @@ func MigrationCreate() {
 	subCommand := os.Args[2]
 	switch subCommand {
 	case "migration":
-		_, err := os.Stat("migration/database/migration")
+		_, err := os.Stat("db/migration")
 		if err != nil {
 			fmt.Println("no initial direktori")
 			os.Exit(0)
 		}
-		CreateMigration()
+		// CreateMigration()
+		CreateMigrationTableV2()
 	case "seeder":
-		_, err := os.Stat("migration/database/seed")
+		_, err := os.Stat("db/seeder")
 		if err != nil {
 			fmt.Println("no initial direktori")
 			os.Exit(0)

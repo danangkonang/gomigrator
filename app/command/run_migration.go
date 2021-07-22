@@ -28,7 +28,7 @@ func MigrationsRun() {
 }
 
 func execMigration(firstFlag, typeFlag string, second []string) {
-	cmd := exec.Command("go", "run", "migration/bin.go", firstFlag, typeFlag, strings.Join(second, ","))
+	cmd := exec.Command("go", "run", "db/bin.go", firstFlag, typeFlag, strings.Join(second, ","))
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Run()

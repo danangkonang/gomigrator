@@ -1,4 +1,7 @@
 .env
 
-migration/
+# migration/
+db/
 gomig
+migration-pg/
+docker-compose.yml

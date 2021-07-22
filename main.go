@@ -27,8 +27,10 @@ func runCmd() {
 		helper.PrintVersion()
 	case "--version":
 		helper.PrintVersion()
+	// case "init":
+	// 	command.Initial()
 	case "init":
-		command.Initial()
+		command.InitialV2()
 	case "create":
 		command.MigrationCreate() //go run main.go create migration [name file]
 	case "-c":

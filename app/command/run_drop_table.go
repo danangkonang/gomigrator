@@ -19,7 +19,7 @@ func DropTableRun() {
 			os.Exit(0)
 		}
 		// fmt.Println("helper lain")
-		_, err := os.Stat("migration/database/migration")
+		_, err := os.Stat("db/migration")
 		if err != nil {
 			fmt.Println("no initial direktori")
 			os.Exit(0)
@@ -33,7 +33,7 @@ func DropTableRun() {
 }
 
 func execDrop(typeFlag string, second []string) {
-	cmd := exec.Command("go", "run", "migration/bin.go", typeFlag, strings.Join(second, ","))
+	cmd := exec.Command("go", "run", "db/bin.go", typeFlag, strings.Join(second, ","))
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Run()
