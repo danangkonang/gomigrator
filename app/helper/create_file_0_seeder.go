@@ -23,7 +23,7 @@ func CreateZeroSeeder() {
 		writeText += "type Seeder struct{}\n"
 
 		_, err = file.WriteString(writeText)
-		if isErrors(err) {
+		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(0)
 		}

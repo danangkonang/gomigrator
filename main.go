@@ -27,19 +27,16 @@ func runCmd() {
 		helper.PrintVersion()
 	case "--version":
 		helper.PrintVersion()
-	// case "init":
-	// 	command.Initial()
 	case "init":
 		command.InitialV2()
 	case "create":
-		command.MigrationCreate() //go run main.go create migration [name file]
+		command.MigrationSeederCreate() //go run main.go create migration [name file]
 	case "-c":
-		command.MigrationCreate() //go run main.go create migration [name file]
+		command.MigrationSeederCreate() //go run main.go create migration [name file]
 	case "run":
-		// command.MigrationRun() //go run main.go run migration [name file]
-		command.MigrationsRun()
+		command.MigrationSeederRun()
 	case "-r":
-		command.MigrationsRun() //go run main.go run migration [name file]
+		command.MigrationSeederRun() //go run main.go run migration [name file]
 	case "reset":
 		command.EmtySeederData() // delete data seeder
 	case "drop":

@@ -8,7 +8,7 @@ import (
 	"github.com/danangkonang/migration-go-cli/app/helper"
 )
 
-func MigrationsRun() {
+func MigrationSeederRun() {
 	switch os.Args[2] {
 	case "--hepl":
 		helper.MultyPrintHelper("run")
