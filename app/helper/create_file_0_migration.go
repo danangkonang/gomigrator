@@ -28,6 +28,8 @@ func CreateZeroMigration() {
 		writeText += `	"log"`
 		writeText += "\n"
 		writeText += `	"time"`
+		writeText += "\n\n"
+		writeText += `	_ "github.com/lib/pq"`
 		writeText += "\n"
 		writeText += ")\n\n"
 
@@ -43,12 +45,12 @@ func CreateZeroMigration() {
 		writeText += "\n"
 		writeText += `		"localhost",`
 		writeText += "\n"
-		writeText += "		9090,\n"
+		writeText += "		5432,\n"
 		writeText += `		"postgres",`
 		writeText += "\n"
 		writeText += `		"postgres",`
 		writeText += "\n"
-		writeText += `		"regional_service",`
+		writeText += `		"default",`
 		writeText += "\n"
 		writeText += "	)\n"
 		writeText += `	db, err := sql.Open("postgres", connection)`

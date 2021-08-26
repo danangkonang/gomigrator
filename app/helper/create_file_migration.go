@@ -88,14 +88,18 @@ func CreateMigrationFileV2(migration *Migration) {
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
 		writeMigration += "func (m *Migration) " + strings.Title(table_name) + "() {\n"
-		writeMigration += "	_, err := Connection().Db.Exec(`\n"
+
+		writeMigration += "	query := `\n"
 		writeMigration += "		CREATE TABLE " + table_name + "(\n"
 		writeMigration += "			id serial PRIMARY KEY,\n"
 		writeMigration += "			name VARCHAR (225) NOT NULL,\n"
 		writeMigration += "			created_at TIMESTAMP NOT NULL,\n"
 		writeMigration += "			updated_at TIMESTAMP NOT NULL\n"
-		writeMigration += "		);\n"
-		writeMigration += "	`)\n"
+		writeMigration += "		)\n"
+		writeMigration += "	`\n"
+
+		writeMigration += "	_, err := Connection().Db.Exec(query)\n"
+
 		writeMigration += "	if err != nil {\n"
 		writeMigration += "		fmt.Println(err.Error())\n"
 		writeMigration += "		os.Exit(0)\n"

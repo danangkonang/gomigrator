@@ -20,7 +20,7 @@ func CreateEnvFile() {
 DB_HOST=localhost
 DB_TYPE=postgres
 DB_PORT=5432
-DB_NAME=testing
+DB_NAME=default
 DB_PASSWORD=postgres
 DB_USER=postgres
 `)

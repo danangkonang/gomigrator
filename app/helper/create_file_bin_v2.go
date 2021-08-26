@@ -34,19 +34,24 @@ func CreateBinFile(thisDir, dirMigration string) {
 		writeText += "\n"
 		writeText += `	"github.com/danangkonang/` + thisDir + `/db/seeder"`
 		writeText += "\n"
+		writeText += `	"github.com/joho/godotenv"`
+		writeText += "\n"
 		writeText += ")\n\n"
 
 		writeText += "type Tables struct {\n"
 		writeText += "	NameTable []string\n"
 		writeText += "}\n\n"
-
 		writeText += "var (\n"
 		writeText += `	MigrationFolder = "db/migration"`
 		writeText += "\n"
 		writeText += `	SeederFolder    = "db/seeder"`
 		writeText += "\n"
-		writeText += ")\n"
+		writeText += ")\n\n"
 		// function
+		writeText += "func init() {\n"
+		writeText += "	godotenv.Load()\n"
+		writeText += "}\n\n"
+
 		writeText += "func main() {\n"
 		writeText += "	if len(os.Args[1:]) == 0 {\n"
 		writeText += "		PrintHelper()\n"
@@ -95,7 +100,6 @@ func CreateBinFile(thisDir, dirMigration string) {
 		writeText += "\n"
 		writeText += `	case "migration":`
 		writeText += "\n"
-		writeText += "\n"
 		writeText += `		if os.Args[3] == "" {`
 		writeText += "\n"
 		writeText += "			RuningMigration(&t)"
@@ -109,7 +113,6 @@ func CreateBinFile(thisDir, dirMigration string) {
 		writeText += "		}"
 		writeText += "\n"
 		writeText += `	case "seeder":`
-		writeText += "\n"
 		writeText += "\n"
 		writeText += `		if os.Args[3] == "" {`
 		writeText += "\n"
@@ -189,9 +192,9 @@ func CreateBinFile(thisDir, dirMigration string) {
 		writeText += "		}\n"
 		writeText += "		tbl.NameTable = newFile\n"
 		writeText += "	}\n"
-		writeText += "	m := seeder.Seeder{}\n"
+		writeText += "	s := seeder.Seeder{}\n"
 		writeText += "	for _, migrate := range tbl.NameTable {\n"
-		writeText += "		meth := reflect.ValueOf(&m).MethodByName(strings.Title(migrate))\n"
+		writeText += "		meth := reflect.ValueOf(&s).MethodByName(strings.Title(migrate))\n"
 		writeText += "		meth.Call(nil)\n"
 		writeText += "	}\n"
 		writeText += "}\n\n"

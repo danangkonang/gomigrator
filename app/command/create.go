@@ -32,7 +32,8 @@ func MigrationCreate() {
 			fmt.Println("no initial direktori")
 			os.Exit(0)
 		}
-		CreateSeeder()
+		// CreateSeeder()
+		CreateSeederTableV2()
 	case "-h":
 		helper.MultyPrintHelper("create")
 	case "--help":

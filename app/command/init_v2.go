@@ -23,6 +23,7 @@ func InitialV2() {
 	helper.CreateBinFile(thisDir, DirDb)
 	helper.CreateZeroMigration()
 	helper.CreateZeroSeeder()
+	helper.CreateEnvFile()
 }
 
 func getTridpartyV2() {
