@@ -19,28 +19,64 @@ func main() {
 func runCmd() {
 	usrCmd := os.Args[1]
 	switch usrCmd {
+	/*
+	* print helper cli
+	 */
 	case "-h":
 		helper.PrintHelper()
 	case "--help":
 		helper.PrintHelper()
+
+	/*
+	* print version aplication cli
+	 */
 	case "-v":
 		helper.PrintVersion()
 	case "--version":
 		helper.PrintVersion()
+
+	/*
+	* comand for init db migration and seeder directory
+	* expanple: go run main.go init
+	 */
 	case "init":
 		command.InitialV2()
+
+	/*
+	* comand for generate migration or seeder file
+	* expanple: go run main.go create migration --name <table name>
+	* file will be save to db/migration/<filename>
+	* expanple: go run main.go create seeder --name <file name> --table <table name>
+	* file will be save to db/seeder/<filename>
+	 */
 	case "create":
-		command.MigrationSeederCreate() //go run main.go create migration [name file]
+		command.MigrationSeederCreate()
 	case "-c":
-		command.MigrationSeederCreate() //go run main.go create migration [name file]
+		command.MigrationSeederCreate()
+
+	/*
+	* comand for running migration or seeder
+	* expanple: go run main.go run migration
+	* expanple: go run main.go run seeder
+	 */
 	case "run":
 		command.MigrationSeederRun()
 	case "-r":
-		command.MigrationSeederRun() //go run main.go run migration [name file]
+		command.MigrationSeederRun()
+
+	/*
+	* comand for delete all data in table
+	* expanple: go run main.go reset
+	 */
 	case "reset":
-		command.EmtySeederData() // delete data seeder
+		command.EmtySeederData()
+
+	/*
+	* comand for delete all tables in database
+	* expanple: go run main.go drop
+	 */
 	case "drop":
-		command.DropTableRun() // delete table
+		command.DropTableRun()
 	default:
 		helper.PrintHelper()
 	}
