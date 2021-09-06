@@ -15,15 +15,39 @@ var (
 )
 
 func InitialV2() {
-	thisDir := helper.MyRootDir()
-	getTridpartyV2()
-	makeDirectoryV2(DirDb)
-	makeDirectoryV2(DirMigration)
-	makeDirectoryV2(DirSeeder)
-	helper.CreateBinFile(thisDir, DirDb)
-	helper.CreateZeroMigration()
-	helper.CreateZeroSeeder()
-	helper.CreateEnvFile()
+	// fmt.Println("panjang: ", len(os.Args))
+	if len(os.Args) > 2 {
+		if len(os.Args) == 4 {
+			// fmt.Println(os.Args[3])
+			thisDir := helper.MyRootDir()
+			getTridpartyV2()
+			makeDirectoryV2(DirDb)
+			makeDirectoryV2(DirMigration)
+			makeDirectoryV2(DirSeeder)
+			helper.CreateBinFile(thisDir, DirDb)
+			helper.CreateZeroMigration()
+			helper.CreateZeroSeeder()
+			helper.CreateEnvFile("mysql")
+		} else {
+			if os.Args[2] == "-d" || os.Args[2] == "--driver" {
+				fmt.Println("unow driver")
+			} else {
+				err := fmt.Sprintf("unow %s", os.Args[2])
+				fmt.Println(err)
+			}
+		}
+	} else {
+		// fmt.Println("driver: ", os.Args[1])
+		thisDir := helper.MyRootDir()
+		getTridpartyV2()
+		makeDirectoryV2(DirDb)
+		makeDirectoryV2(DirMigration)
+		makeDirectoryV2(DirSeeder)
+		helper.CreateBinFile(thisDir, DirDb)
+		helper.CreateZeroMigration()
+		helper.CreateZeroSeeder()
+		helper.CreateEnvFile("postgres")
+	}
 }
 
 func getTridpartyV2() {
