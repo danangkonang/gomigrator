@@ -34,7 +34,7 @@ type Helper struct {
 }
 
 var helperTmp = `
-Usage: create {{"\n"}}
+Usage: create [COMMAND] [OPTIONS]{{"\n"}}
 {{- if .Option }}
 Commands:
 {{- range .Option}}
@@ -50,12 +50,15 @@ Options:
 func printHeler(temp string, data interface{}) {
 	tmpl, err := template.New("heler").Parse(temp)
 	if err != nil {
-		panic(err)
+		fmt.Println(err.Error())
+		os.Exit(0)
 	}
 	err = tmpl.Execute(os.Stdout, data)
 	if err != nil {
-		panic(err)
+		fmt.Println(err.Error())
+		os.Exit(0)
 	}
+	os.Exit(0)
 }
 
 func main() {
@@ -103,10 +106,10 @@ func main() {
 	create := flag.NewFlagSet("create", flag.ExitOnError)
 	var c model.Create
 	migration := flag.NewFlagSet("migration", flag.ContinueOnError)
-	migration.Func("name", "generate file name", func(s string) error {
-		c.FileName = s
-		return nil
-	})
+	// migration.Func("name", "generate file name", func(s string) error {
+	// 	c.FileName = s
+	// 	return nil
+	// })
 	migration.Func("table", "generate file name", func(s string) error {
 		c.TableName = s
 		return nil
@@ -147,7 +150,6 @@ func main() {
 			printHeler(helperTmp, hlp)
 		}
 		init.Parse(os.Args[2:])
-		// cli.Init(&i)
 		command.Init(&i)
 	case "create":
 		create.Usage = func() {
@@ -196,7 +198,7 @@ func handleCreate(argument []string, migration, seeder *flag.FlagSet, c *model.C
 	case "migration":
 		migration.Usage = func() {
 			var cmdFlag []*FlagCmd
-			order := []string{"table", "name"}
+			order := []string{"table"}
 			for _, item := range order {
 				flg := migration.Lookup(item)
 				cmdFlag = append(cmdFlag, &FlagCmd{
@@ -212,8 +214,23 @@ func handleCreate(argument []string, migration, seeder *flag.FlagSet, c *model.C
 		migration.Parse(argument[3:])
 		command.CreateMigtaion(c)
 	case "seeder":
+		seeder.Usage = func() {
+			var cmdFlag []*FlagCmd
+			order := []string{"table", "name"}
+			for _, item := range order {
+				flg := seeder.Lookup(item)
+				cmdFlag = append(cmdFlag, &FlagCmd{
+					FlagName: fmt.Sprintf("--%s", flg.Name),
+					FlagDesc: flg.Usage,
+				})
+			}
+			hlp := &Helper{
+				Argument: cmdFlag,
+			}
+			printHeler(helperTmp, hlp)
+		}
 		seeder.Parse(argument[3:])
-		// cli.CreateSeeder(&c)
+		command.CreateSeeder(c)
 	default:
 		fmt.Println("helper")
 		os.Exit(0)
