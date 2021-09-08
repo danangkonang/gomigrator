@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"text/template"
 
 	"github.com/danangkonang/migration-go-cli/app/command"
@@ -39,8 +40,7 @@ Usage: create [COMMAND] [OPTIONS]{{"\n"}}
 Commands:
 {{- range .Option}}
   {{ .CmdName }}    {{"\t"}}{{ .CmdDesc }}{{ end -}}
-{{"\n"}}
-{{ end }}
+{{"\n"}}{{ end }}
 Options:
 {{- range .Argument}}
   {{ .FlagName }}  {{"\t"}}{{ .FlagDesc }}{{ end -}}
@@ -76,6 +76,10 @@ func main() {
 		os.Exit(0)
 	}
 	var i model.Init
+
+	/*
+	*
+	 */
 	init := flag.NewFlagSet("init", flag.ExitOnError)
 	init.Func("driver", "set up db driver", func(s string) error {
 		i.Driver = s
@@ -103,13 +107,12 @@ func main() {
 		return nil
 	})
 
+	/*
+	*
+	 */
 	create := flag.NewFlagSet("create", flag.ExitOnError)
 	var c model.Create
 	migration := flag.NewFlagSet("migration", flag.ContinueOnError)
-	// migration.Func("name", "generate file name", func(s string) error {
-	// 	c.FileName = s
-	// 	return nil
-	// })
 	migration.Func("table", "generate file name", func(s string) error {
 		c.TableName = s
 		return nil
@@ -124,8 +127,40 @@ func main() {
 		return nil
 	})
 
+	/*
+	*
+	 */
 	up := flag.NewFlagSet("up", flag.ExitOnError)
+	var upM model.UpDown
+	upMigration := flag.NewFlagSet("migration", flag.ContinueOnError)
+	upMigration.Func("tables", "list file name", func(s string) error {
+		upM.Tables = strings.Fields(s)
+		return nil
+	})
+	upSeeder := flag.NewFlagSet("seeder", flag.ContinueOnError)
+	upSeeder.Func("tables", "list file name", func(s string) error {
+		upM.Tables = strings.Fields(s)
+		return nil
+	})
+
+	/*
+	*
+	 */
 	down := flag.NewFlagSet("down", flag.ExitOnError)
+	var dwM model.UpDown
+	// remove table migartion
+	downMigration := flag.NewFlagSet("migration", flag.ContinueOnError)
+	downMigration.Func("tables", "list file name", func(s string) error {
+		dwM.Tables = strings.Fields(s)
+		return nil
+	})
+
+	// remove seeder data
+	downSeeder := flag.NewFlagSet("seeder", flag.ContinueOnError)
+	downSeeder.Func("tables", "list file name", func(s string) error {
+		dwM.Tables = strings.Fields(s)
+		return nil
+	})
 	reset := flag.NewFlagSet("reset", flag.ExitOnError)
 
 	if len(os.Args) < 2 {
@@ -163,7 +198,7 @@ func main() {
 				CmdDesc: "migration file",
 			})
 			var cmdFlag []*FlagCmd
-			order := []string{"table", "name"}
+			order := []string{"table"}
 			for _, item := range order {
 				flg := migration.Lookup(item)
 				cmdFlag = append(cmdFlag, &FlagCmd{
@@ -178,13 +213,39 @@ func main() {
 			printHeler(helperTmp, hlp)
 		}
 		create.Parse(os.Args[2:])
-		handleCreate(os.Args, migration, seeder, &c)
+		createHandle(os.Args, migration, seeder, &c)
 	case "up":
+		up.Usage = func() {
+			var cmdOption []*ComandUsage
+			cmdOption = append(cmdOption, &ComandUsage{
+				CmdName: upMigration.Name(),
+				CmdDesc: "migration file",
+			})
+			cmdOption = append(cmdOption, &ComandUsage{
+				CmdName: upSeeder.Name(),
+				CmdDesc: "migration file",
+			})
+			var cmdFlag []*FlagCmd
+			order := []string{"tables"}
+			for _, item := range order {
+				flg := upMigration.Lookup(item)
+				cmdFlag = append(cmdFlag, &FlagCmd{
+					FlagName: fmt.Sprintf("--%s", flg.Name),
+					FlagDesc: flg.Usage,
+				})
+			}
+			hlp := &Helper{
+				Option:   cmdOption,
+				Argument: cmdFlag,
+			}
+			printHeler(helperTmp, hlp)
+		}
 		up.Parse(os.Args[2:])
-		// HandleUp(os.Args)
+		upHandle(os.Args, upMigration, upSeeder, &upM)
 	case "down":
 		down.Parse(os.Args[2:])
 		// HandleDown(os.Args)
+		downHandle(os.Args, downMigration, downSeeder, &dwM)
 	case "reset":
 		reset.Parse(os.Args[2:])
 	default:
@@ -193,7 +254,96 @@ func main() {
 	}
 }
 
-func handleCreate(argument []string, migration, seeder *flag.FlagSet, c *model.Create) {
+func downHandle(argument []string, downMigration, downSeeder *flag.FlagSet, c *model.UpDown) {
+	switch argument[2] {
+	case "migration":
+		downMigration.Usage = func() {
+			var cmdFlag []*FlagCmd
+			order := []string{"tables"}
+			for _, item := range order {
+				flg := downMigration.Lookup(item)
+				cmdFlag = append(cmdFlag, &FlagCmd{
+					FlagName: fmt.Sprintf("--%s", flg.Name),
+					FlagDesc: flg.Usage,
+				})
+			}
+			hlp := &Helper{
+				Argument: cmdFlag,
+			}
+			printHeler(helperTmp, hlp)
+		}
+		downMigration.Parse(argument[3:])
+		command.DownMigration(c)
+	case "seeder":
+		downSeeder.Usage = func() {
+			var cmdFlag []*FlagCmd
+			order := []string{"tables"}
+			for _, item := range order {
+				flg := downSeeder.Lookup(item)
+				cmdFlag = append(cmdFlag, &FlagCmd{
+					FlagName: fmt.Sprintf("--%s", flg.Name),
+					FlagDesc: flg.Usage,
+				})
+			}
+			hlp := &Helper{
+				Argument: cmdFlag,
+			}
+			printHeler(helperTmp, hlp)
+		}
+		downSeeder.Parse(argument[3:])
+		command.DownSeeder(c)
+	default:
+		fmt.Println("helper")
+		os.Exit(0)
+	}
+}
+
+func upHandle(argument []string, upMigration, upSeeder *flag.FlagSet, c *model.UpDown) {
+	switch argument[2] {
+	case "migration":
+		upMigration.Usage = func() {
+			var cmdFlag []*FlagCmd
+			order := []string{"tables"}
+			for _, item := range order {
+				flg := upMigration.Lookup(item)
+				cmdFlag = append(cmdFlag, &FlagCmd{
+					FlagName: fmt.Sprintf("--%s", flg.Name),
+					FlagDesc: flg.Usage,
+				})
+			}
+			hlp := &Helper{
+				Argument: cmdFlag,
+			}
+			printHeler(helperTmp, hlp)
+		}
+		upMigration.Parse(argument[3:])
+		command.UpMigration(c)
+		// command.CreateMigtaion(c)
+	case "seeder":
+		upSeeder.Usage = func() {
+			var cmdFlag []*FlagCmd
+			order := []string{"tables"}
+			for _, item := range order {
+				flg := upSeeder.Lookup(item)
+				cmdFlag = append(cmdFlag, &FlagCmd{
+					FlagName: fmt.Sprintf("--%s", flg.Name),
+					FlagDesc: flg.Usage,
+				})
+			}
+			hlp := &Helper{
+				Argument: cmdFlag,
+			}
+			printHeler(helperTmp, hlp)
+		}
+		upSeeder.Parse(argument[3:])
+		command.UpSeeder(c)
+	default:
+		fmt.Println("helper")
+		os.Exit(0)
+	}
+}
+
+func createHandle(argument []string, migration, seeder *flag.FlagSet, c *model.Create) {
 	switch argument[2] {
 	case "migration":
 		migration.Usage = func() {

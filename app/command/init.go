@@ -11,7 +11,7 @@ import (
 
 func Init(app *model.Init) {
 	if app.Driver == "" {
-		app.Driver = "postgresql"
+		app.Driver = "postgres"
 	}
 	if app.Host == "" {
 		app.Host = "localhost"
@@ -19,16 +19,20 @@ func Init(app *model.Init) {
 	if app.Port == 0 {
 		app.Port = 5432
 	}
+	if app.Driver == "mysql" {
+		app.Port = 3306
+	}
 	if app.DAtabase == "" {
-		app.DAtabase = "dafault"
+		app.DAtabase = "default"
 	}
 	if app.User == "" {
-		app.User = "root"
+		app.User = "user"
 	}
 	if app.Password == "" {
-		app.Password = "root"
+		app.Password = "password"
 	}
 	this_dir := helper.MyRootDir()
+	// os.Exit(0)
 	findTridparty(app)
 	makeDirectoryV2(DirDb)
 	makeDirectoryV2(DirMigration)
@@ -52,6 +56,10 @@ func findTridparty(app *model.Init) {
 		pq.Run()
 		godotenv.Run()
 	case "mysql":
+		pq := exec.Command("go", "get", "github.com/go-sql-driver/mysql")
+		godotenv := exec.Command("go", "get", "github.com/joho/godotenv")
+		pq.Run()
+		godotenv.Run()
 	default:
 		fmt.Println("help me")
 		os.Exit(0)

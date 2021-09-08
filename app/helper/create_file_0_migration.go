@@ -3,7 +3,6 @@ package helper
 import (
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/danangkonang/migration-go-cli/app/model"
 )
@@ -30,8 +29,18 @@ func NewCreateZeroMigration(app *model.Init) {
 		writeText += "\n"
 		writeText += `	"log"`
 		writeText += "\n"
+		writeText += `	"os"`
+		writeText += "\n"
 		writeText += `	"time"`
 		writeText += "\n\n"
+		switch app.Driver {
+		case "mysql":
+			writeText += `	_ "github.com/go-sql-driver/mysql"`
+		case "postgres":
+			writeText += `	_ "github.com/lib/pq"`
+		default:
+			writeText += `	_ "github.com/lib/pq"`
+		}
 		writeText += `	_ "github.com/lib/pq"`
 		writeText += "\n"
 		writeText += ")\n\n"
@@ -44,20 +53,26 @@ func NewCreateZeroMigration(app *model.Init) {
 
 		writeText += "func Connection() *DB {\n"
 		writeText += "	connection := fmt.Sprintf(\n"
-		writeText += `		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Jakarta",`
+		writeText += `		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Jakarta",`
 		writeText += "\n"
-		writeText += `		"` + app.Host + `",`
+		// writeText += `		"` + app.Host + `",`
+		writeText += `		os.Getenv("DB_HOST"),`
 		writeText += "\n"
-		writeText += `		` + strconv.Itoa(app.Port) + `,`
+		// writeText += `		` + strconv.Itoa(app.Port) + `,`
+		writeText += `		os.Getenv("DB_PORT"),`
 		writeText += "\n"
-		writeText += `		"` + app.User + `",`
+		// writeText += `		"` + app.User + `",`
+		writeText += `		os.Getenv("DB_USER"),`
 		writeText += "\n"
-		writeText += `		"` + app.Password + `",`
+		// writeText += `		"` + app.Password + `",`
+		writeText += `		os.Getenv("DB_PASSWORD"),`
 		writeText += "\n"
-		writeText += `		"` + app.DAtabase + `",`
+		// writeText += `		"` + app.DAtabase + `",`
+		writeText += `		os.Getenv("DB_NAME"),`
 		writeText += "\n"
 		writeText += "	)\n"
-		writeText += `	db, err := sql.Open("` + app.Driver + `", connection)`
+		// writeText += `	db, err := sql.Open("` + app.Driver + `", connection)`
+		writeText += `	db, err := sql.Open(os.Getenv("DB_DRIVER"), connection)`
 		writeText += "\n"
 		writeText += "	if err != nil {\n"
 		writeText += "		log.Panic(err.Error())\n"

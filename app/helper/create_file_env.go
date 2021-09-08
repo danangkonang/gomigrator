@@ -19,7 +19,7 @@ func NewCreateEnvFile(app *model.Init) {
 			fmt.Println(err.Error())
 		}
 		file_env := fmt.Sprintf(
-			"DB_DRIVER=%s\nDB_HOST=%s\nDB_PORT=%d\nDB_NAME=%s\nDB_PASSWORD=%s\nDB_USER=%s",
+			"DB_DRIVER=%s\nDB_HOST=%s\nDB_PORT=%d\nDB_NAME=%s\nDB_USER=%s\nDB_PASSWORD=%s\n",
 			app.Driver,
 			app.Host,
 			app.Port,

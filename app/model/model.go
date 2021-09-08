@@ -15,5 +15,5 @@ type Init struct {
 }
 
 type UpDown struct {
-	TableName string
+	Tables []string
 }
