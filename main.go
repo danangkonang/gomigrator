@@ -30,12 +30,21 @@ type FlagCmd struct {
 }
 
 type Helper struct {
+	Usage    string
+	Version  string
+	Error    string
 	Option   []*ComandUsage
 	Argument []*FlagCmd
 }
 
+var versionTmp = `Version: {{ .Version }}{{"\n"}}`
+
+var errorTmp = `unknow comand '{{ .Error }}'{{"\n"}}
+see 'gomig --help'
+`
+
 var helperTmp = `
-Usage: create [COMMAND] [OPTIONS]{{"\n"}}
+Usage: {{ .Usage }}{{"\n"}}
 {{- if .Option }}
 Commands:
 {{- range .Option}}
@@ -61,6 +70,53 @@ func printHeler(temp string, data interface{}) {
 	os.Exit(0)
 }
 
+func globalHelp() {
+	hlp := &Helper{
+		Usage: "gomig [COMAND] [OPTIONS]",
+		Option: []*ComandUsage{
+			{
+				CmdName: "init",
+				CmdDesc: "generate db directory for",
+			},
+			{
+				CmdName: "create",
+				CmdDesc: "create migration or seeder file",
+			},
+			{
+				CmdName: "up",
+				CmdDesc: "exect migration to database",
+			},
+			{
+				CmdName: "down",
+				CmdDesc: "drop migration on databse",
+			},
+			{
+				CmdName: "migration",
+				CmdDesc: "generate type migration",
+			},
+			{
+				CmdName: "seeder",
+				CmdDesc: "generate type seeder",
+			},
+		},
+		Argument: []*FlagCmd{
+			{
+				FlagName: "--table",
+				FlagDesc: "table name",
+			},
+			{
+				FlagName: "--tables",
+				FlagDesc: "list tables",
+			},
+			{
+				FlagName: "--name",
+				FlagDesc: "generate file name",
+			},
+		},
+	}
+	printHeler(helperTmp, hlp)
+}
+
 func main() {
 	flag.BoolVar(&help, "h", false, "help")
 	flag.BoolVar(&help, "help", false, "help")
@@ -68,11 +124,13 @@ func main() {
 	flag.BoolVar(&version, "version", false, "version")
 	flag.Parse()
 	if help || len(os.Args[1:]) == 0 {
-		fmt.Println("show help 1")
-		os.Exit(0)
+		globalHelp()
 	}
 	if version {
-		fmt.Println("show version")
+		hlp := &Helper{
+			Version: "1.1.1",
+		}
+		printHeler(versionTmp, hlp)
 		os.Exit(0)
 	}
 	var i model.Init
@@ -161,11 +219,9 @@ func main() {
 		dwM.Tables = strings.Fields(s)
 		return nil
 	})
-	reset := flag.NewFlagSet("reset", flag.ExitOnError)
 
 	if len(os.Args) < 2 {
-		fmt.Println("helper")
-		os.Exit(0)
+		globalHelp()
 	}
 	switch os.Args[1] {
 	case "init":
@@ -180,6 +236,7 @@ func main() {
 				})
 			}
 			hlp := &Helper{
+				Usage:    "gomig init [OPTIONS]",
 				Argument: cmdFlag,
 			}
 			printHeler(helperTmp, hlp)
@@ -207,6 +264,7 @@ func main() {
 				})
 			}
 			hlp := &Helper{
+				Usage:    "gomig create [COMMAND] [OPTIONS]",
 				Option:   cmdOption,
 				Argument: cmdFlag,
 			}
@@ -235,6 +293,7 @@ func main() {
 				})
 			}
 			hlp := &Helper{
+				Usage:    "gomig up [COMMAND] [OPTIONS]",
 				Option:   cmdOption,
 				Argument: cmdFlag,
 			}
@@ -243,14 +302,39 @@ func main() {
 		up.Parse(os.Args[2:])
 		upHandle(os.Args, upMigration, upSeeder, &upM)
 	case "down":
+		down.Usage = func() {
+			var cmdOption []*ComandUsage
+			cmdOption = append(cmdOption, &ComandUsage{
+				CmdName: upMigration.Name(),
+				CmdDesc: "migration file",
+			})
+			cmdOption = append(cmdOption, &ComandUsage{
+				CmdName: upSeeder.Name(),
+				CmdDesc: "migration file",
+			})
+			var cmdFlag []*FlagCmd
+			order := []string{"tables"}
+			for _, item := range order {
+				flg := upMigration.Lookup(item)
+				cmdFlag = append(cmdFlag, &FlagCmd{
+					FlagName: fmt.Sprintf("--%s", flg.Name),
+					FlagDesc: flg.Usage,
+				})
+			}
+			hlp := &Helper{
+				Usage:    "gomig down [COMMAND] [OPTIONS]",
+				Option:   cmdOption,
+				Argument: cmdFlag,
+			}
+			printHeler(helperTmp, hlp)
+		}
 		down.Parse(os.Args[2:])
-		// HandleDown(os.Args)
 		downHandle(os.Args, downMigration, downSeeder, &dwM)
-	case "reset":
-		reset.Parse(os.Args[2:])
 	default:
-		fmt.Println("helper")
-		os.Exit(0)
+		hlp := &Helper{
+			Error: os.Args[1],
+		}
+		printHeler(errorTmp, hlp)
 	}
 }
 
@@ -268,6 +352,7 @@ func downHandle(argument []string, downMigration, downSeeder *flag.FlagSet, c *m
 				})
 			}
 			hlp := &Helper{
+				Usage:    "gomig down migration [OPTIONS]",
 				Argument: cmdFlag,
 			}
 			printHeler(helperTmp, hlp)
@@ -286,6 +371,7 @@ func downHandle(argument []string, downMigration, downSeeder *flag.FlagSet, c *m
 				})
 			}
 			hlp := &Helper{
+				Usage:    "gomig down seeder [OPTIONS]",
 				Argument: cmdFlag,
 			}
 			printHeler(helperTmp, hlp)
@@ -293,8 +379,11 @@ func downHandle(argument []string, downMigration, downSeeder *flag.FlagSet, c *m
 		downSeeder.Parse(argument[3:])
 		command.DownSeeder(c)
 	default:
-		fmt.Println("helper")
-		os.Exit(0)
+		// globalHelp()
+		hlp := &Helper{
+			Error: os.Args[2],
+		}
+		printHeler(errorTmp, hlp)
 	}
 }
 
@@ -312,13 +401,13 @@ func upHandle(argument []string, upMigration, upSeeder *flag.FlagSet, c *model.U
 				})
 			}
 			hlp := &Helper{
+				Usage:    "gomig up migration [OPTIONS]",
 				Argument: cmdFlag,
 			}
 			printHeler(helperTmp, hlp)
 		}
 		upMigration.Parse(argument[3:])
 		command.UpMigration(c)
-		// command.CreateMigtaion(c)
 	case "seeder":
 		upSeeder.Usage = func() {
 			var cmdFlag []*FlagCmd
@@ -331,6 +420,7 @@ func upHandle(argument []string, upMigration, upSeeder *flag.FlagSet, c *model.U
 				})
 			}
 			hlp := &Helper{
+				Usage:    "gomig up seeder [OPTIONS]",
 				Argument: cmdFlag,
 			}
 			printHeler(helperTmp, hlp)
@@ -338,8 +428,11 @@ func upHandle(argument []string, upMigration, upSeeder *flag.FlagSet, c *model.U
 		upSeeder.Parse(argument[3:])
 		command.UpSeeder(c)
 	default:
-		fmt.Println("helper")
-		os.Exit(0)
+		// globalHelp()
+		hlp := &Helper{
+			Error: os.Args[2],
+		}
+		printHeler(errorTmp, hlp)
 	}
 }
 
@@ -357,6 +450,7 @@ func createHandle(argument []string, migration, seeder *flag.FlagSet, c *model.C
 				})
 			}
 			hlp := &Helper{
+				Usage:    "gomig create migration [OPTIONS]",
 				Argument: cmdFlag,
 			}
 			printHeler(helperTmp, hlp)
@@ -375,6 +469,7 @@ func createHandle(argument []string, migration, seeder *flag.FlagSet, c *model.C
 				})
 			}
 			hlp := &Helper{
+				Usage:    "gomig create seeder [OPTIONS]",
 				Argument: cmdFlag,
 			}
 			printHeler(helperTmp, hlp)
@@ -382,8 +477,11 @@ func createHandle(argument []string, migration, seeder *flag.FlagSet, c *model.C
 		seeder.Parse(argument[3:])
 		command.CreateSeeder(c)
 	default:
-		fmt.Println("helper")
-		os.Exit(0)
+		// globalHelp()
+		hlp := &Helper{
+			Error: os.Args[2],
+		}
+		printHeler(errorTmp, hlp)
 	}
 }
 
