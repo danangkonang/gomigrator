@@ -37,7 +37,8 @@ func Init(app *model.Init) {
 	makeDirectoryV2(DirDb)
 	makeDirectoryV2(DirMigration)
 	makeDirectoryV2(DirSeeder)
-	helper.CreateBinFile(this_dir, DirDb)
+	// helper.CreateBinFile(this_dir, DirDb)
+	helper.CreateBinFileNew(this_dir, DirDb)
 	helper.NewCreateZeroMigration(app)
 	helper.CreateZeroSeeder()
 	helper.NewCreateEnvFile(app)
@@ -50,7 +51,7 @@ func findTridparty(app *model.Init) {
 		godotenv := exec.Command("go", "get", "github.com/joho/godotenv")
 		pq.Run()
 		godotenv.Run()
-	case "postgresql":
+	case "postgres":
 		pq := exec.Command("go", "get", "github.com/lib/pq")
 		godotenv := exec.Command("go", "get", "github.com/joho/godotenv")
 		pq.Run()
@@ -61,7 +62,7 @@ func findTridparty(app *model.Init) {
 		pq.Run()
 		godotenv.Run()
 	default:
-		fmt.Println("help me")
+		fmt.Println("help me init")
 		os.Exit(0)
 	}
 }

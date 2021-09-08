@@ -83,7 +83,7 @@ func CreateSeeder(app *model.Create) {
 		writeMigration += "		fmt.Println(err.Error())\n"
 		writeMigration += "		os.Exit(0)\n"
 		writeMigration += "	}\n"
-		writeMigration += ` 	fmt.Println("success insert table ` + file_name + `")`
+		writeMigration += ` 	fmt.Println(string(migration.Green), "success", string(migration.Reset), "insert table ` + file_name + `")`
 		writeMigration += "	\n"
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)

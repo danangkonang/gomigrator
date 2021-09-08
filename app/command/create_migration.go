@@ -85,7 +85,7 @@ func CreateMigtaion(app *model.Create) {
 		writeMigration += "		fmt.Println(err.Error())\n"
 		writeMigration += "		os.Exit(0)\n"
 		writeMigration += "	}\n"
-		writeMigration += `  fmt.Println("success create table ` + file_name + `")`
+		writeMigration += `  fmt.Println(string(Green), "success", string(Reset), "create table ` + file_name + `")`
 		writeMigration += "\n"
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)

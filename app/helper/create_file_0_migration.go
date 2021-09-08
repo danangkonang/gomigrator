@@ -33,14 +33,16 @@ func NewCreateZeroMigration(app *model.Init) {
 		writeText += "\n"
 		writeText += `	"time"`
 		writeText += "\n\n"
-		switch app.Driver {
-		case "mysql":
-			writeText += `	_ "github.com/go-sql-driver/mysql"`
-		case "postgres":
-			writeText += `	_ "github.com/lib/pq"`
-		default:
-			writeText += `	_ "github.com/lib/pq"`
-		}
+		// switch app.Driver {
+		// case "mysql":
+		// 	writeText += `	_ "github.com/go-sql-driver/mysql"`
+		// case "postgres":
+		// 	writeText += `	_ "github.com/lib/pq"`
+		// default:
+		// 	writeText += `	_ "github.com/lib/pq"`
+		// }
+		writeText += `	_ "github.com/go-sql-driver/mysql"`
+		writeText += "\n"
 		writeText += `	_ "github.com/lib/pq"`
 		writeText += "\n"
 		writeText += ")\n\n"
@@ -51,27 +53,58 @@ func NewCreateZeroMigration(app *model.Init) {
 		writeText += "	Db *sql.DB\n"
 		writeText += "}\n\n"
 
+		writeText += "var (\n"
+		writeText += `	Green = "\033[32m"`
+		writeText += "\n"
+		writeText += `	Reset = "\033[0m"`
+		writeText += "\n"
+		writeText += ")\n\n"
+
 		writeText += "func Connection() *DB {\n"
-		writeText += "	connection := fmt.Sprintf(\n"
+		writeText += "	var connection string\n"
+
+		writeText += "	psql := fmt.Sprintf(\n"
 		writeText += `		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Jakarta",`
 		writeText += "\n"
-		// writeText += `		"` + app.Host + `",`
 		writeText += `		os.Getenv("DB_HOST"),`
 		writeText += "\n"
-		// writeText += `		` + strconv.Itoa(app.Port) + `,`
 		writeText += `		os.Getenv("DB_PORT"),`
 		writeText += "\n"
-		// writeText += `		"` + app.User + `",`
 		writeText += `		os.Getenv("DB_USER"),`
 		writeText += "\n"
-		// writeText += `		"` + app.Password + `",`
 		writeText += `		os.Getenv("DB_PASSWORD"),`
 		writeText += "\n"
-		// writeText += `		"` + app.DAtabase + `",`
 		writeText += `		os.Getenv("DB_NAME"),`
 		writeText += "\n"
 		writeText += "	)\n"
-		// writeText += `	db, err := sql.Open("` + app.Driver + `", connection)`
+
+		writeText += "	mysql := fmt.Sprintf(\n"
+		writeText += `		"%s:%s@tcp(%s:%s)/%s",`
+		writeText += "\n"
+		writeText += `		os.Getenv("DB_USER"),`
+		writeText += "\n"
+		writeText += `		os.Getenv("DB_PASSWORD"),`
+		writeText += "\n"
+		writeText += `		os.Getenv("DB_NAME"),`
+		writeText += "\n"
+		writeText += `		os.Getenv("DB_HOST"),`
+		writeText += "\n"
+		writeText += `		os.Getenv("DB_PORT"),`
+		writeText += "\n"
+		writeText += "	)\n"
+
+		writeText += `	switch os.Getenv("DB_DRIVER") {`
+		writeText += "\n"
+		writeText += `	case "postgres":`
+		writeText += "\n"
+		writeText += "		connection = psql\n"
+		writeText += `	case "mysql":`
+		writeText += "\n"
+		writeText += "		connection = mysql\n"
+		writeText += "	default:\n"
+		writeText += "		connection = psql\n"
+		writeText += "	}\n"
+
 		writeText += `	db, err := sql.Open(os.Getenv("DB_DRIVER"), connection)`
 		writeText += "\n"
 		writeText += "	if err != nil {\n"
