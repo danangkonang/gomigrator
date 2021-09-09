@@ -19,41 +19,132 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		}
 		writeText := "package main\n\n"
 		writeText += "import (\n"
-		writeText += `	"flag"`
-		writeText += "\n"
-		writeText += `	"fmt"`
-		writeText += "\n"
-		writeText += `	"io/ioutil"`
-		writeText += "\n"
-		writeText += `	"os"`
-		writeText += "\n"
-		writeText += `	"reflect"`
-		writeText += "\n"
-		writeText += `	"strings"`
-		writeText += "\n"
-		writeText += `	"text/template"`
-		writeText += "\n\n"
-		writeText += `	"github.com/danangkonang/` + thisDir + `/db/migration"`
-		writeText += "\n"
-		writeText += `	"github.com/danangkonang/` + thisDir + `/db/seeder"`
-		writeText += "\n"
-		writeText += `	"github.com/joho/godotenv"`
-		writeText += "\n"
+		writeText += "	\"flag\"\n"
+		writeText += "	\"fmt\"\n"
+		writeText += "	\"io/ioutil\"\n"
+		writeText += "	\"os\"\n"
+		writeText += "	\"reflect\"\n"
+		writeText += "	\"strings\"\n"
+		writeText += "	\"text/template\"\n\n"
+		writeText += "	\"github.com/danangkonang/" + thisDir + "/db/migration\"\n"
+		writeText += "	\"github.com/danangkonang/" + thisDir + "/db/seeder\"\n"
+		writeText += "	\"github.com/joho/godotenv\"\n"
+		writeText += ")\n\n"
+
+		writeText += "var (\n"
+		writeText += "	help    bool\n"
+		writeText += "	version bool\n"
 		writeText += ")\n\n"
 
 		writeText += "type Tables struct {\n"
 		writeText += "	NameTable []string\n"
 		writeText += "}\n\n"
 		writeText += "var (\n"
-		writeText += `	MigrationFolder = "db/migration"`
-		writeText += "\n"
-		writeText += `	SeederFolder    = "db/seeder"`
-		writeText += "\n"
-		writeText += `	green           = "\033[32m"`
-		writeText += "\n"
-		writeText += `	reset           = "\033[0m"`
-		writeText += "\n"
+		writeText += "	MigrationFolder = \"db/migration\"\n"
+		writeText += "	SeederFolder    = \"db/seeder\"\n"
+		writeText += "	green           = \"\033[32m\"\n"
+		writeText += "	reset           = \"\033[0m\"\n"
 		writeText += ")\n\n"
+
+		writeText += "type ComandUsage struct {\n"
+		writeText += "	CmdName  string\n"
+		writeText += "	CmdAlias string\n"
+		writeText += "	CmdDesc  string\n"
+		writeText += "}\n\n"
+
+		writeText += "type FlagCmd struct {\n"
+		writeText += "	FlagName  string\n"
+		writeText += "	FlagAlias string\n"
+		writeText += "	FlagDesc  string\n"
+		writeText += "}\n\n"
+
+		writeText += "type Helper struct {\n"
+		writeText += "	Usage    string\n"
+		writeText += "	Version  string\n"
+		writeText += "	Error    string\n"
+		writeText += "	Option   []*ComandUsage\n"
+		writeText += "	Argument []*FlagCmd\n"
+		writeText += "}\n\n"
+
+		writeText += "var versionTmp = `Version: {{ .Version }}\n"
+		writeText += "`\n\n"
+
+		writeText += "var errorTmp = `unknow comand '{{ .Error }}'\n\n"
+		writeText += "see 'gomigator --help'\n"
+		writeText += "`\n\n"
+
+		writeText += "var helperTmp = `\n"
+		writeText += "Usage: {{ .Usage }}\n"
+		writeText += "{{ if .Option }}\n"
+		writeText += "Commands:\n"
+		writeText += "{{- range .Option}}\n"
+		writeText += "	{{ .CmdName }}      {{\"\t\"}}{{ .CmdDesc }}{{ end -}}\n"
+		writeText += "{{ end }}\n\n"
+		writeText += "Options:\n"
+		writeText += "{{- range .Argument}}\n"
+		writeText += "	{{ .FlagName }}  {{\"\t\"}}{{ .FlagDesc }}{{ end }}\n\n"
+		writeText += "`\n\n"
+
+		writeText += "func printTemplate(temp string, data interface{}) {\n"
+		writeText += "	tmpl, err := template.New(\"help\").Parse(temp)\n"
+		writeText += "	if err != nil {\n"
+		writeText += "		fmt.Println(err.Error())\n"
+		writeText += "		os.Exit(0)\n"
+		writeText += "	}\n"
+		writeText += "	err = tmpl.Execute(os.Stdout, data)\n"
+		writeText += "	if err != nil {\n"
+		writeText += "		fmt.Println(err.Error())\n"
+		writeText += "		os.Exit(0)\n"
+		writeText += "	}\n"
+		writeText += "	os.Exit(0)\n"
+		writeText += "}\n\n"
+
+		writeText += "func globalHelp() {\n"
+		writeText += "	hlp := &Helper{\n"
+		writeText += "		Usage: \"gomigator [COMAND] [OPTIONS]\",\n"
+		writeText += "		Option: []*ComandUsage{\n"
+		writeText += "			{\n"
+		writeText += "				CmdName: \"init\",\n"
+		writeText += "				CmdDesc: \"generate db directory for\","
+		writeText += "			},\n"
+		writeText += "			{\n"
+		writeText += "				CmdName: \"create\",\n"
+		writeText += "				CmdDesc: \"create migration or seeder file\",\n"
+		writeText += "			},\n"
+		writeText += "			{\n"
+		writeText += "				CmdName: \"up\",\n"
+		writeText += "				CmdDesc: \"exect migration to database\",\n"
+		writeText += "			},\n"
+		writeText += "			{\n"
+		writeText += "				CmdName: \"down\",\n"
+		writeText += "				CmdDesc: \"drop migration on databse\",\n"
+		writeText += "			},\n"
+		writeText += "			{\n"
+		writeText += "				CmdName: \"migration\",\n"
+		writeText += "				CmdDesc: \"generate type migration\",\n"
+		writeText += "			},\n"
+		writeText += "			{\n"
+		writeText += "				CmdName: \"seeder\",\n"
+		writeText += "				CmdDesc: \"generate type seeder\",\n"
+		writeText += "			},\n"
+		writeText += "		},\n"
+		writeText += "		Argument: []*FlagCmd{\n"
+		writeText += "			{\n"
+		writeText += "				FlagName: \"--table\",\n"
+		writeText += "				FlagDesc: \"table name\",\n"
+		writeText += "			},\n"
+		writeText += "			{\n"
+		writeText += "				FlagName: \"--tables\",\n"
+		writeText += "				FlagDesc: \"list tables\",\n"
+		writeText += "			},\n"
+		writeText += "			{\n"
+		writeText += "				FlagName: \"--name\",\n"
+		writeText += "				FlagDesc: \"generate file name\",\n"
+		writeText += "			},\n"
+		writeText += "		},\n"
+		writeText += "	}\n"
+		writeText += "	printTemplate(helperTmp, hlp)\n"
+		writeText += "}\n\n"
 
 		writeText += "func init() {\n"
 		writeText += "	godotenv.Load()\n"
@@ -63,26 +154,35 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		* Main
 		 */
 		writeText += "func main() {\n"
+		writeText += "	flag.BoolVar(&help, \"h\", false, \"help\")\n"
+		writeText += "	flag.BoolVar(&help, \"help\", false, \"help\")\n"
+		writeText += "	flag.BoolVar(&version, \"v\", false, \"version\")\n"
+		writeText += "	flag.BoolVar(&version, \"version\", false, \"version\")\n"
+		writeText += "	flag.Parse()\n"
+		writeText += "	if help || len(os.Args[1:]) == 0 {\n"
+		writeText += `		globalHelp()`
+		writeText += "\n"
+		writeText += "	}\n"
+		writeText += "	if version {\n"
+		writeText += "		hlp := &Helper{\n"
+		writeText += "			Version: \"1.1.1\",\n"
+		writeText += "		}\n"
+		writeText += `		printTemplate(versionTmp, hlp)`
+		writeText += "	\n"
+		writeText += "	}\n"
 		writeText += "	var t Tables\n"
-		writeText += `	up := flag.NewFlagSet("up", flag.ExitOnError)`
-		writeText += "\n"
-		writeText += `	upMigration := flag.NewFlagSet("migration", flag.ContinueOnError)`
-		writeText += "\n"
-		writeText += `	upMigration.Func("tables", "list file name", func(s string) error {`
-		writeText += "\n"
+		writeText += "	up := flag.NewFlagSet(\"up\", flag.ExitOnError)\n"
+		writeText += "	upMigration := flag.NewFlagSet(\"migration\", flag.ContinueOnError)\n"
+		writeText += "	upMigration.Func(\"tables\", \"list file name\", func(s string) error {\n"
 		writeText += "		t.NameTable = strings.Fields(s)\n"
 		writeText += "		return nil\n"
 		writeText += "	})\n"
-		writeText += `	upSeeder := flag.NewFlagSet("seeder", flag.ContinueOnError)`
-		writeText += "\n"
-		writeText += `	upSeeder.Func("tables", "list file name", func(s string) error {`
-		writeText += "\n"
+		writeText += "	upSeeder := flag.NewFlagSet(\"seeder\", flag.ContinueOnError)\n"
+		writeText += "	upSeeder.Func(\"tables\", \"list file name\", func(s string) error {\n"
 		writeText += "		t.NameTable = strings.Fields(s)\n"
 		writeText += "		return nil\n"
 		writeText += "	})\n\n"
-
-		writeText += `	down := flag.NewFlagSet("down", flag.ExitOnError)`
-		writeText += "\n"
+		writeText += "	down := flag.NewFlagSet(\"down\", flag.ExitOnError)\n"
 		writeText += `	downMigration := flag.NewFlagSet("migration", flag.ContinueOnError)`
 		writeText += "\n"
 		writeText += `	downMigration.Func("tables", "list file name", func(s string) error {`
@@ -98,9 +198,8 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "		return nil\n"
 		writeText += "	})\n"
 		writeText += "	if len(os.Args) < 2 {\n"
-		writeText += `		fmt.Println("helper")`
+		writeText += `		globalHelp()`
 		writeText += "\n"
-		writeText += "		os.Exit(0)\n"
 		writeText += "	}\n"
 		writeText += "	switch os.Args[1] {\n"
 		writeText += `	case "up":`
@@ -112,6 +211,10 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "		down.Parse(os.Args[2:])\n"
 		writeText += "		downHandle(os.Args, upMigration, upSeeder, &t)\n"
 		writeText += "	default:\n"
+		writeText += "		hlp := &Helper{\n"
+		writeText += "			Error: os.Args[1],\n"
+		writeText += "		}\n"
+		writeText += "		printTemplate(errorTmp, hlp)\n"
 		writeText += "	}\n"
 		writeText += "}\n\n"
 
@@ -126,6 +229,10 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "		upSeeder.Parse(os.Args[3:])\n"
 		writeText += "		seederDown(tb)\n"
 		writeText += "	default:\n"
+		writeText += "		hlp := &Helper{\n"
+		writeText += "			Error: os.Args[1],\n"
+		writeText += "		}\n"
+		writeText += "		printTemplate(errorTmp, hlp)\n"
 		writeText += "	}\n"
 		writeText += "}\n\n"
 
@@ -210,6 +317,10 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "		upSeeder.Parse(os.Args[3:])\n"
 		writeText += "		seederUp(tb)\n"
 		writeText += "	default:\n"
+		writeText += "		hlp := &Helper{\n"
+		writeText += "			Error: os.Args[1],\n"
+		writeText += "		}\n"
+		writeText += "		printTemplate(errorTmp, hlp)\n"
 		writeText += "	}\n"
 		writeText += "}\n\n"
 
@@ -270,75 +381,6 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "		meth.Call(nil)\n"
 		writeText += "	}\n"
 		writeText += "}\n\n"
-
-		/*
-		* Gomig
-		 */
-		writeText += "type Gomig struct {"
-		writeText += "\n"
-		writeText += "	Name    string"
-		writeText += "\n"
-		writeText += "	Version string"
-		writeText += "\n"
-		writeText += "}"
-		writeText += "\n\n"
-
-		/*
-		* template
-		 */
-		writeText += "var MyTemplate = `{{.Name}} Version {{.Version}}\n\n"
-		writeText += `Usage: {{.Name}} [command] [options]`
-		writeText += "\n\n"
-		writeText += "Options:\n"
-		writeText += "	-v, --version                       output the version number\n"
-		writeText += "	-h, --help                          output usage information\n\n"
-		writeText += "Commands:\n"
-		writeText += "	- migrate\n"
-		writeText += "	- run\n"
-		writeText += "	- down\n\n"
-		writeText += "{{- /* end */ -}}\n"
-		writeText += `{{- "" }}`
-		writeText += "`\n\n"
-		writeText += "var VersionTemplate = `{{.Name}} Version {{.Version}}\n"
-		writeText += "{{- /* end */ -}}\n"
-		writeText += `{{- "" }}`
-		writeText += "\n"
-		writeText += "`\n\n"
-
-		/*
-		* PrintHelper
-		 */
-		writeText += "func PrintHelper() {\n"
-		writeText += `	data := Gomig{"Danang", "0.0.5"}`
-		writeText += "\n"
-		writeText += `	tmpl, err := template.New("test").Parse(MyTemplate)`
-		writeText += "\n"
-		writeText += "	if err != nil {\n"
-		writeText += "		panic(err)\n"
-		writeText += "	}\n"
-		writeText += "	err = tmpl.Execute(os.Stdout, data)\n"
-		writeText += "	if err != nil {\n"
-		writeText += "		panic(err)\n"
-		writeText += "	}\n"
-		writeText += "}\n"
-		writeText += "\n"
-
-		/*
-		* PrintVersion
-		 */
-		writeText += "func PrintVersion() {\n"
-		writeText += `	data := Gomig{"Danang", "0.0.5"}`
-		writeText += "\n"
-		writeText += `	tmpl, err := template.New("test").Parse(MyTemplate)`
-		writeText += "\n"
-		writeText += "	if err != nil {\n"
-		writeText += "		panic(err)\n"
-		writeText += "	}\n"
-		writeText += "	err = tmpl.Execute(os.Stdout, data)\n"
-		writeText += "	if err != nil {\n"
-		writeText += "		panic(err)\n"
-		writeText += "	}\n"
-		writeText += "}\n"
 
 		file.WriteString(writeText)
 		defer file.Close()

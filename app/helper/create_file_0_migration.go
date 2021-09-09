@@ -33,17 +33,17 @@ func NewCreateZeroMigration(app *model.Init) {
 		writeText += "\n"
 		writeText += `	"time"`
 		writeText += "\n\n"
-		// switch app.Driver {
-		// case "mysql":
-		// 	writeText += `	_ "github.com/go-sql-driver/mysql"`
-		// case "postgres":
-		// 	writeText += `	_ "github.com/lib/pq"`
-		// default:
-		// 	writeText += `	_ "github.com/lib/pq"`
-		// }
-		writeText += `	_ "github.com/go-sql-driver/mysql"`
-		writeText += "\n"
-		writeText += `	_ "github.com/lib/pq"`
+		switch app.Driver {
+		case "mysql":
+			writeText += `	_ "github.com/go-sql-driver/mysql"`
+		case "postgres":
+			writeText += `	_ "github.com/lib/pq"`
+		default:
+			writeText += `	_ "github.com/lib/pq"`
+		}
+		// writeText += `	_ "github.com/go-sql-driver/mysql"`
+		// writeText += "\n"
+		// writeText += `	_ "github.com/lib/pq"`
 		writeText += "\n"
 		writeText += ")\n\n"
 

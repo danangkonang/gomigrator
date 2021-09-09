@@ -2,7 +2,7 @@
 
 ## On developing 
 
-`gomig` is simple tools database migration for developer
+`gomigrator` is a simple tools database migration for developer
 
 ## Installation
  
@@ -10,65 +10,66 @@
 
   ```bash
   #local isntall
-  sudo curl -L "https://github.com/danangkonang/migration-go-cli/releases/download/v0.0.6/main" -o gomig && chmod +x gomig
+  sudo curl -L "https://github.com/danangkonang/migration-go-cli/releases/download/0.0.8/main" -o gomigrator && chmod +x gomigrator
 
   #global install
-  sudo curl -L "https://github.com/danangkonang/migration-go-cli/releases/download/v0.0.6/main" -o /usr/local/bin/gomig
+  sudo curl -L "https://github.com/danangkonang/migration-go-cli/releases/download/0.0.8/main" -o /usr/local/bin/gomigrator
   ```
 
   - Apply executable permissions to the binary:
   ```bash
-  sudo chmod +x /usr/local/bin/gomig
+  sudo chmod +x /usr/local/bin/gomigrator
   ```
 
-  -  If the command gomig fails you cant run this
+  -  If the command gomigrator fails you cant run this
   ```bash
-  sudo ln -s /usr/local/bin/gomig /usr/bin/gomig
+  sudo ln -s /usr/local/bin/gomigrator /usr/bin/gomigrator
   ```
 
   - Test installation.
   ```bash
-  goming --version
+  gomigrator --version
   ```
 
 ## Databases
 
 * PostgreSQL
-* 
+* Mysql
 
-## Example
+## Basic
 - ***migration***
 
 ```bash
   # create migration
-  gomig create migration -t [table name]
+  gomigrator create migration --table [table name]
 
-  # running all migration
-  gomig run migration
 ```
 
 - ***seeder***
 
 ```bash
   # create seeder file
-  gomig create seeder -n [seeder name] -t [table name]
+  gomigrator create seeder --table [table name]
 
   # runing seeder
-  gomig run seeder
+  gomigrator up seeder
 ```
 
-- **undo**
+- **up**
 
 ```bash
-  # delete all tables 
-  gomig drop
+  # up all migration
+  gomigrator up migration
+
+```
+
+- **down**
+
+```bash
+  # down 
+  gomigrator down migration
 
   # or spesifik table 
-  gomig drop [table1 table2 ..]
+  gomigrator down migration --tables [list migration file]
 
-  # delete all data seeder
-  gomig reset
-
-  # or spesifik table 
-  gomig reset [table1 table2 ..]
 ````

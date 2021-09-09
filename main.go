@@ -37,26 +37,29 @@ type Helper struct {
 	Argument []*FlagCmd
 }
 
-var versionTmp = `Version: {{ .Version }}{{"\n"}}`
+var versionTmp = `Version: {{ .Version }}
+`
 
-var errorTmp = `unknow comand '{{ .Error }}'{{"\n"}}
-see 'gomig --help'
+var errorTmp = `unknow comand '{{ .Error }}'
+
+see 'gomigator --help'
 `
 
 var helperTmp = `
-Usage: {{ .Usage }}{{"\n"}}
-{{- if .Option }}
+Usage: {{ .Usage }}
+{{ if .Option }}
 Commands:
 {{- range .Option}}
   {{ .CmdName }}    {{"\t"}}{{ .CmdDesc }}{{ end -}}
-{{"\n"}}{{ end }}
+{{ end }}
+
 Options:
 {{- range .Argument}}
-  {{ .FlagName }}  {{"\t"}}{{ .FlagDesc }}{{ end -}}
-{{"\n"}}
+  {{ .FlagName }}        {{"\t"}}{{ .FlagDesc }}{{ end }}
+
 `
 
-func printHeler(temp string, data interface{}) {
+func printTemplate(temp string, data interface{}) {
 	tmpl, err := template.New("heler").Parse(temp)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -72,7 +75,7 @@ func printHeler(temp string, data interface{}) {
 
 func globalHelp() {
 	hlp := &Helper{
-		Usage: "gomig [COMAND] [OPTIONS]",
+		Usage: "gomigator [COMAND] [OPTIONS]",
 		Option: []*ComandUsage{
 			{
 				CmdName: "init",
@@ -101,6 +104,14 @@ func globalHelp() {
 		},
 		Argument: []*FlagCmd{
 			{
+				FlagName: "-h, --help",
+				FlagDesc: "print help gomigrator",
+			},
+			{
+				FlagName: "-v, --version",
+				FlagDesc: "print version gomigrator",
+			},
+			{
 				FlagName: "--table",
 				FlagDesc: "table name",
 			},
@@ -114,7 +125,7 @@ func globalHelp() {
 			},
 		},
 	}
-	printHeler(helperTmp, hlp)
+	printTemplate(helperTmp, hlp)
 }
 
 func main() {
@@ -128,10 +139,9 @@ func main() {
 	}
 	if version {
 		hlp := &Helper{
-			Version: "1.1.1",
+			Version: "0.0.8",
 		}
-		printHeler(versionTmp, hlp)
-		os.Exit(0)
+		printTemplate(versionTmp, hlp)
 	}
 	var i model.Init
 
@@ -236,10 +246,10 @@ func main() {
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig init [OPTIONS]",
+				Usage:    "gomigator init [OPTIONS]",
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		init.Parse(os.Args[2:])
 		command.Init(&i)
@@ -264,11 +274,11 @@ func main() {
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig create [COMMAND] [OPTIONS]",
+				Usage:    "gomigator create [COMMAND] [OPTIONS]",
 				Option:   cmdOption,
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		create.Parse(os.Args[2:])
 		createHandle(os.Args, migration, seeder, &c)
@@ -293,11 +303,11 @@ func main() {
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig up [COMMAND] [OPTIONS]",
+				Usage:    "gomigator up [COMMAND] [OPTIONS]",
 				Option:   cmdOption,
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		up.Parse(os.Args[2:])
 		upHandle(os.Args, upMigration, upSeeder, &upM)
@@ -322,11 +332,11 @@ func main() {
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig down [COMMAND] [OPTIONS]",
+				Usage:    "gomigator down [COMMAND] [OPTIONS]",
 				Option:   cmdOption,
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		down.Parse(os.Args[2:])
 		downHandle(os.Args, downMigration, downSeeder, &dwM)
@@ -334,7 +344,7 @@ func main() {
 		hlp := &Helper{
 			Error: os.Args[1],
 		}
-		printHeler(errorTmp, hlp)
+		printTemplate(errorTmp, hlp)
 	}
 }
 
@@ -352,10 +362,10 @@ func downHandle(argument []string, downMigration, downSeeder *flag.FlagSet, c *m
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig down migration [OPTIONS]",
+				Usage:    "gomigator down migration [OPTIONS]",
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		downMigration.Parse(argument[3:])
 		command.DownMigration(c)
@@ -371,19 +381,18 @@ func downHandle(argument []string, downMigration, downSeeder *flag.FlagSet, c *m
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig down seeder [OPTIONS]",
+				Usage:    "gomigator down seeder [OPTIONS]",
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		downSeeder.Parse(argument[3:])
 		command.DownSeeder(c)
 	default:
-		// globalHelp()
 		hlp := &Helper{
 			Error: os.Args[2],
 		}
-		printHeler(errorTmp, hlp)
+		printTemplate(errorTmp, hlp)
 	}
 }
 
@@ -401,10 +410,10 @@ func upHandle(argument []string, upMigration, upSeeder *flag.FlagSet, c *model.U
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig up migration [OPTIONS]",
+				Usage:    "gomigator up migration [OPTIONS]",
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		upMigration.Parse(argument[3:])
 		command.UpMigration(c)
@@ -420,19 +429,18 @@ func upHandle(argument []string, upMigration, upSeeder *flag.FlagSet, c *model.U
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig up seeder [OPTIONS]",
+				Usage:    "gomigator up seeder [OPTIONS]",
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		upSeeder.Parse(argument[3:])
 		command.UpSeeder(c)
 	default:
-		// globalHelp()
 		hlp := &Helper{
 			Error: os.Args[2],
 		}
-		printHeler(errorTmp, hlp)
+		printTemplate(errorTmp, hlp)
 	}
 }
 
@@ -450,10 +458,10 @@ func createHandle(argument []string, migration, seeder *flag.FlagSet, c *model.C
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig create migration [OPTIONS]",
+				Usage:    "gomigator create migration [OPTIONS]",
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		migration.Parse(argument[3:])
 		command.CreateMigtaion(c)
@@ -469,19 +477,18 @@ func createHandle(argument []string, migration, seeder *flag.FlagSet, c *model.C
 				})
 			}
 			hlp := &Helper{
-				Usage:    "gomig create seeder [OPTIONS]",
+				Usage:    "gomigator create seeder [OPTIONS]",
 				Argument: cmdFlag,
 			}
-			printHeler(helperTmp, hlp)
+			printTemplate(helperTmp, hlp)
 		}
 		seeder.Parse(argument[3:])
 		command.CreateSeeder(c)
 	default:
-		// globalHelp()
 		hlp := &Helper{
 			Error: os.Args[2],
 		}
-		printHeler(errorTmp, hlp)
+		printTemplate(errorTmp, hlp)
 	}
 }
 
