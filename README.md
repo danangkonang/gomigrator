@@ -1,19 +1,19 @@
-# migration Go-Lang CLI
-
-## On developing 
+# gomigrator
 
 `gomigrator` is a simple tools database migration for developer
 
 ## Installation
  
-  - Run this command to download:
+  - local install
 
   ```bash
-  #local isntall
-  sudo curl -L "https://github.com/danangkonang/migration-go-cli/releases/download/0.0.8/main" -o gomigrator && chmod +x gomigrator
+  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.0.8/main" -o gomigrator && chmod +x gomigrator
+  ```
 
-  #global install
-  sudo curl -L "https://github.com/danangkonang/migration-go-cli/releases/download/0.0.8/main" -o /usr/local/bin/gomigrator
+  - global install
+
+  ```bash
+  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.0.8/main" -o /usr/local/bin/gomigrator
   ```
 
   - Apply executable permissions to the binary:
@@ -37,7 +37,7 @@
 * Mysql
 
 ## Basic
-- ***migration***
+- ***Migration***
 
 ```bash
   # create migration
@@ -45,7 +45,7 @@
 
 ```
 
-- ***seeder***
+- ***Seeder***
 
 ```bash
   # create seeder file
@@ -55,7 +55,7 @@
   gomigrator up seeder
 ```
 
-- **up**
+- **Up**
 
 ```bash
   # up all migration
@@ -63,7 +63,7 @@
 
 ```
 
-- **down**
+- **Down**
 
 ```bash
   # down 

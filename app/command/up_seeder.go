@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/danangkonang/migration-go-cli/app/model"
+	"github.com/danangkonang/gomigrator/app/model"
 )
 
 func UpSeeder(up *model.UpDown) {

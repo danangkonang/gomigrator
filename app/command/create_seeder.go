@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/danangkonang/migration-go-cli/app/helper"
-	"github.com/danangkonang/migration-go-cli/app/model"
+	"github.com/danangkonang/gomigrator/app/helper"
+	"github.com/danangkonang/gomigrator/app/model"
 )
 
 func CreateSeeder(app *model.Create) {
@@ -101,8 +101,8 @@ func CreateSeeder(app *model.Create) {
 // 	"os"
 // 	"strings"
 
-// 	"github.com/danangkonang/migration-go-cli/app/helper"
-// 	"github.com/danangkonang/migration-go-cli/app/model"
+// 	"github.com/danangkonang/gomigrator/app/helper"
+// 	"github.com/danangkonang/gomigrator/app/model"
 // )
 
 // func CreateSeeder(app *model.Create) {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/danangkonang/migration-go-cli/app/helper"
+	"github.com/danangkonang/gomigrator/app/helper"
 )
 
 func MigrationSeederCreate() {

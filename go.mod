@@ -1,4 +1,4 @@
-module github.com/danangkonang/migration-go-cli
+module github.com/danangkonang/gomigrator
 
 go 1.16
 

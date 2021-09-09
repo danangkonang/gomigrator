@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/danangkonang/migration-go-cli/app/helper"
+	"github.com/danangkonang/gomigrator/app/helper"
 )
 
 var (

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/danangkonang/migration-go-cli/app/model"
+	"github.com/danangkonang/gomigrator/app/model"
 )
 
 var (

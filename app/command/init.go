@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/danangkonang/migration-go-cli/app/helper"
-	"github.com/danangkonang/migration-go-cli/app/model"
+	"github.com/danangkonang/gomigrator/app/helper"
+	"github.com/danangkonang/gomigrator/app/model"
 )
 
 func Init(app *model.Init) {

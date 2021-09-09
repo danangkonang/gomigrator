@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/danangkonang/migration-go-cli/app/helper"
+	"github.com/danangkonang/gomigrator/app/helper"
 )
 
 func CreateSeederTableV2() {

@@ -8,8 +8,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/danangkonang/migration-go-cli/app/command"
-	"github.com/danangkonang/migration-go-cli/app/model"
+	"github.com/danangkonang/gomigrator/app/command"
+	"github.com/danangkonang/gomigrator/app/model"
 )
 
 var (
