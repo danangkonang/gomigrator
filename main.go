@@ -10,6 +10,7 @@ import (
 
 	"github.com/danangkonang/gomigrator/app/command"
 	"github.com/danangkonang/gomigrator/app/model"
+	"github.com/joho/godotenv"
 )
 
 var (
@@ -58,6 +59,10 @@ Options:
   {{ .FlagName }}        {{"\t"}}{{ .FlagDesc }}{{ end }}
 
 `
+
+func init() {
+	godotenv.Load()
+}
 
 func printTemplate(temp string, data interface{}) {
 	tmpl, err := template.New("heler").Parse(temp)

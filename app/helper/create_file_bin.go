@@ -107,7 +107,7 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "		Option: []*ComandUsage{\n"
 		writeText += "			{\n"
 		writeText += "				CmdName: \"init\",\n"
-		writeText += "				CmdDesc: \"generate db directory for\","
+		writeText += "				CmdDesc: \"generate db directory for\",\n"
 		writeText += "			},\n"
 		writeText += "			{\n"
 		writeText += "				CmdName: \"create\",\n"
@@ -241,7 +241,7 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "func migrationDown(t *Tables) {\n"
 		writeText += "	files, err := ioutil.ReadDir(MigrationFolder)\n"
 		writeText += "	if err != nil {\n"
-		writeText += `		fmt.Println("help me")`
+		writeText += `		fmt.Println(err.Error())`
 		writeText += "\n"
 		writeText += "		os.Exit(0)\n"
 		writeText += "	}\n"
@@ -276,7 +276,7 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "func seederDown(t *Tables) {\n"
 		writeText += "	files, err := ioutil.ReadDir(SeederFolder)\n"
 		writeText += "	if err != nil {\n"
-		writeText += `		fmt.Println("help me")`
+		writeText += `		fmt.Println(err.Error())`
 		writeText += "\n"
 		writeText += "		os.Exit(0)\n"
 		writeText += "	}\n"
@@ -329,7 +329,7 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "func migrationUp(t *Tables) {\n"
 		writeText += "	files, err := ioutil.ReadDir(MigrationFolder)\n"
 		writeText += "	if err != nil {\n"
-		writeText += `		fmt.Println("help me")`
+		writeText += `		fmt.Println(err.Error())`
 		writeText += "\n"
 		writeText += "		os.Exit(0)\n"
 		writeText += "	}\n"
@@ -358,7 +358,7 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "func seederUp(t *Tables) {\n"
 		writeText += "	files, err := ioutil.ReadDir(SeederFolder)\n"
 		writeText += "	if err != nil {\n"
-		writeText += `		fmt.Println("help me")`
+		writeText += `		fmt.Println(err.Error())`
 		writeText += "\n"
 		writeText += "		os.Exit(0)\n"
 		writeText += "	}\n"

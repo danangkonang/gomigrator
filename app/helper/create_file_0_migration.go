@@ -27,8 +27,8 @@ func NewCreateZeroMigration(app *model.Init) {
 		writeText += "\n"
 		writeText += `	"fmt"`
 		writeText += "\n"
-		writeText += `	"log"`
-		writeText += "\n"
+		// writeText += `	"log"`
+		// writeText += "\n"
 		writeText += `	"os"`
 		writeText += "\n"
 		writeText += `	"time"`
@@ -41,9 +41,6 @@ func NewCreateZeroMigration(app *model.Init) {
 		default:
 			writeText += `	_ "github.com/lib/pq"`
 		}
-		// writeText += `	_ "github.com/go-sql-driver/mysql"`
-		// writeText += "\n"
-		// writeText += `	_ "github.com/lib/pq"`
 		writeText += "\n"
 		writeText += ")\n\n"
 
@@ -85,11 +82,11 @@ func NewCreateZeroMigration(app *model.Init) {
 		writeText += "\n"
 		writeText += `		os.Getenv("DB_PASSWORD"),`
 		writeText += "\n"
-		writeText += `		os.Getenv("DB_NAME"),`
-		writeText += "\n"
 		writeText += `		os.Getenv("DB_HOST"),`
 		writeText += "\n"
 		writeText += `		os.Getenv("DB_PORT"),`
+		writeText += "\n"
+		writeText += `		os.Getenv("DB_NAME"),`
 		writeText += "\n"
 		writeText += "	)\n"
 
@@ -108,7 +105,8 @@ func NewCreateZeroMigration(app *model.Init) {
 		writeText += `	db, err := sql.Open(os.Getenv("DB_DRIVER"), connection)`
 		writeText += "\n"
 		writeText += "	if err != nil {\n"
-		writeText += "		log.Panic(err.Error())\n"
+		writeText += "		fmt.Println(err.Error())\n"
+		writeText += "		os.Exit(0)\n"
 		writeText += "	}\n"
 		writeText += "	db.SetMaxOpenConns(100)\n"
 		writeText += "	db.SetMaxIdleConns(100)\n"

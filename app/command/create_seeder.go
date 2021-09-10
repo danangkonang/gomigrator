@@ -66,15 +66,19 @@ func CreateSeeder(app *model.Create) {
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
 		writeMigration += "func (s *Seeder) " + strings.Title(app.FileName) + "() {\n"
+		writeMigration += "	start := time.Now()\n"
 		writeMigration += "	query := `\n"
 		writeMigration += "		INSERT INTO\n"
 		writeMigration += "			" + app.TableName + " (name, created_at, updated_at)\n"
 		writeMigration += "		VALUES\n"
-		writeMigration += "			($1, $2, $3)\n"
+		if os.Getenv("DB_DRIVER") == "mysql" {
+			writeMigration += "			(?, ?, ?)\n"
+		} else {
+			writeMigration += "			($1, $2, $3)\n"
+		}
 		writeMigration += "	`\n"
-
-		writeMigration += "	_, err := migration.Connection().Db.Exec(\n"
-		writeMigration += "		query,\n"
+		writeMigration += "	stmt, _ := migration.Connection().Db.Prepare(query)\n"
+		writeMigration += "	_, err := stmt.Exec(\n"
 		writeMigration += `		"default", time.Now(), time.Now(),`
 		writeMigration += "\n"
 		writeMigration += "	)\n"
@@ -83,7 +87,8 @@ func CreateSeeder(app *model.Create) {
 		writeMigration += "		fmt.Println(err.Error())\n"
 		writeMigration += "		os.Exit(0)\n"
 		writeMigration += "	}\n"
-		writeMigration += ` 	fmt.Println(string(migration.Green), "success", string(migration.Reset), "insert table ` + file_name + `")`
+		writeMigration += "	duration := time.Since(start)\n"
+		writeMigration += `	fmt.Println("insert table ` + file_name + `", string(migration.Green), "success", string(migration.Reset), "in", fmt.Sprintf("%.2f", duration.Seconds()), "second")`
 		writeMigration += "	\n"
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)

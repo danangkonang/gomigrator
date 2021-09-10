@@ -69,13 +69,19 @@ func CreateMigtaion(app *model.Create) {
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
 		writeMigration += "func (m *Migration) " + strings.Title(app.TableName) + "() {\n"
-
 		writeMigration += "	query := `\n"
 		writeMigration += "		CREATE TABLE " + app.TableName + "(\n"
-		writeMigration += "			id serial PRIMARY KEY,\n"
-		writeMigration += "			name VARCHAR (225) NOT NULL,\n"
-		writeMigration += "			created_at TIMESTAMP NOT NULL,\n"
-		writeMigration += "			updated_at TIMESTAMP NOT NULL\n"
+		if os.Getenv("DB_DRIVER") == "mysql" {
+			writeMigration += "			id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\n"
+			writeMigration += "			name VARCHAR (225) NOT NULL,\n"
+			writeMigration += "			created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n"
+			writeMigration += "			updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP\n"
+		} else {
+			writeMigration += "			id serial PRIMARY KEY,\n"
+			writeMigration += "			name VARCHAR (225) NOT NULL,\n"
+			writeMigration += "			created_at TIMESTAMP NOT NULL,\n"
+			writeMigration += "			updated_at TIMESTAMP NOT NULL\n"
+		}
 		writeMigration += "		)\n"
 		writeMigration += "	`\n"
 
