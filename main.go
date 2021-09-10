@@ -144,7 +144,7 @@ func main() {
 	}
 	if version {
 		hlp := &Helper{
-			Version: "0.0.8",
+			Version: "0.0.9",
 		}
 		printTemplate(versionTmp, hlp)
 	}

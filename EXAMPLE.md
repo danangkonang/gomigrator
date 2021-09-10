@@ -1,3 +1,5 @@
+# example gomigrator with fake data
+
 ```go
 package seeder
 

@@ -35,14 +35,20 @@
 
 * PostgreSQL
 * Mysql
+* 
 
-## Basic
+## Usage
 - ***Migration***
 
 ```bash
   # create migration
   gomigrator create migration --table [table name]
 
+  # up migration
+  gomigrator up migration
+
+  # down migration
+  gomigrator down migration
 ```
 
 - ***Seeder***
@@ -51,25 +57,11 @@
   # create seeder file
   gomigrator create seeder --table [table name]
 
-  # runing seeder
+  # up seeder
   gomigrator up seeder
+
+  # down seeder
+  gomigrator down seeder
 ```
 
-- **Up**
-
-```bash
-  # up all migration
-  gomigrator up migration
-
-```
-
-- **Down**
-
-```bash
-  # down 
-  gomigrator down migration
-
-  # or spesifik table 
-  gomigrator down migration --tables [list migration file]
-
-````
+see [example](https://github.com/danangkonang/gomigrator/blob/master/EXAMPLE.md) seeder with fake data
