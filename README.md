@@ -7,7 +7,7 @@
   - local install
 
   ```bash
-  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.0.9/gomigrator" -o gomigrator && chmod +x gomigrator
+  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.0.9/gomigrator" -o gomigrator && sudo chmod +x gomigrator
   ```
 
   - global install
