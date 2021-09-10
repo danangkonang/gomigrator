@@ -42,8 +42,10 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "var (\n"
 		writeText += "	MigrationFolder = \"db/migration\"\n"
 		writeText += "	SeederFolder    = \"db/seeder\"\n"
-		writeText += "	green           = \"\033[32m\"\n"
-		writeText += "	reset           = \"\033[0m\"\n"
+		writeText += `	green           = "\033[32m"`
+		writeText += "\n"
+		writeText += `	reset           = "\033[0m"`
+		writeText += "\n"
 		writeText += ")\n\n"
 
 		writeText += "type ComandUsage struct {\n"

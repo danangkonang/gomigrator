@@ -9,6 +9,12 @@ import (
 	"github.com/danangkonang/gomigrator/app/model"
 )
 
+var (
+	DirDb        = "db"
+	DirMigration = "db/migration"
+	DirSeeder    = "db/seeder"
+)
+
 func Init(app *model.Init) {
 	if app.Driver == "" {
 		app.Driver = "postgres"
@@ -64,5 +70,12 @@ func findTridparty(app *model.Init) {
 	default:
 		fmt.Println("help me init")
 		os.Exit(0)
+	}
+}
+
+func makeDirectoryV2(name string) {
+	if _, err := os.Stat(name); os.IsNotExist(err) {
+		os.Mkdir(name, 0700)
+		fmt.Println("create " + name)
 	}
 }

@@ -23,8 +23,8 @@ func MyRootDir() string {
 	}
 	modName := modfile.ModulePath(goModBytes)
 	arr := strings.Split(modName, "/")
-	mood := arr[len(arr)-1]
-	return mood
+	module := arr[len(arr)-1]
+	return module
 }
 
 // func GetModuleName() string {
