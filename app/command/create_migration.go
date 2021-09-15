@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/danangkonang/gomigrator/app/model"
+	"github.com/danangkonang/gomigrator/templates"
 )
 
 var (
@@ -28,15 +29,18 @@ func CreateMigtaion(app *model.Create) {
 		fmt.Println("table name null")
 		os.Exit(0)
 	}
-	files, erro := ioutil.ReadDir(DirSeeder)
+	files, erro := ioutil.ReadDir(DirMigration)
 	if erro != nil {
-		fmt.Println(erro.Error())
+		hlp := &templates.Helper{
+			Error: "no folder migration",
+		}
+		templates.PrintTemplate(templates.ErrorTmp, hlp)
 		os.Exit(0)
 	}
 	newFile := []string{}
 	for _, file := range files {
 		filename := file.Name()
-		list := strings.Split(filename, "_seeder_")
+		list := strings.Split(filename, "_migration_")
 		if list[0] != "0.go" {
 			name := list[1]
 			tb_name := strings.Split(name, ".go")
@@ -59,6 +63,7 @@ func CreateMigtaion(app *model.Create) {
 		var file, err = os.Create(path)
 		if err != nil {
 			fmt.Println(err.Error())
+			os.Exit(0)
 		}
 		// isi file
 		writeMigration := "package migration\n\n"

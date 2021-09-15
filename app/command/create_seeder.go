@@ -9,6 +9,7 @@ import (
 
 	"github.com/danangkonang/gomigrator/app/helper"
 	"github.com/danangkonang/gomigrator/app/model"
+	"github.com/danangkonang/gomigrator/templates"
 )
 
 func CreateSeeder(app *model.Create) {
@@ -22,7 +23,10 @@ func CreateSeeder(app *model.Create) {
 
 	files, erro := ioutil.ReadDir(DirSeeder)
 	if erro != nil {
-		fmt.Println(erro.Error())
+		hlp := &templates.Helper{
+			Error: "no folder migration",
+		}
+		templates.PrintTemplate(templates.ErrorTmp, hlp)
 		os.Exit(0)
 	}
 	newFile := []string{}

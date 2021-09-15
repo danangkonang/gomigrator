@@ -1,70 +1,63 @@
 package templates
 
-var HelperTemplate = `
-Usage: {{.AppName}} <command> [options]
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
 
-Options:
-    {{.Helper}}        {{.HelperDesc}}
-    {{.Table}}       {{.TableDesc}}
-    {{.Name}}        {{.NameDesc}}
-    {{.Migration}}         {{.MigrationDesc}}
-    {{.Seeder}}            {{.SeederDesc}}
+type ComandUsage struct {
+	CmdName  string
+	CmdAlias string
+	CmdDesc  string
+}
 
+type FlagCmd struct {
+	FlagName  string
+	FlagAlias string
+	FlagDesc  string
+}
+
+type Helper struct {
+	Usage    string
+	Version  string
+	Error    string
+	Option   []*ComandUsage
+	Argument []*FlagCmd
+}
+
+var ErrorTmp = `{{ .Error }}
+
+see 'gomigator --help'
+`
+
+var VersionTmp = `Version: {{ .Version }}
+`
+
+var HelperTmp = `
+Usage: {{ .Usage }}
+{{ if .Option }}
 Commands:
-    {{.Init}}              {{.InitDesc}}
-    {{.Reset}}             {{.ResetDesc}}
-    {{.Drop}}              {{.DropDesc}}
-    {{.Create}}            {{.CreateDesc}}
-    {{.Run}}               {{.RunDesc}}
-
-{{- /* end */ -}}
-{{- "" }}
-`
-var VersionTemplate = `{{.Name}} version {{.Version}}
-{{- /* end */ -}}
-{{- "" }}
-`
-
-var ErrorTemplate = `{{.Message}}: unknown command
-Run 'gomig -help' for usage.
-{{- /* end */ -}}
-{{- "" }}
-`
-var HelperCreateTemplate = `
-Usage: {{.Name}} create [options]
+{{- range .Option}}
+  {{ .CmdName }}    {{"\t"}}{{ .CmdDesc }}{{ end -}}
+{{ end }}
 
 Options:
-    -t, table                           create table name for migration
-    -n, name                            create file name seeder or migration
-    migration                           create migration file
-    seeder                              create seeder file
-{{- /* end */ -}}
-{{- "" }}
-`
-var HelperRunTemplate = `
-Usage: {{.AppName}} {{.Cmd}} [comand] [options]
+{{- range .Argument}}
+  {{ .FlagName }}        {{"\t"}}{{ .FlagDesc }}{{ end }}
 
-Commands:
-    {{.Migration}}              {{.MigrationDesc}}
-    {{.Seeder}}                 {{.SeederDesc}}
-
-Options:
-    {{.Table}}            {{.TableDesc}}
-    {{.Name}}             {{.NameDesc}}
-{{- /* end */ -}}
-{{- "" }}
 `
 
-const HelperCreateMigrationTemplate = `
-Usage: {{.AppName}} {{.Cmd}} [comand] [options]
-
-Commands:
-    {{.Migration}}              {{.MigrationDesc}}
-    {{.Seeder}}                 {{.SeederDesc}}
-
-Options:
-    {{.Table}}            {{.TableDesc}}
-    {{.Name}}             {{.NameDesc}}
-{{- /* end */ -}}
-{{- "" }}
-`
+func PrintTemplate(temp string, data interface{}) {
+	tmpl, err := template.New("helper").Parse(temp)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(0)
+	}
+	err = tmpl.Execute(os.Stdout, data)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(0)
+	}
+	os.Exit(0)
+}

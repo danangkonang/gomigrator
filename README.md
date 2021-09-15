@@ -38,6 +38,13 @@
 * 
 
 ## Usage
+- ***Init***
+
+```bash
+  gomigrator init --driver [mysql/ postgress]
+```
+ default will generate
+
 - ***Migration***
 
 ```bash
