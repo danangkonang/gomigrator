@@ -32,8 +32,8 @@ func CreateSeeder(app *model.Create) {
 	newFile := []string{}
 	for _, file := range files {
 		filename := file.Name()
-		list := strings.Split(filename, "_seeder_")
-		if list[0] != "0.go" {
+		if filename != "0.go" {
+			list := strings.Split(filename, "_seeder_")
 			name := list[1]
 			tb_name := strings.Split(name, ".go")
 			if app.TableName == tb_name[0] {
@@ -46,7 +46,7 @@ func CreateSeeder(app *model.Create) {
 		app.FileName = app.FileName + fmt.Sprintf("%d", time.Now().Unix())
 	}
 
-	file_name := getTime() + "_seeder_" + app.FileName + ".go"
+	file_name := CreateUnixNumber(len(files)) + "_seeder_" + app.FileName + ".go"
 	path := DirSeeder + "/" + file_name
 	_, err := os.Stat(path)
 
@@ -98,5 +98,5 @@ func CreateSeeder(app *model.Create) {
 		file.WriteString(writeMigration)
 		defer file.Close()
 	}
-	fmt.Println(string(green), "success", string(white), "created", path)
+	fmt.Println(string(Green), "success", string(white), "created", path)
 }

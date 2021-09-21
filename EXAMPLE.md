@@ -1,4 +1,4 @@
-# example gomigrator with fake data
+# example gomigrator seeder runner with fake data
 
 ```go
 package seeder
@@ -15,11 +15,11 @@ import (
 func (s *Seeder) Users() {
 	start := time.Now()
 	query := `
-			INSERT INTO
-				users (name, created_at, updated_at)
-			VALUES
-				(?, ?, ?)
-		`
+		INSERT INTO
+			users (name, created_at, updated_at)
+		VALUES
+			(?, ?, ?)
+	`
 	stmt, _ := migration.Connection().Db.Prepare(query)
 	for i := 0; i < 1000000; i++ {
 		_, err := stmt.Exec(

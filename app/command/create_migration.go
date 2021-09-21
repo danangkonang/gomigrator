@@ -5,23 +5,27 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/danangkonang/gomigrator/app/model"
 	"github.com/danangkonang/gomigrator/templates"
 )
 
 var (
-	red   = "\033[31m"
-	green = "\033[32m"
-	blue  = "\033[34m"
+	// red   = "\033[31m"
+	Green = "\033[32m"
+	// blue  = "\033[34m"
 	white = "\033[0;37m"
 )
 
-func getTime() string {
-	t := time.Now()
-	waktu := t.Format("2006_01_02_150405")
-	return waktu
+// func getTime() string {
+// 	t := time.Now()
+// 	waktu := t.Format("2006_01_02_150405")
+// 	return waktu
+// }
+
+func CreateUnixNumber(num int) string {
+	new_number := fmt.Sprintf("%04d", num)
+	return new_number
 }
 
 func CreateMigtaion(app *model.Create) {
@@ -40,8 +44,8 @@ func CreateMigtaion(app *model.Create) {
 	newFile := []string{}
 	for _, file := range files {
 		filename := file.Name()
-		list := strings.Split(filename, "_migration_")
-		if list[0] != "0.go" {
+		if filename != "0.go" {
+			list := strings.Split(filename, "_migration_")
 			name := list[1]
 			tb_name := strings.Split(name, ".go")
 			if app.TableName == tb_name[0] {
@@ -53,7 +57,7 @@ func CreateMigtaion(app *model.Create) {
 		fmt.Println("duplicate table name")
 		os.Exit(0)
 	}
-	file_name := getTime() + "_migration_" + app.TableName + ".go"
+	file_name := CreateUnixNumber(len(files)) + "_migration_" + app.TableName + ".go"
 	path := DirMigration + "/" + file_name
 	// deteksi apakah file sudah ada
 	_, err := os.Stat(path)
@@ -102,5 +106,5 @@ func CreateMigtaion(app *model.Create) {
 		file.WriteString(writeMigration)
 		defer file.Close()
 	}
-	fmt.Println(string(green), "success", string(white), "created", path)
+	fmt.Println(string(Green), "success", string(white), "created", path)
 }

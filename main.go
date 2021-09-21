@@ -77,7 +77,7 @@ func globalHelp() {
 	templates.PrintTemplate(templates.HelperTmp, hlp)
 }
 
-func main() {
+func run() {
 	flag.BoolVar(&help, "h", false, "help")
 	flag.BoolVar(&help, "help", false, "help")
 	flag.BoolVar(&version, "v", false, "version")
@@ -88,7 +88,7 @@ func main() {
 	}
 	if version {
 		hlp := &templates.Helper{
-			Version: "0.0.9",
+			Version: "0.1.0",
 		}
 		// printTemplate(versionTmp, hlp)
 		templates.PrintTemplate(templates.VersionTmp, hlp)
@@ -440,4 +440,13 @@ func createHandle(argument []string, migration, seeder *flag.FlagSet, c *model.C
 		}
 		templates.PrintTemplate(templates.ErrorTmp, hlp)
 	}
+}
+
+func main() {
+	run()
+	// if len("newFile") > 0 {
+	// 	// app.FileName = app.FileName + fmt.Sprintf("%03d", len(newFile))
+	// 	// app.FileName = app.FileName + fmt.Sprintf("%d", time.Now().Unix())
+	// 	fmt.Println(fmt.Sprintf("%03d", len("ini")))
+	// }
 }

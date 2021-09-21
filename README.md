@@ -7,13 +7,13 @@
   - local install
 
   ```bash
-  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.0.9/gomigrator" -o gomigrator && sudo chmod +x gomigrator
+  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.1.0/gomigrator" -o gomigrator && sudo chmod +x gomigrator
   ```
 
   - global install
 
   ```bash
-  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.0.9/gomigrator" -o /usr/local/bin/gomigrator
+  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.1.0/gomigrator" -o /usr/local/bin/gomigrator
   ```
 
   - Apply executable permissions to the binary:
@@ -33,17 +33,39 @@
 
 ## Databases
 
-* PostgreSQL
-* Mysql
+* PSQL
+* MySQL
 * 
 
 ## Usage
+- ***Help**
+
+```bash
+Usage: gomigator [COMAND] [OPTIONS]
+
+Commands:
+  init          Generate default directory to manage migration
+  create        Creates new migration or seeder file
+  up            Migrate to database
+  down          Roll back migration
+  migration     Generate migration type
+  seeder        Generate seeder type
+
+Options:
+  -h, --help            Print help gomigrator
+  -v, --version         Print version gomigrator
+  --table               Table name
+  --tables              List table
+  --name                Generate file name
+```
 - ***Init***
 
 ```bash
-  gomigrator init --driver [mysql/ postgress]
+  gomigrator init
 ```
- default will generate
+Default init will generate driver postgres, you can custom driver with `gomigrator init --driver [mysql/psql]` or other flags  `gomigrator init --help`.
+
+gomigrator saved connection file `db/mogration/0.go`
 
 - ***Migration***
 
@@ -71,4 +93,4 @@
   gomigrator down seeder
 ```
 
-see [example](https://github.com/danangkonang/gomigrator/blob/master/EXAMPLE.md) seeder with fake data
+See [example](https://github.com/danangkonang/gomigrator/blob/master/EXAMPLE.md) seeder with fake data
