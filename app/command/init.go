@@ -17,7 +17,13 @@ var (
 
 func Init(app *model.Init) {
 	if app.Driver == "" {
-		app.Driver = "psql"
+		app.Driver = "postgres"
+	}
+	if app.Driver == "postgres" {
+		app.Driver = "postgres"
+	}
+	if app.Driver == "psql" {
+		app.Driver = "postgres"
 	}
 	if app.Host == "" {
 		app.Host = "localhost"
@@ -57,7 +63,7 @@ func findTridparty(app *model.Init) {
 		godotenv := exec.Command("go", "get", "github.com/joho/godotenv")
 		pq.Run()
 		godotenv.Run()
-	case "psql":
+	case "postgres":
 		pq := exec.Command("go", "get", "github.com/lib/pq")
 		godotenv := exec.Command("go", "get", "github.com/joho/godotenv")
 		pq.Run()

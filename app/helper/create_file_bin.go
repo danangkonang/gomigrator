@@ -256,20 +256,28 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "		}\n"
 		writeText += "		t.NameTable = newFile\n"
 		writeText += "	}\n"
+		writeText += "	m := migration.Migration{}\n"
 		writeText += "	for _, migrate := range t.NameTable {\n"
+		// writeText += `		list := strings.Split(migrate, "_migration_")`
+		// writeText += "\n"
+		// writeText += `		tb_name := strings.Split(list[1], ".go")`
+		// writeText += "\n"
+		// writeText += `		query := "DROP TABLE IF EXISTS " + tb_name[0] + " CASCADE;"`
+		// writeText += "\n"
+		// writeText += "		_, err := migration.Connection().Db.Exec(query)\n"
+		// writeText += "		if err != nil {\n"
+		// writeText += "			fmt.Println(err)\n"
+		// writeText += "			os.Exit(0)\n"
+		// writeText += "		}\n"
+		// writeText += `		fmt.Println(string(green), "success", string(reset), "DROP ", migrate)`
+		// writeText += "\n"
 		writeText += `		list := strings.Split(migrate, "_migration_")`
 		writeText += "\n"
 		writeText += `		tb_name := strings.Split(list[1], ".go")`
 		writeText += "\n"
-		writeText += `		query := "DROP TABLE IF EXISTS " + tb_name[0] + " CASCADE;"`
+		writeText += `		meth := reflect.ValueOf(&m).MethodByName("Down" + strings.Title(tb_name[0]))`
 		writeText += "\n"
-		writeText += "		_, err := migration.Connection().Db.Exec(query)\n"
-		writeText += "		if err != nil {\n"
-		writeText += "			fmt.Println(err)\n"
-		writeText += "			os.Exit(0)\n"
-		writeText += "		}\n"
-		writeText += `		fmt.Println(string(green), "success", string(reset), "DROP ", migrate)`
-		writeText += "\n"
+		writeText += "		meth.Call(nil)\n"
 		writeText += "	}\n"
 		writeText += "}\n\n"
 
@@ -296,6 +304,17 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "\n"
 		writeText += `		tb_name := strings.Split(list[1], ".go")`
 		writeText += "\n"
+
+		writeText += "var query string\n"
+		writeText += `if os.Getenv("DB_DRIVER") == "mysql" {`
+		writeText += "\n"
+		writeText += `	query = "TRUNCATE " + tb_name[0] + " ;"`
+		writeText += "\n"
+		writeText += "} else {\n"
+		writeText += `	query = "TRUNCATE " + tb_name[0] + " RESTART IDENTITY;"`
+		writeText += "\n"
+		writeText += "}\n"
+
 		writeText += `		query := "TRUNCATE " + tb_name[0] + " RESTART IDENTITY;"`
 		writeText += "\n"
 		writeText += "		_, err := migration.Connection().Db.Exec(query)\n"
@@ -303,7 +322,7 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "			fmt.Println(err.Error())\n"
 		writeText += "			os.Exit(0)\n"
 		writeText += "		}\n"
-		writeText += `		fmt.Println(string(green), "success", string(reset), "remove data on TABLE ", migrate)`
+		writeText += `		fmt.Println(string(green), "success", string(reset), "down ", migrate)`
 		writeText += "\n"
 		writeText += "	}\n"
 		writeText += "}\n\n"
@@ -350,7 +369,8 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += "\n"
 		writeText += `		tb_name := strings.Split(list[1], ".go")`
 		writeText += "\n"
-		writeText += "		meth := reflect.ValueOf(&m).MethodByName(strings.Title(tb_name[0]))\n"
+		writeText += `		meth := reflect.ValueOf(&m).MethodByName("Up" + strings.Title(tb_name[0]))`
+		writeText += "\n"
 		writeText += "		meth.Call(nil)\n"
 		writeText += "	}\n"
 		writeText += "}\n\n"

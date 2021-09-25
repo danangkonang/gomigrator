@@ -92,7 +92,8 @@ func CreateSeeder(app *model.Create) {
 		writeMigration += "		os.Exit(0)\n"
 		writeMigration += "	}\n"
 		writeMigration += "	duration := time.Since(start)\n"
-		writeMigration += `	fmt.Println("insert table ` + file_name + `", string(migration.Green), "success", string(migration.Reset), "in", fmt.Sprintf("%.2f", duration.Seconds()), "second")`
+		// writeMigration += `	fmt.Println("insert table ` + file_name + `", string(migration.Green), "success", string(migration.Reset), "in", fmt.Sprintf("%.2f", duration.Seconds()), "second")`
+		writeMigration += `	fmt.Println(string(migration.Green), "success", string(migration.Reset), "up ` + file_name + `", "in", fmt.Sprintf("%.2f", duration.Seconds()), "second")`
 		writeMigration += "	\n"
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)

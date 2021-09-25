@@ -36,7 +36,7 @@ func NewCreateZeroMigration(app *model.Init) {
 		switch app.Driver {
 		case "mysql":
 			writeText += `	_ "github.com/go-sql-driver/mysql"`
-		case "psql":
+		case "postgres":
 			writeText += `	_ "github.com/lib/pq"`
 		default:
 			writeText += `	_ "github.com/lib/pq"`
@@ -60,8 +60,8 @@ func NewCreateZeroMigration(app *model.Init) {
 		writeText += "func Connection() *DB {\n"
 		writeText += "	var connection string\n"
 
-		writeText += "	psql := fmt.Sprintf(\n"
-		writeText += `		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Jakarta",`
+		writeText += "	postgres := fmt.Sprintf(\n"
+		writeText += `		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",`
 		writeText += "\n"
 		writeText += `		os.Getenv("DB_HOST"),`
 		writeText += "\n"
@@ -92,14 +92,14 @@ func NewCreateZeroMigration(app *model.Init) {
 
 		writeText += `	switch os.Getenv("DB_DRIVER") {`
 		writeText += "\n"
-		writeText += `	case "psql":`
+		writeText += `	case "postgres":`
 		writeText += "\n"
-		writeText += "		connection = psql\n"
+		writeText += "		connection = postgres\n"
 		writeText += `	case "mysql":`
 		writeText += "\n"
 		writeText += "		connection = mysql\n"
 		writeText += "	default:\n"
-		writeText += "		connection = psql\n"
+		writeText += "		connection = postgres\n"
 		writeText += "	}\n"
 
 		writeText += `	db, err := sql.Open(os.Getenv("DB_DRIVER"), connection)`

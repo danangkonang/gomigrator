@@ -77,7 +77,7 @@ func CreateMigtaion(app *model.Create) {
 		writeMigration += `	"os"`
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
-		writeMigration += "func (m *Migration) " + strings.Title(app.TableName) + "() {\n"
+		writeMigration += "func (m *Migration) Up" + strings.Title(app.TableName) + "() {\n"
 		writeMigration += "	query := `\n"
 		writeMigration += "		CREATE TABLE " + app.TableName + "(\n"
 		if os.Getenv("DB_DRIVER") == "mysql" {
@@ -100,7 +100,20 @@ func CreateMigtaion(app *model.Create) {
 		writeMigration += "		fmt.Println(err.Error())\n"
 		writeMigration += "		os.Exit(0)\n"
 		writeMigration += "	}\n"
-		writeMigration += `  fmt.Println(string(Green), "success", string(Reset), "create table ` + file_name + `")`
+		writeMigration += `  fmt.Println(string(Green), "success", string(Reset), "up ` + file_name + `")`
+		writeMigration += "\n"
+		writeMigration += "}\n\n"
+
+		writeMigration += "func (m *Migration) Down" + strings.Title(app.TableName) + "() {\n"
+		writeMigration += "	query := `DROP TABLE " + app.TableName + "`\n"
+
+		writeMigration += "	_, err := Connection().Db.Exec(query)\n"
+
+		writeMigration += "	if err != nil {\n"
+		writeMigration += "		fmt.Println(err.Error())\n"
+		writeMigration += "		os.Exit(0)\n"
+		writeMigration += "	}\n"
+		writeMigration += `  fmt.Println(string(Green), "success", string(Reset), "down ` + file_name + `")`
 		writeMigration += "\n"
 		writeMigration += "}\n"
 		file.WriteString(writeMigration)
