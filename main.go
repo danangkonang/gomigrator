@@ -230,6 +230,9 @@ func run() {
 			}
 			templates.PrintTemplate(templates.HelperTmp, hlp)
 		}
+		if len(os.Args) <= 2 {
+			globalHelp()
+		}
 		create.Parse(os.Args[2:])
 		createHandle(os.Args, migration, seeder, &c)
 	case "up":
@@ -259,6 +262,9 @@ func run() {
 			}
 			templates.PrintTemplate(templates.HelperTmp, hlp)
 		}
+		if len(os.Args) <= 2 {
+			globalHelp()
+		}
 		up.Parse(os.Args[2:])
 		upHandle(os.Args, upMigration, upSeeder, &upM)
 	case "down":
@@ -287,6 +293,9 @@ func run() {
 				Argument: cmdFlag,
 			}
 			templates.PrintTemplate(templates.HelperTmp, hlp)
+		}
+		if len(os.Args) <= 2 {
+			globalHelp()
 		}
 		down.Parse(os.Args[2:])
 		downHandle(os.Args, downMigration, downSeeder, &dwM)

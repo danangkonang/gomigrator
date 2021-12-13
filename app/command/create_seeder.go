@@ -14,7 +14,7 @@ import (
 
 func CreateSeeder(app *model.Create) {
 	if app.TableName == "" {
-		fmt.Println("table name undefined")
+		fmt.Println("unknow flag table name \n\"gomigrator create seeder --help\"")
 		os.Exit(0)
 	}
 	if app.FileName == "" {

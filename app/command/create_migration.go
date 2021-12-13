@@ -30,13 +30,13 @@ func CreateUnixNumber(num int) string {
 
 func CreateMigtaion(app *model.Create) {
 	if app.TableName == "" {
-		fmt.Println("table name null")
+		fmt.Println("unknow migration table name or run \n\"gomigrator create migration --help\"")
 		os.Exit(0)
 	}
 	files, erro := ioutil.ReadDir(DirMigration)
 	if erro != nil {
 		hlp := &templates.Helper{
-			Error: "no folder migration",
+			Error: "unknow folder migration",
 		}
 		templates.PrintTemplate(templates.ErrorTmp, hlp)
 		os.Exit(0)

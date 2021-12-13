@@ -305,17 +305,15 @@ func CreateBinFileNew(thisDir, dirMigration string) {
 		writeText += `		tb_name := strings.Split(list[1], ".go")`
 		writeText += "\n"
 
-		writeText += "var query string\n"
-		writeText += `if os.Getenv("DB_DRIVER") == "mysql" {`
+		writeText += "		var query string\n"
+		writeText += `		if os.Getenv("DB_DRIVER") == "mysql" {`
 		writeText += "\n"
-		writeText += `	query = "TRUNCATE " + tb_name[0] + " ;"`
+		writeText += `			query = "TRUNCATE " + tb_name[0] + " ;"`
 		writeText += "\n"
-		writeText += "} else {\n"
-		writeText += `	query = "TRUNCATE " + tb_name[0] + " RESTART IDENTITY;"`
+		writeText += "		} else {\n"
+		writeText += `			query = "TRUNCATE " + tb_name[0] + " RESTART IDENTITY;"`
 		writeText += "\n"
-		writeText += "}\n"
-
-		writeText += `		query := "TRUNCATE " + tb_name[0] + " RESTART IDENTITY;"`
+		writeText += "		}\n"
 		writeText += "\n"
 		writeText += "		_, err := migration.Connection().Db.Exec(query)\n"
 		writeText += "		if err != nil {\n"
