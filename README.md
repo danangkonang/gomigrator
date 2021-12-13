@@ -33,12 +33,12 @@
 
 ## Databases
 
-* PSQL
+* PostgreSQL
 * MySQL
 * 
 
 ## Usage
-- ***Help**
+- **Help**
 
 ```bash
 Usage: gomigator [COMAND] [OPTIONS]
