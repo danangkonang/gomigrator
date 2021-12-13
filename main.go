@@ -88,7 +88,7 @@ func run() {
 	}
 	if version {
 		hlp := &templates.Helper{
-			Version: "0.1.1",
+			Version: "0.1.2",
 		}
 		// printTemplate(versionTmp, hlp)
 		templates.PrintTemplate(templates.VersionTmp, hlp)
