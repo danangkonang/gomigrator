@@ -31,14 +31,14 @@
   gomigrator --version
   ```
 
-## Databases
+## Databases Support
 
 * PostgreSQL
 * MySQL
 * 
 
 ## Usage
-- **Help**
+- ***Help***
 
 ```bash
 Usage: gomigator [COMAND] [OPTIONS]
