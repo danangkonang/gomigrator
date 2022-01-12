@@ -7,13 +7,13 @@
   - local install
 
   ```bash
-  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.1.2/gomigrator" -o gomigrator && sudo chmod +x gomigrator
+  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.1.3/gomigrator" -o gomigrator && sudo chmod +x gomigrator
   ```
 
   - global install
 
   ```bash
-  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.1.2/gomigrator" -o /usr/local/bin/gomigrator
+  sudo curl -L "https://github.com/danangkonang/gomigrator/releases/download/0.1.3/gomigrator" -o /usr/local/bin/gomigrator
   ```
 
   - Apply executable permissions to the binary:

@@ -76,7 +76,7 @@ func NewCreateZeroMigration(app *model.Init) {
 		writeText += "	)\n"
 
 		writeText += "	mysql := fmt.Sprintf(\n"
-		writeText += `		"%s:%s@tcp(%s:%s)/%s",`
+		writeText += `		"%s:%s@tcp(%s:%s)/%s?parseTime=true",`
 		writeText += "\n"
 		writeText += `		os.Getenv("DB_USER"),`
 		writeText += "\n"

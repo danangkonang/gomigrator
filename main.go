@@ -88,7 +88,7 @@ func run() {
 	}
 	if version {
 		hlp := &templates.Helper{
-			Version: "0.1.2",
+			Version: "0.1.3",
 		}
 		// printTemplate(versionTmp, hlp)
 		templates.PrintTemplate(templates.VersionTmp, hlp)
@@ -265,7 +265,6 @@ func run() {
 		if len(os.Args) <= 2 {
 			globalHelp()
 		}
-		up.Parse(os.Args[2:])
 		upHandle(os.Args, upMigration, upSeeder, &upM)
 	case "down":
 		down.Usage = func() {
@@ -397,9 +396,9 @@ func upHandle(argument []string, upMigration, upSeeder *flag.FlagSet, c *model.U
 		command.UpSeeder(c)
 	default:
 		hlp := &templates.Helper{
-			Error: os.Args[2],
+			Error: fmt.Sprintf("unknow command: %s", os.Args[2]),
 		}
-		templates.PrintTemplate(templates.HelperTmp, hlp)
+		templates.PrintTemplate(templates.ErrorTmp, hlp)
 	}
 }
 
@@ -453,9 +452,4 @@ func createHandle(argument []string, migration, seeder *flag.FlagSet, c *model.C
 
 func main() {
 	run()
-	// if len("newFile") > 0 {
-	// 	// app.FileName = app.FileName + fmt.Sprintf("%03d", len(newFile))
-	// 	// app.FileName = app.FileName + fmt.Sprintf("%d", time.Now().Unix())
-	// 	fmt.Println(fmt.Sprintf("%03d", len("ini")))
-	// }
 }
