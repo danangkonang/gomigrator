@@ -70,6 +70,14 @@ func CreateSeeder(app *model.Create) {
 		writeMigration += "\n"
 		writeMigration += ")\n\n"
 		writeMigration += "func (s *Seeder) " + strings.Title(app.FileName) + "() {\n"
+		writeMigration += "	data := []struct {\n"
+		writeMigration += "		name string\n"
+		writeMigration += "	}{\n"
+		writeMigration += "		{\n"
+		writeMigration += `			name: "senin",`
+		writeMigration += "\n"
+		writeMigration += "		},\n"
+		writeMigration += "	}\n"
 		writeMigration += "	start := time.Now()\n"
 		writeMigration += "	query := `\n"
 		writeMigration += "		INSERT INTO\n"
@@ -82,15 +90,22 @@ func CreateSeeder(app *model.Create) {
 		}
 		writeMigration += "	`\n"
 		writeMigration += "	stmt, _ := migration.Connection().Db.Prepare(query)\n"
-		writeMigration += "	_, err := stmt.Exec(\n"
-		writeMigration += `		"default", time.Now(), time.Now(),`
-		writeMigration += "\n"
-		writeMigration += "	)\n"
 
-		writeMigration += "	if err != nil {\n"
-		writeMigration += "		fmt.Println(err.Error())\n"
-		writeMigration += "		os.Exit(0)\n"
+		writeMigration += "	for _, vl := range data {\n"
+
+		writeMigration += "		_, err := stmt.Exec(\n"
+		writeMigration += `			vl.name, time.Now(), time.Now(),`
+		writeMigration += "\n"
+
+		writeMigration += "		)\n"
+
+		writeMigration += "		if err != nil {\n"
+		writeMigration += "			fmt.Println(err.Error())\n"
+		writeMigration += "			os.Exit(0)\n"
+		writeMigration += "		}\n"
+
 		writeMigration += "	}\n"
+
 		writeMigration += "	duration := time.Since(start)\n"
 		// writeMigration += `	fmt.Println("insert table ` + file_name + `", string(migration.Green), "success", string(migration.Reset), "in", fmt.Sprintf("%.2f", duration.Seconds()), "second")`
 		writeMigration += `	fmt.Println(string(migration.Green), "success", string(migration.Reset), "up ` + file_name + `", "in", fmt.Sprintf("%.2f", duration.Seconds()), "second")`
